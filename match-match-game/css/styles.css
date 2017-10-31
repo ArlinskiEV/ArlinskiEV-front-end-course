@@ -53,6 +53,7 @@ main {
 .card > img {
   width: 200px;
   height: 400px;
+  display: block;/*delete 4px in bottom*/
 }
 
 
