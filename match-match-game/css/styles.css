@@ -49,13 +49,20 @@ main {
   border-radius: 25px;
   display: inline-block;
   overflow: hidden;
+  width: 200px;
+  height: 400px;
+  /*background-size: contain;*/
+  background-size: cover;
+  background-image: url(../img/cards/triss.png);
+  background-repeat: no-repeat;
 }
+/*
 .card > img {
   width: 200px;
   height: 400px;
   display: block;/*delete 4px in bottom*/
 }
-
+*/
 
 
 

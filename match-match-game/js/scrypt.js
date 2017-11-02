@@ -32,9 +32,9 @@
     function createCard(id, container) {
         const card = document.createElement('div');
         card.className = 'card';
-        //card.setAttribute('id', id);
+        card.setAttribute('tabindex', 100 + id);
         card.id = id;
-        card.innerHTML = '<img src="img/cards/triss.png" alt="">';
+        card.innerHTML = '';//'<img src="img/cards/triss.png" alt="">';
         container.appendChild(card);
     }
 
