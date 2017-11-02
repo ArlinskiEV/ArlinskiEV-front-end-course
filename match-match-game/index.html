@@ -16,22 +16,17 @@
     </header>
     <main>
       <div class="wrapper">
-        <section class="table" id="table">
+        <div class="game">
           <header>
             <nav>
-              <p>new game</p>
-              <input type=button value="Обнулить" onclick="Game()">
-              <p>pause</p>
+              <div class="control" tabindex="0" onclick="start()">
+                <p>start</p>
+              </div>
             </nav>
-            <time>00:00:00.00</time>
+            <time id="timer">00:00:00.00</time>
           </header>
-
-          <div class="card">
-            <!--img src="img/cards/triss.png" alt=""-->
-          </div
-
-
-        ></section>
+          <section class="table" id="table"></section>
+        </div>
       </div>
     </main>
     <footer>
