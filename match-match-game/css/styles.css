@@ -61,9 +61,15 @@ main {
   background-repeat: no-repeat;
 }
 
-
-
-
+.hide {
+  visibility: hidden;
+}
+.rotate {
+  background-image: url(../img/cards/tr.jpg);
+}
+.unrotate {
+  background-image: url(../img/cards/trr.jpg);
+}
 
 
 
