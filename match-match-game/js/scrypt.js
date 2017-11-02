@@ -1,16 +1,16 @@
  (function () {
-     //alert('hello world ;)');
+     alert('hello world ;)');
 
 
 
     Array.prototype.shuffle = function() {
-        var input = this;
+        let input = this;
 
-        for (var i = input.length-1; i >=0; i--) {
+        for (let i = input.length - 1; i >= 0; i--) {
 
-            var randomIndex = Math.floor(Math.random()*(i+1));
+            let randomIndex = Math.floor(Math.random() * (i + 1));
 
-            var itemAtIndex = input[randomIndex];
+            let itemAtIndex = input[randomIndex];
             input[randomIndex] = input[i];
             input[i] = itemAtIndex;
         }
@@ -20,10 +20,14 @@
     //alert('document redy? really?');
 
     //all work only within #table
-    let n = 13;
+    // id -in order
+    // pair - from shuffle
+    let difficulty = 8;
+    let n = difficulty * 2;
     let table = document.getElementById('table');
+
     for (let i = 0; i < n; i++) {
-        createCard(i,table);
+        createCard(i, table);
     }
     function createCard(id, container) {
         const card = document.createElement('div');
@@ -34,4 +38,4 @@
         container.appendChild(card);
     }
 
- }());
+}());
