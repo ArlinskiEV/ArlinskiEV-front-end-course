@@ -1,4 +1,4 @@
- (function () {
+ function Game() {
      alert('hello world ;)');
 
 
@@ -17,8 +17,6 @@
         return input;
     }
 
-    //alert('document redy? really?');
-
     //all work only within #table
     // id -in order
     // pair - from shuffle
@@ -34,8 +32,16 @@
         card.className = 'card';
         card.setAttribute('tabindex', 100 + id);
         card.id = id;
-        card.innerHTML = '';//'<img src="img/cards/triss.png" alt="">';
+        card.innerHTML = '';
         container.appendChild(card);
     }
 
-}());
+};
+
+
+
+
+
+
+alert('document ready? really?');
+Game();
