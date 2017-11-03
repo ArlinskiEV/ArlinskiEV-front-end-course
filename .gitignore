@@ -3,6 +3,4 @@ node_modules
 *.bundle.js
 *.log
 timer.html
-match-match-game/img/templates/
-match-match-game/img/template/
-match-match-game/img/
+img/templates/
