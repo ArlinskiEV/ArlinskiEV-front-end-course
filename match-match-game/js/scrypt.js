@@ -119,6 +119,7 @@ class Game {
         let card = document.getElementById(id);
         this.styleRotate(card);
         this.rotateNumber++;
+
         //rotate third card
         if (this.rotateCard.length == 2) {
             console.log('rot = 2, need unrotate');
@@ -126,9 +127,13 @@ class Game {
             this.rotateCard = [];
         }
         //card rotate
-        this.rotateCard.push(id);
-        console.log('rotate card id='+id);
-        //return true;
+        if (this.rotateCard.indexOf(id) != -1) {
+            this.unrotate(this.rotateCard.join(','));
+            this.rotateCard = [];
+        } else {
+            this.rotateCard.push(id);
+            console.log('rotate card id='+id);
+        }
 
         //match
         if (this.rotateCard.length == 2 &&
