@@ -19,13 +19,13 @@ class Game {
         console.log('start constructor');
         let gamer = this;
 
-        let table = document.getElementById('table');
-        table.addEventListener('click', function startTimer(event) {
-            table.removeEventListener('click', startTimer);
+        let desk = document.getElementById('desk');
+        desk.addEventListener('click', function startTimer(event) {
+            desk.removeEventListener('click', startTimer);
             gamer.gameStartTimer();
             alert('123');
         });
-        table.addEventListener('click', function rot(event) {
+        desk.addEventListener('click', function rot(event) {
             console.log('target id='+event.target.id);
             if (event.target.classList.contains('card')) gamer.rotate(event.target.id);
         });
@@ -58,15 +58,15 @@ class Game {
     }
     croupier(n) {//add card on table
         console.log('start croupier');
-        let table = document.getElementById('table');
-        table.innerHTML = '';
+        let desk = document.getElementById('desk');
+        desk.innerHTML = '';
         for (let i = 0; i < n; i++) {
             let card = document.createElement('div');
             card.className = 'card';
             card.setAttribute('tabindex', i + 1);
             card.id = i;
             card.innerHTML = '';
-            table.appendChild(card);
+            desk.appendChild(card);
         };
         console.log('end croupier');
     };
@@ -77,7 +77,8 @@ class Game {
     styleRotate(obj) {
         obj.classList.remove('unrotate');
         obj.classList.add('rotate');
-        let t = obj.id<this.difficulty?obj.id:this.game[obj.id];
+        let t = obj.id<this.game[obj.id]?obj.id:this.game[obj.id];
+        console.log('obj = '+obj.id+' t='+t);
         let style = 'background-image: url(../img/cards/'+t+'.png)';
         obj.setAttribute('style',style);
         console.log('rotate object id='+obj.id);
@@ -90,7 +91,7 @@ class Game {
             j.classList.add('hide');
             j.classList.remove('rotate');
             j.classList.remove('unrotate');
-            //j.removeAttribute('style');
+            j.removeAttribute('style');
             console.log('hide id='+j.id);
         }
 
@@ -104,7 +105,7 @@ class Game {
             let j = document.getElementById(arguments[i]);
             j.classList.remove('rotate');
             j.classList.add('unrotate');
-            //j.removeAttribute('style');
+            j.removeAttribute('style');
             console.log('unrotate id='+j.id)
         }
 

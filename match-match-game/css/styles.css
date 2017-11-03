@@ -42,7 +42,7 @@ main {
     border: 1px solid red;
 }
 
-.table {
+.desk {
   text-align: center;
   min-height: 400px;
   font-size: 0; /*remove inline-block space*/
