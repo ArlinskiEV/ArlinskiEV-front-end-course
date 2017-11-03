@@ -3,4 +3,4 @@ node_modules
 *.bundle.js
 *.log
 timer.html
-img/templates/
+match-match-game/img/templates/
