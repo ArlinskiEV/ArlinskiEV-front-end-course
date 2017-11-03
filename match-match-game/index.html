@@ -18,13 +18,18 @@
       <div class="wrapper">
         <div class="game">
           <header>
-            <nav>
+            <nav class="controls">
               <div class="control" tabindex="0" onclick="start()">
                 <p>reset</p>
+              </div>
+              <div class="control" tabindex="0" onclick="shirt()">
+                <p>shirt</p>
               </div>
             </nav>
             <time id="timer">00:00:00.00</time>
           </header>
+          <section class="shirts" id="shirts">
+          </section>
           <section class="desk" id="desk"></section>
         </div>
       </div>

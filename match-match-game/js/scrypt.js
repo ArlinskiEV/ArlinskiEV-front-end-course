@@ -33,7 +33,7 @@ class Game {
         console.log('end constructor');
     }
     reset() {
-        this.difficulty = 3; //from radio-button
+        this.difficulty = 4; //from radio-button
         this.game = [];
 
         for (let i = 0; i < this.difficulty * 2; i++) {
