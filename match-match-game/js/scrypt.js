@@ -18,7 +18,7 @@ class Game {
     constructor() {
         console.log('start constructor');
         let gamer = this;
-        this.difficulty = 2; //from radio-button
+        this.difficulty = 3; //from radio-button
         this.game = [];
         for (let i = 0; i < this.difficulty; i++) {
             this.game.push(this.difficulty + i);
@@ -42,7 +42,12 @@ class Game {
             console.log('target id='+event.target.id);
             if (event.target.classList.contains('card')) gamer.rotate(event.target.id);
         });
-        console.log('end constructor');
+
+        let s = '';
+        for (var i = 0; i < this.game.length; i++) {
+            s += ' '+this.game[i];
+        }
+        console.log('end constructor:'+s);
     }
     gameStartTimer() {
         console.log('startTimer');
@@ -52,54 +57,48 @@ class Game {
         let table = document.getElementById('table');
         table.innerHTML = '';
         for (let i = 0; i < n; i++) {
-            const card = document.createElement('div');
+            let card = document.createElement('div');
             card.className = 'card';
             card.setAttribute('tabindex', i + 1);
             card.id = i;
             card.innerHTML = '';
             table.appendChild(card);
         };
-        console.log('end');
+        console.log('end croupier');
     };
     win() {
-        alert('win');
         console.log('win');
         console.log('rotate:'+this.rotateNumber);
     }
     styleRotate(obj) {
         obj.classList.remove('unrotate');
         obj.classList.add('rotate');
+        console.log('rotate id='+obj.id);
     }
     styleHide() {
         console.log('start hide');
-        let table = document.getElementById('table');
-        let forHide = table.getElementsByClassName('rotate');
-        let arr = [];
-        for (let i = 0; i < forHide.length; i++) {
-            arr.push(forHide.item(i));
+
+        for (let i = 0; i < arguments.length; i++) {
+            let j = document.getElementById(arguments[i]);
+            j.classList.add('hide');
+            j.classList.remove('rotate');
+            j.classList.remove('unrotate');
+            console.log('hide id='+j.id);
         }
-        for (let i = 0; i < arr.length; i++)
-        {
-            arr[i].classList.add('hide');
-            arr[i].classList.remove('rotate');
-            arr[i].classList.remove('unrotate');
-        }
+
         console.log('end hide')
     }
 
     unrotate() {
         console.log('unrotate');
-        let table = document.getElementById('table');
-        let forHide = table.getElementsByClassName('rotate');
-        let arr = [];
-        for (let i = 0; i < forHide.length; i++) {
-            arr.push(forHide.item(i));
+
+        for (let i = 0; i < arguments.length; i++) {
+            let j = document.getElementById(arguments[i]);
+            j.classList.remove('rotate');
+            j.classList.add('unrotate');
+            console.log('unrotate id='+j.id)
         }
-        for (let i = 0; i < arr.length; i++)
-        {
-            arr[i].classList.add('unrotate');
-            arr[i].classList.remove('rotate');
-        }
+
         console.log('end hide')
     }
 
@@ -113,18 +112,18 @@ class Game {
         //only one card rotate
         if (this.rotateCard == -1) {
             this.rotateCard = id;
-            console.log('rotate one card');
+            console.log('rotate one card id='+id);
             return true;
         }
         //two cards rotate
         if (this.rotateCard == this.game[id]) {
             this.matches += 2;
-            this.styleHide();
+            this.styleHide(id, this.rotateCard);
             if (this.matches == this.game.length) {
                 this.win();
             }
         } else {
-            this.unrotate();
+            this.unrotate(id, this.rotateCard);
         }
 
         this.rotateCard = -1;
@@ -138,5 +137,6 @@ class Game {
 
 var g = null;
 function start() {
-    g = new Game;
+    //g = new Game;
+    new Game;
 }
