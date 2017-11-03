@@ -4,3 +4,5 @@ node_modules
 *.log
 timer.html
 match-match-game/img/templates/
+match-match-game/img/template/
+match-match-game/img/
