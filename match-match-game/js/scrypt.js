@@ -35,13 +35,17 @@ class Game {
     reset() {
         this.difficulty = 3; //from radio-button
         this.game = [];
-        for (let i = 0; i < this.difficulty; i++) {
-            this.game.push(this.difficulty + i);
+
+        for (let i = 0; i < this.difficulty * 2; i++) {
+            this.game.push(/*this.difficulty +*/ i);
         }
+
         this.game.shuffle();
+        /*
         for (let i = 0; i < this.difficulty; i++) {
             this.game[this.game[i]] = i;
-        }
+        }*/
+
         this.croupier(this.difficulty*2);
         this.rotateNumber = 0;
         this.rotateCard = [];
@@ -77,7 +81,8 @@ class Game {
     styleRotate(obj) {
         obj.classList.remove('unrotate');
         obj.classList.add('rotate');
-        let t = obj.id<this.game[obj.id]?obj.id:this.game[obj.id];
+        //let t = obj.id<this.game[obj.id]?obj.id:this.game[obj.id];
+        let t = this.game[obj.id] % this.difficulty;
         console.log('obj = '+obj.id+' t='+t);
         let style = 'background-image: url(../img/cards/'+t+'.png)';
         obj.setAttribute('style',style);
@@ -137,7 +142,10 @@ class Game {
 
         //match
         if (this.rotateCard.length == 2 &&
-            this.rotateCard[0] == this.game[id]) {
+            //this.rotateCard[0] == this.game[id]
+            this.game[this.rotateCard[0]] % this.difficulty ==
+            this.game[id] % this.difficulty
+            ) {
             this.matches += 2;
             this.styleHide(this.rotateCard[0], this.rotateCard[1]);
             if (this.matches == this.game.length) {
