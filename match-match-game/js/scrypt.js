@@ -77,6 +77,9 @@ class Game {
     styleRotate(obj) {
         obj.classList.remove('unrotate');
         obj.classList.add('rotate');
+        let t = obj.id<this.difficulty?obj.id:this.game[obj.id];
+        let style = 'background-image: url(../img/cards/'+t+'.png)';
+        obj.setAttribute('style',style);
         console.log('rotate object id='+obj.id);
     }
     styleHide() {
@@ -87,6 +90,7 @@ class Game {
             j.classList.add('hide');
             j.classList.remove('rotate');
             j.classList.remove('unrotate');
+            //j.removeAttribute('style');
             console.log('hide id='+j.id);
         }
 
@@ -94,16 +98,17 @@ class Game {
     }
 
     unrotate() {
-        console.log('unrotate');
+        console.log('start unrotate');
 
         for (let i = 0; i < arguments.length; i++) {
             let j = document.getElementById(arguments[i]);
             j.classList.remove('rotate');
             j.classList.add('unrotate');
+            //j.removeAttribute('style');
             console.log('unrotate id='+j.id)
         }
 
-        console.log('end hide')
+        console.log('end unrotate')
     }
 
     rotate(id) {
