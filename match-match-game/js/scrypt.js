@@ -18,6 +18,21 @@ class Game {
     constructor() {
         console.log('start constructor');
         let gamer = this;
+
+        let table = document.getElementById('table');
+        table.addEventListener('click', function startTimer(event) {
+            table.removeEventListener('click', startTimer);
+            gamer.gameStartTimer();
+            alert('123');
+        });
+        table.addEventListener('click', function rot(event) {
+            console.log('target id='+event.target.id);
+            if (event.target.classList.contains('card')) gamer.rotate(event.target.id);
+        });
+        gamer.reset();
+        console.log('end constructor');
+    }
+    reset() {
         this.difficulty = 3; //from radio-button
         this.game = [];
         for (let i = 0; i < this.difficulty; i++) {
@@ -32,22 +47,11 @@ class Game {
         this.rotateCard = -1;
         this.matches = 0;
 
-        let table = document.getElementById('table');
-        table.addEventListener('click', function startTimer(event) {
-            table.removeEventListener('click', startTimer);
-            gamer.gameStartTimer();
-        });
-
-        table.addEventListener('click', function rot(event) {
-            console.log('target id='+event.target.id);
-            if (event.target.classList.contains('card')) gamer.rotate(event.target.id);
-        });
-
         let s = '';
         for (var i = 0; i < this.game.length; i++) {
             s += ' '+this.game[i];
         }
-        console.log('end constructor:'+s);
+        console.log('reset:'+s);
     }
     gameStartTimer() {
         console.log('startTimer');
@@ -73,7 +77,7 @@ class Game {
     styleRotate(obj) {
         obj.classList.remove('unrotate');
         obj.classList.add('rotate');
-        console.log('rotate id='+obj.id);
+        console.log('rotate object id='+obj.id);
     }
     styleHide() {
         console.log('start hide');
@@ -135,8 +139,8 @@ class Game {
 }
 
 
-var g = null;
+var g = new Game;
 function start() {
     //g = new Game;
-    new Game;
+    g.reset();
 }

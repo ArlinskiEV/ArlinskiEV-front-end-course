@@ -57,7 +57,7 @@ main {
   height: 400px;
   margin: 5px;
   background-size: cover;
-  background-image: url(../img/cards/triss.png);
+  background-image: url(../img/shirts/1.png);
   background-repeat: no-repeat;
 }
 
@@ -68,7 +68,7 @@ main {
   background-image: url(../img/cards/tr.jpg);
 }
 .unrotate {
-  background-image: url(../img/cards/trr.jpg);
+  background-image: url(../img/shirts/1.png);
 }
 
 
