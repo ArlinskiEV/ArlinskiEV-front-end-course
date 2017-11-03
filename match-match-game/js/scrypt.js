@@ -20,12 +20,15 @@ class Game {
         let gamer = this;
 
         let desk = document.getElementById('desk');
-        desk.addEventListener('click', function startTimer(event) {
+
+        /*desk.addEventListener('click', function startTimer(event) {
             desk.removeEventListener('click', startTimer);
             gamer.gameStartTimer();
             alert('123');
-        });
-        desk.addEventListener('click', function rot(event) {
+        });*/
+        this.rotateNumber = -1;//for only one time-starter
+
+        desk.addEventListener('click', function(event) {
             console.log('target id='+event.target.id);
             if (event.target.classList.contains('card')) gamer.rotate(event.target.id);
         });
@@ -47,6 +50,24 @@ class Game {
         }*/
 
         this.croupier(this.difficulty*2);
+
+
+
+        if (this.rotateNumber != 0) {
+            let gamer = this;
+            let desk = document.getElementById('desk');
+            desk.addEventListener('click', function startTimer(event) {
+                if (event.target.classList.contains('card')) {
+                    desk.removeEventListener('click', startTimer);
+                    gamer.gameStartTimer();
+                    alert('123');
+                }
+            });
+        }
+
+
+
+
         this.rotateNumber = 0;
         this.rotateCard = [];
         this.matches = 0;
