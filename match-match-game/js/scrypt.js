@@ -44,7 +44,7 @@ class Game {
         }
         this.croupier(this.difficulty*2);
         this.rotateNumber = 0;
-        this.rotateCard = -1;
+        this.rotateCard = [];
         this.matches = 0;
 
         let s = '';
@@ -119,24 +119,26 @@ class Game {
         let card = document.getElementById(id);
         this.styleRotate(card);
         this.rotateNumber++;
-        //only one card rotate
-        if (this.rotateCard == -1) {
-            this.rotateCard = id;
-            console.log('rotate one card id='+id);
-            return true;
+        //rotate third card
+        if (this.rotateCard.length == 2) {
+            console.log('rot = 2, need unrotate');
+            this.unrotate(this.rotateCard[0], this.rotateCard[1]);
+            this.rotateCard = [];
         }
-        //two cards rotate
-        if (this.rotateCard == this.game[id]) {
+        //card rotate
+        this.rotateCard.push(id);
+        console.log('rotate card id='+id);
+        //return true;
+
+        //match
+        if (this.rotateCard.length == 2 &&
+            this.rotateCard[0] == this.game[id]) {
             this.matches += 2;
-            this.styleHide(id, this.rotateCard);
+            this.styleHide(this.rotateCard[0], this.rotateCard[1]);
             if (this.matches == this.game.length) {
                 this.win();
             }
-        } else {
-            this.unrotate(id, this.rotateCard);
         }
-
-        this.rotateCard = -1;
 
         console.log('end rotate');
 
