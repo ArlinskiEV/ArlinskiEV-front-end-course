@@ -52,7 +52,7 @@ main {
 }
 .shirts {
   max-height: 420px;
-  overflow: scroll;
+  overflow: auto;
   background-color: blue;
 }
 

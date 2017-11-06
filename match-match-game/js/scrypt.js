@@ -66,7 +66,7 @@ class Game {
             false);
 
 
-
+        /*timer event*/
         if (this.rotateNumber != 0) {
             let gamer = this;
             let desk = document.getElementById('desk');
@@ -94,7 +94,15 @@ class Game {
     };
     croupier(n, section, classes, shirtMode) {//add card on table
         console.log('start croupier');
-        section.innerHTML = '';
+        //section.innerHTML = '';
+        if (section.childNodes.length !== 0) {
+            section.parentNode.removeChild(conteiner);
+        }
+
+
+
+
+
         for (let i = 0; i < n; i++) {
             let card = document.createElement('div');
             card.className = classes;
