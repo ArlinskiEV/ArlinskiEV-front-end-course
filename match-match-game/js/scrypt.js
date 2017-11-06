@@ -19,24 +19,35 @@ class Game {
         console.log('start constructor');
         let gamer = this;
 
-        let desk = document.getElementById('desk');
-
         /*desk.addEventListener('click', function startTimer(event) {
             desk.removeEventListener('click', startTimer);
             gamer.gameStartTimer();
             alert('123');
         });*/
         this.rotateNumber = -1;//for only one time-starter
+        this.maxDifficulty = 12;
+        this.shirtsCount = 9;
 
+        /*listeners*/
+        let desk = document.getElementById('desk');
         desk.addEventListener('click', function(event) {
-            console.log('target id='+event.target.id);
+            console.log('target desk id='+event.target.id);
             if (event.target.classList.contains('card')) gamer.rotate(event.target.id);
         });
+
+        let shirtSection = document.getElementById('shirts');
+        shirtSection.addEventListener('click', function(event) {
+            console.log('target shirt id='+event.target.id);
+            if (event.target.classList.contains('shirt')) gamer.shirt(event.target.id);
+        });
+
+
+
         gamer.reset();
         console.log('end constructor');
     }
     reset() {
-        this.difficulty = 4; //from radio-button
+        this.difficulty = 4;//this.maxDifficulty;
         this.game = [];
 
         for (let i = 0; i < this.difficulty * 2; i++) {
@@ -48,8 +59,11 @@ class Game {
         for (let i = 0; i < this.difficulty; i++) {
             this.game[this.game[i]] = i;
         }*/
-
-        this.croupier(this.difficulty*2);
+        this.croupier(
+            this.difficulty*2,
+            document.getElementById('desk'),
+            'card',
+            false);
 
 
 
@@ -60,13 +74,10 @@ class Game {
                 if (event.target.classList.contains('card')) {
                     desk.removeEventListener('click', startTimer);
                     gamer.gameStartTimer();
-                    alert('123');
+                    //alert('123');
                 }
             });
         }
-
-
-
 
         this.rotateNumber = 0;
         this.rotateCard = [];
@@ -77,23 +88,42 @@ class Game {
             s += ' '+this.game[i];
         }
         console.log('reset:'+s);
-    }
+    };
     gameStartTimer() {
         console.log('startTimer');
-    }
-    croupier(n) {//add card on table
+    };
+    croupier(n, section, classes, shirtMode) {//add card on table
         console.log('start croupier');
-        let desk = document.getElementById('desk');
-        desk.innerHTML = '';
+        section.innerHTML = '';
         for (let i = 0; i < n; i++) {
             let card = document.createElement('div');
-            card.className = 'card';
+            card.className = classes;
             card.setAttribute('tabindex', i + 1);
             card.id = i;
             card.innerHTML = '';
-            desk.appendChild(card);
+            if (shirtMode) {
+                    let style = 'background-image: url(../img/shirts/'+i+'.png)';
+                    card.setAttribute('style',style);
+            }
+            section.appendChild(card);
         };
         console.log('end croupier');
+    };
+    shirts() {/*click button*/
+        let shirtSection = document.getElementById('shirts');
+        /*if empty - add, if full - delete*/
+        if (shirtSection.innerHTML == '') {
+            this.croupier(
+                this.shirtsCount,
+                document.getElementById('shirts'),
+                'card shirt',
+                true);
+        } else {
+            shirtSection.innerHTML = '';
+        }
+    }
+    shirt(id) {
+        console.log('start shirts id='+id);
     };
     win() {
         console.log('win');
@@ -180,9 +210,11 @@ class Game {
 
 }
 
-
+/*main*/
 var g = new Game;
 function start() {
-    //g = new Game;
     g.reset();
+}
+function shirt() {
+    g.shirts();
 }

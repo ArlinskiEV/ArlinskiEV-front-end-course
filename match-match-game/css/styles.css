@@ -42,11 +42,18 @@ main {
     border: 1px solid red;
 }
 
-.desk {
+.cards {
   text-align: center;
-  min-height: 400px;
   font-size: 0; /*remove inline-block space*/
+}
+.desk {
+  min-height: 400px;
   background-color: green;
+}
+.shirts {
+  max-height: 420px;
+  overflow: scroll;
+  background-color: blue;
 }
 
 .card {
