@@ -95,8 +95,8 @@ class Game {
     croupier(n, section, classes, shirtMode) {//add card on table
         console.log('start croupier');
         //section.innerHTML = '';
-        if (section.childNodes.length !== 0) {
-            section.parentNode.removeChild(conteiner);
+        while (section.firstChild) {
+            section.removeChild(section.firstChild);
         }
 
 

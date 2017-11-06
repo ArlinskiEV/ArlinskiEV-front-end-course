@@ -44,6 +44,9 @@ main {
 
 .cards {
   text-align: center;
+  border-radius: 25px;
+  padding-left: 15px;
+  padding-right: 15px;/*scroll*/
   font-size: 0; /*remove inline-block space*/
 }
 .desk {
