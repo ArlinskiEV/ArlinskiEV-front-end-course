@@ -124,6 +124,10 @@ class Game {
     }
     shirt(id) {
         console.log('start shirts id='+id);
+        let style = document.getElementById('shirtsStyle');
+        style.innerHTML = '.card{background-image: url(../img/shirts/'+id+'.png);}';
+
+        console.log('end shirts id='+id);
     };
     win() {
         console.log('win');
