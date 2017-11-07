@@ -192,7 +192,6 @@ class Game {
         console.log('rotate id=' + id);
 
         let card = document.getElementById(id);
-        this.styleRotate(card);
         this.rotateNumber++;
 
         //rotate third card
@@ -207,6 +206,7 @@ class Game {
             this.rotateCard = [];
         } else {
             this.rotateCard.push(id);
+            this.styleRotate(card);
             console.log('rotate card id='+id);
         }
 
