@@ -84,11 +84,13 @@ class Game {
     changeDifficulty(id) {
         console.log('+++');
         if (id.indexOf('unic') != -1) {
-            this.unicCardsCount = parseInt(id) * 2; //same card on desk %2 == 0
+            this.unicCardsCount = parseInt(id,10) * 2; //same card on desk %2 == 0
+            console.log('SET unic='+this.unicCardsCount);
         };
 
         if (id.indexOf('pair') != -1) {
-            this.difficulty = parseInt(id);//pair count;
+            this.difficulty = parseInt(id,10);//pair count;
+            console.log('SET diff='+this.difficulty);
         };
     }
     reset() {
@@ -262,7 +264,9 @@ class Game {
         //return this.game[id] % this.difficulty;
 
         return (this.game[parseInt(id,10)] %
-            (this.difficulty * 2 / this.unicCardsCount) + 'card');
+            this.difficulty * 2 / this.unicCardsCount + 'card');
+
+            //return (this.game[parseInt(id,10)] % (2*this.unicCardsCount) + 'card');
     }
     styleRotate(obj) {
 
@@ -387,5 +391,5 @@ function shirt() {
     g.shirts();
 }
 function difficulty() {
-//    g.setDifficulty();
+    g.setDifficulty();
 }
