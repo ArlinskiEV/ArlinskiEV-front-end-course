@@ -28,6 +28,9 @@ class Game {
         this.maxUnicCardsCount = 12;
         this.shirtsCount = 9;
 
+        this.difficulty = 4;//pair count;
+        this.unicCardsCount = 2; //same card on desk %2 == 0
+
         /*listeners*/
         let desk = document.getElementById('desk');
         desk.addEventListener('click', function(event) {
@@ -47,14 +50,48 @@ class Game {
             if (event.target.classList.contains('shirt')) gamer.shirt(event.target.id);
         });
 
+        let difficultySection = document.getElementById('difficulty');
+        this.diffArr = [];
+        while (difficultySection.firstChild) {
+            this.diffArr.push(difficultySection.removeChild(difficultySection.firstChild));
+        }
+        difficultySection.addEventListener('click', function(event) {
+            console.log('target diff id='+event.target.id);
+            if (event.target.id) {
+                gamer.changeDifficulty(event.target.id);
+                gamer.reset();
+            }
+        });
 
 
         gamer.reset();
         console.log('end constructor');
     }
+    setDifficulty() {/*click button*/
+        let difficultySection = document.getElementById('difficulty');
+        if (!difficultySection.firstChild) {
+            /*add controls*/
+            while (this.diffArr.length > 0) {
+                difficultySection.appendChild(this.diffArr.pop());
+            }
+        } else {
+            while (difficultySection.firstChild) {
+                this.diffArr.push(difficultySection.removeChild(difficultySection.firstChild));
+            }
+        }
+
+    }
+    changeDifficulty(id) {
+        console.log('+++');
+        if (id.indexOf('unic') != -1) {
+            this.unicCardsCount = parseInt(id) * 2; //same card on desk %2 == 0
+        };
+
+        if (id.indexOf('pair') != -1) {
+            this.difficulty = parseInt(id);//pair count;
+        };
+    }
     reset() {
-        this.difficulty = 4;//pair count;
-        this.unicCardsCount = 4; //same card on desk %2 == 0
         this.game = [];
         this.stoped = true;
         for (let i = 0; i < this.difficulty * 2; i++) {
@@ -348,4 +385,7 @@ function start() {
 }
 function shirt() {
     g.shirts();
+}
+function difficulty() {
+    g.setDifficulty();
 }

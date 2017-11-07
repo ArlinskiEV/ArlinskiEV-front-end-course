@@ -126,11 +126,52 @@ main {
   }
 }
 
+/*difficulty*/
+.difficulty {
+  background-image: radial-gradient(white 0%, gray 25%, black 100%);
+}
+form {
+  font-size: 18pt;
+  width: 80%;
+  text-align: center;
+}
+input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+
+  border: 2px solid #999;
+  transition: 0.2s all linear;
+  outline: none;
+  margin-right: 5px;
+
+  position: relative;
+  top: 4px;
+}
+
+input:checked {
+  border: 6px solid black;
+}
+
+legend {
+  color: white;
+  background-color: black;
+  padding: 5px 10px;
+  border-radius: 0;
+  border: 0;
+  font-size: 14px;
+}
+
 
 /*win*/
 .desk h1 {
   color: firebrick;
-  font-size: 23pt;
+  font-size: 25pt;
+  text-transform: uppercase;
 }
 .desk h2 {
   color: firebrick;
