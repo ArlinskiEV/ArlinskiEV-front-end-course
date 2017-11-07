@@ -190,7 +190,13 @@ class Game {
         console.log('start hide');
 
         for (let i = 0; i < arguments.length; i++) {
-            let j = document.getElementById(arguments[i]);
+            let j = document.getElementById(parseInt(arguments[i])+'card');
+
+            while (j.classList.contains('cardType')) {
+                target = target.parentNode;
+            }
+
+
             j.classList.add('hide');
             //j.classList.remove('rotate');
             //j.classList.remove('unrotate');
@@ -254,11 +260,22 @@ class Game {
             ) {
             this.matches += 2;
             console.log('matches');
-            this.styleHide(this.rotateCard[0], this.rotateCard[1]);
+
+
+            let card1 = this.rotateCard[0];
+            let card2 = this.rotateCard[1];
+            let gamer = this;
+            setTimeout(function(){
+                gamer.styleHide(card1, card2);
+            }, 1000);
+
+
             this.rotateCard = [];
 
             if (this.matches == this.game.length) {
-                this.win();
+                setTimeout(function(){
+                    gamer.win();
+                }, 1000);
             }
         }
 
