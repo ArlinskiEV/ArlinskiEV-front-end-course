@@ -80,7 +80,6 @@ main {
 .unrotate {
   -webkit-animation: 2s linear 0s unrot;
   animation: 2s linear 0s unrot;
-  /*animation-direction: reverse;*/
   animation-fill-mode: forwards;
 }
 .hide {
