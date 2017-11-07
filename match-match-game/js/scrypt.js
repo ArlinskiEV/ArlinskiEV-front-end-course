@@ -72,7 +72,8 @@ class Game {
             'card',
             false);
 
-
+        let timer = document.getElementById('timer');
+        timer.innerHTML = '00:00:00';
         /*timer event*/
         if (this.rotateNumber != 0) {
             let gamer = this;
@@ -98,7 +99,32 @@ class Game {
     };
     gameStartTimer() {
         console.log('startTimer');
+        let currentTime = new Date();
+        this.startTime = currentTime;
+        this.stoped = false;
+
+        function timerIterate(gamer) {
+            let currentTime = new Date();
+            let timer = document.getElementById('timer');
+
+            let h = currentTime.getHours() - gamer.startTime.getHours();
+            let m = currentTime.getMinutes() - gamer.startTime.getMinutes();
+            let s = currentTime.getSeconds() - gamer.startTime.getSeconds();
+            let ms = currentTime.getMilliseconds() - gamer.startTime.getMilliseconds();
+            timer.innerHTML = h+':'+m+':'+s+'.'+ms;
+
+            if (!gamer.stoped) setTimeout(function(){
+                timerIterate(gamer);
+            }, 10);
+        }
+
+        timerIterate(this);
     };
+    gameStopTimer() {
+        console.log('stopTimer');
+        this.stoped = true;
+        return new Date();
+    }
     croupier(n, section, classes, shirtMode) {//add card on table
         console.log('start croupier');
         //section.innerHTML = '';
@@ -161,6 +187,28 @@ class Game {
     win() {
         console.log('win');
         console.log('rotate:'+this.rotateNumber);
+        let time = this.gameStopTimer();
+        let desk = document.getElementById('desk');
+        while (desk.firstChild) {
+            desk.removeChild(desk.firstChild);
+        }
+        let h1 = document.createElement('h1');
+        h1.innerHTML = "congratulation";
+
+        let h2 = document.createElement('h2');
+        h2.innerHTML = 'clicks: '+this.rotateNumber;
+        let h22 = document.createElement('h2');
+        let h = time.getHours() - this.startTime.getHours();
+        let m = time.getMinutes() - this.startTime.getMinutes();
+        let s = time.getSeconds() - this.startTime.getSeconds();
+        let ms = time.getMilliseconds() - this.startTime.getMilliseconds();
+        h22.innerHTML = h+':'+m+':'+s+'.'+ms;
+
+
+
+        desk.appendChild(h1);
+        desk.appendChild(h2);
+        desk.appendChild(h22);
     }
     resolveImg(id) {
         //return this.game[id] % this.difficulty;
@@ -180,9 +228,6 @@ class Game {
         let style = 'background-image: url(../img/cards/'+t+'.png);';
         let face = obj.getElementsByClassName('face');
         face[0].setAttribute('style',style);
-
-
-
 
         console.log('rotate object id='+obj.id);
     }

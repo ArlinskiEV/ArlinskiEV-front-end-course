@@ -125,33 +125,17 @@ main {
     opacity: 0;
   }
 }
-/*
-@keyframes rot {
-  0% {
-    transform: rotateY(0deg);
-  }
-  50% {
-    transform: rotateY(90deg);
-  }
-  100% {
-    transform: rotateY(180deg); }
+
+
+/*win*/
+.desk h1 {
+  color: firebrick;
+  font-size: 23pt;
 }
-
-
-@keyframes unrot {
-  0% {
-    transform: rotateY(180deg);
-  }
-  50% {
-    transform: rotateY(90deg);
-  }
-  100% {
-    transform: rotateY(0deg); }
+.desk h2 {
+  color: firebrick;
+  font-size: 18pt;
 }
-
-*/
-
-
 
 footer {
   width: 100%;
