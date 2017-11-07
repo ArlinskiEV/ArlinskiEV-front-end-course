@@ -64,7 +64,7 @@ class Game {
         });
 
 
-        gamer.reset();
+        //gamer.reset();
         console.log('end constructor');
     }
     setDifficulty() {/*click button*/

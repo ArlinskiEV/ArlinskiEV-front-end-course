@@ -174,6 +174,15 @@ legend {
 }
 .desk h2 {
   color: firebrick;
+  font-size: 23pt;
+  text-transform: uppercase;
+}
+.desk h3 {
+  color: firebrick;
+  font-size: 20pt;
+}
+.rules {
+  color: firebrick;
   font-size: 18pt;
 }
 
