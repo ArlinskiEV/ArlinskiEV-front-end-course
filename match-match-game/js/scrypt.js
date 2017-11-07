@@ -194,6 +194,11 @@ class Game {
             j.classList.add('hide');
             //j.classList.remove('rotate');
             //j.classList.remove('unrotate');
+            /*
+            while (j.firstChild) {
+                j.removeChild(shirtSection.firstChild);
+            }
+            */
             console.log('hide id='+j.id);
         }
 

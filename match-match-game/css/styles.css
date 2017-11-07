@@ -98,7 +98,7 @@ main {
   transform: rotateY(180deg);
 }
 .back {
-  background-image: url(../img/shirts/6shirt.png);
+  background-image: url(../img/shirts/1shirt.png);
   z-index: 2;
 }
 
@@ -125,7 +125,7 @@ main {
     opacity: 0;
   }
 }
-
+/*
 @keyframes rot {
   0% {
     transform: rotateY(0deg);
@@ -149,7 +149,7 @@ main {
     transform: rotateY(0deg); }
 }
 
-
+*/
 
 
 
