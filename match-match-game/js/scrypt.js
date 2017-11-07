@@ -25,7 +25,7 @@ class Game {
             alert('123');
         });*/
         this.rotateNumber = -1;//for only one time-starter
-        this.maxDifficulty = 12;
+        this.maxUnicCardsCount = 12;
         this.shirtsCount = 9;
 
         /*listeners*/
@@ -47,7 +47,8 @@ class Game {
         console.log('end constructor');
     }
     reset() {
-        this.difficulty = 4;//this.maxDifficulty;
+        this.difficulty = 4;//pair count;
+        this.unicCardsCount = 4; //same card on desk %2 == 0
         this.game = [];
 
         for (let i = 0; i < this.difficulty * 2; i++) {
@@ -60,7 +61,7 @@ class Game {
             this.game[this.game[i]] = i;
         }*/
         this.croupier(
-            this.difficulty*2,
+            this.difficulty * 2,
             document.getElementById('desk'),
             'card',
             false);
@@ -82,7 +83,7 @@ class Game {
         this.rotateNumber = 0;
         this.rotateCard = [];
         this.matches = 0;
-
+        //for test
         let s = '';
         for (var i = 0; i < this.game.length; i++) {
             s += ' '+this.game[i];
@@ -100,18 +101,16 @@ class Game {
         }
 
 
-
-
-
         for (let i = 0; i < n; i++) {
             let card = document.createElement('div');
             card.className = classes;
             card.setAttribute('tabindex', i + 1);
-            card.id = i;
+            card.id = i + 'card';
             card.innerHTML = '';
             if (shirtMode) {
-                    let style = 'background-image: url(../img/shirts/'+i+'.png)';
+                    let style = 'background-image: url(../img/shirts/'+i+'shirt.png)';
                     card.setAttribute('style',style);
+                    card.id = i + 'shirt';
             }
             section.appendChild(card);
         };
@@ -120,14 +119,16 @@ class Game {
     shirts() {/*click button*/
         let shirtSection = document.getElementById('shirts');
         /*if empty - add, if full - delete*/
-        if (shirtSection.innerHTML == '') {
+        if (!shirtSection.firstChild) {
             this.croupier(
                 this.shirtsCount,
                 document.getElementById('shirts'),
                 'card shirt',
                 true);
         } else {
-            shirtSection.innerHTML = '';
+            while (shirtSection.firstChild) {
+                shirtSection.removeChild(shirtSection.firstChild);
+            }
         }
     }
     shirt(id) {
@@ -141,11 +142,17 @@ class Game {
         console.log('win');
         console.log('rotate:'+this.rotateNumber);
     }
+    resolveImg(id) {
+        //return this.game[id] % this.difficulty;
+
+        return (this.game[parseInt(id,10)] %
+            (this.difficulty * 2 / this.unicCardsCount) + 'card');
+    }
     styleRotate(obj) {
         obj.classList.remove('unrotate');
         obj.classList.add('rotate');
         //let t = obj.id<this.game[obj.id]?obj.id:this.game[obj.id];
-        let t = this.game[obj.id] % this.difficulty;
+        let t = this.resolveImg(obj.id);
         console.log('obj = '+obj.id+' t='+t);
         let style = 'background-image: url(../img/cards/'+t+'.png)';
         obj.setAttribute('style',style);
@@ -206,8 +213,9 @@ class Game {
         //match
         if (this.rotateCard.length == 2 &&
             //this.rotateCard[0] == this.game[id]
-            this.game[this.rotateCard[0]] % this.difficulty ==
-            this.game[id] % this.difficulty
+            //this.game[this.rotateCard[0]] % this.difficulty ==
+            //this.game[id] % this.difficulty
+            this.resolveImg(this.rotateCard[0]) == this.resolveImg(id)
             ) {
             this.matches += 2;
             this.styleHide(this.rotateCard[0], this.rotateCard[1]);

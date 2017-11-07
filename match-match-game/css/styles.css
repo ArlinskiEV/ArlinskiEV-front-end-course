@@ -45,16 +45,15 @@ main {
 .cards {
   text-align: center;
   border-radius: 25px;
-  padding-left: 15px;
-  padding-right: 15px;/*scroll*/
   font-size: 0; /*remove inline-block space*/
 }
 .desk {
   min-height: 400px;
-  background-color: green;
+  background-image: radial-gradient(white 0%, gray 50%, black 100%);
+
 }
 .shirts {
-  max-height: 420px;
+  max-height: 410px;
   overflow: auto;
   background-color: blue;
 }
@@ -67,7 +66,7 @@ main {
   height: 400px;
   margin: 5px;
   background-size: cover;
-  background-image: url(../img/shirts/1.png);
+  background-image: url(../img/shirts/1shirt.png);
   background-repeat: no-repeat;
 }
 
@@ -75,10 +74,10 @@ main {
   visibility: hidden;
 }
 .rotate {
-  background-image: url(../img/cards/tr.jpg);
+  /*background-image: url(../img/cards/tr.jpg);*/
 }
 .unrotate {
-  background-image: url(../img/shirts/1.png);
+  background-image: url(../img/shirts/1shirt.png);
 }
 
 
