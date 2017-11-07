@@ -71,17 +71,37 @@ main {
 }
 
 .hide {
-  visibility: hidden;
+  -webkit-animation: 1s linear 0s slowhide;
+  animation: 1s linear 0s slowhide;
+  animation-fill-mode: forwards;
+
 }
-.rotate {/*
-  -webkit-animation: 5s linear 0s rotate;
-  animation: 5s linear 0s rotate;*/
+.rotate {
+  -webkit-animation: 2s linear 0s rotate;
+  animation: 2s linear 0s rotate;
+  animation-fill-mode: forwards;
 }
 .unrotate {
-  background-image: url(../img/shirts/1shirt.png) !important;
+  /*background-image: url(../img/shirts/1shirt.png) !important;*/
+  -webkit-animation: 2s linear 0s rotate;
+  animation: 2s linear 0s rotate;
+  animation-fill-mode: forwards;
+  animation-direction: reverse;
 }
 
-
+@keyframes slowhide {
+  0% {
+    visibility: visible;
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5%;
+  }
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
 
 @keyframes rotate {
   0% {
@@ -95,6 +115,7 @@ main {
     background-image: url(../img/shirts/1shirt.png);
     transform: rotateY(-90deg);}
   100% {
+    /*background-image: url(../img/shirts/1shirt.png);*/
     transform: rotateY(0deg); } }
 
 

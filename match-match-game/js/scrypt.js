@@ -166,7 +166,7 @@ class Game {
             j.classList.add('hide');
             j.classList.remove('rotate');
             j.classList.remove('unrotate');
-            j.removeAttribute('style');
+            //j.removeAttribute('style');
             console.log('hide id='+j.id);
         }
 
@@ -176,7 +176,7 @@ class Game {
     unrotate() {
         console.log('start unrotate');
 
-        for (let i = 0; i < arguments.length; i++) {
+        for (let i = 0; (i < arguments.length && arguments[i]); i++) {
             let j = document.getElementById(arguments[i]);
             j.classList.remove('rotate');
             j.classList.add('unrotate');
@@ -193,6 +193,7 @@ class Game {
 
         let card = document.getElementById(id);
         this.rotateNumber++;
+        let flag = this.rotateCard.indexOf(id);
 
         //rotate third card
         if (this.rotateCard.length == 2) {
@@ -201,7 +202,7 @@ class Game {
             this.rotateCard = [];
         }
         //card rotate
-        if (this.rotateCard.indexOf(id) != -1) {
+        if (flag != -1) {
             this.unrotate(this.rotateCard.join(','));
             this.rotateCard = [];
         } else {
@@ -212,13 +213,12 @@ class Game {
 
         //match
         if (this.rotateCard.length == 2 &&
-            //this.rotateCard[0] == this.game[id]
-            //this.game[this.rotateCard[0]] % this.difficulty ==
-            //this.game[id] % this.difficulty
             this.resolveImg(this.rotateCard[0]) == this.resolveImg(id)
             ) {
             this.matches += 2;
+            console.log('matches');
             this.styleHide(this.rotateCard[0], this.rotateCard[1]);
+            this.rotateCard = [];
             if (this.matches == this.game.length) {
                 this.win();
             }
