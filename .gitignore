@@ -2,5 +2,8 @@
 node_modules
 *.bundle.js
 *.log
-timer.html
+*.html
+!index.html
 match-match-game/img/templates/
+*.zip
+ngrok

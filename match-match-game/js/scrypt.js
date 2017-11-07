@@ -164,9 +164,8 @@ class Game {
         for (let i = 0; i < arguments.length; i++) {
             let j = document.getElementById(arguments[i]);
             j.classList.add('hide');
-            j.classList.remove('rotate');
-            j.classList.remove('unrotate');
-            //j.removeAttribute('style');
+            //j.classList.remove('rotate');
+            //j.classList.remove('unrotate');
             console.log('hide id='+j.id);
         }
 
@@ -219,6 +218,7 @@ class Game {
             console.log('matches');
             this.styleHide(this.rotateCard[0], this.rotateCard[1]);
             this.rotateCard = [];
+
             if (this.matches == this.game.length) {
                 this.win();
             }
