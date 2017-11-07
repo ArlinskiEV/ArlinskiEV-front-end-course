@@ -56,7 +56,7 @@ class Game {
         this.difficulty = 4;//pair count;
         this.unicCardsCount = 4; //same card on desk %2 == 0
         this.game = [];
-
+        this.stoped = true;
         for (let i = 0; i < this.difficulty * 2; i++) {
             this.game.push(/*this.difficulty +*/ i);
         }
@@ -73,7 +73,7 @@ class Game {
             false);
 
         let timer = document.getElementById('timer');
-        timer.innerHTML = '00:00:00';
+        timer.innerHTML = '00:00:00.00';
         /*timer event*/
         if (this.rotateNumber != 0) {
             let gamer = this;
@@ -99,19 +99,24 @@ class Game {
     };
     gameStartTimer() {
         console.log('startTimer');
-        let currentTime = new Date();
-        this.startTime = currentTime;
+        this.startTime = new Date();
         this.stoped = false;
 
         function timerIterate(gamer) {
             let currentTime = new Date();
             let timer = document.getElementById('timer');
 
-            let h = currentTime.getHours() - gamer.startTime.getHours();
-            let m = currentTime.getMinutes() - gamer.startTime.getMinutes();
-            let s = currentTime.getSeconds() - gamer.startTime.getSeconds();
-            let ms = currentTime.getMilliseconds() - gamer.startTime.getMilliseconds();
+            let time = currentTime.getTime() - gamer.startTime.getTime();
+            let h = Math.trunc(time / (60*60*1000));//60*60*1000
+            time = time % (60*60*1000);
+            let m = Math.trunc(time / (60*1000));//60*1000
+            time = time % (60*1000);
+            let s = Math.trunc(time / 1000);//1000
+            time = time % 1000;
+            let ms = time;//
+
             timer.innerHTML = h+':'+m+':'+s+'.'+ms;
+            //timer.innerHTML = time.toTimeString();
 
             if (!gamer.stoped) setTimeout(function(){
                 timerIterate(gamer);
@@ -198,11 +203,17 @@ class Game {
         let h2 = document.createElement('h2');
         h2.innerHTML = 'clicks: '+this.rotateNumber;
         let h22 = document.createElement('h2');
-        let h = time.getHours() - this.startTime.getHours();
-        let m = time.getMinutes() - this.startTime.getMinutes();
-        let s = time.getSeconds() - this.startTime.getSeconds();
-        let ms = time.getMilliseconds() - this.startTime.getMilliseconds();
+        //time = new Date(time - this.startTime);
+        time = time.getTime() - this.startTime.getTime();
+        let h = Math.trunc(time / (60*60*1000));//60*60*1000
+        time = time % (60*60*1000);
+        let m = Math.trunc(time / (60*1000));//60*1000
+        time = time % (60*1000);
+        let s = Math.trunc(time / 1000);//1000
+        time = time % 1000;
+        let ms = time;//
         h22.innerHTML = h+':'+m+':'+s+'.'+ms;
+        //h22.innerHTML = time.toTimeString();
 
 
 
