@@ -62,31 +62,58 @@ main {
   border-radius: 25px;
   display: inline-block;
   overflow: hidden;
+  margin: 5px;
+  perspective: 20px;
+
+}
+
+.card, .face, .back {
   width: 200px;
   height: 400px;
-  margin: 5px;
-  background-size: cover;
-  background-image: url(../img/shirts/1shirt.png);
-  background-repeat: no-repeat;
 
-  /*backface-visibility: hidden;*/
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+
+.cardContainer {
+  transition: 2s;
+  transform-style: preserve-3d;
+  position: relative;
+  margin: 0;
+}
+.face, .back {
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.card.rotate .cardContainer {
+  transform: rotateY(180deg);
+}
+
+
+.face {
+  transform: rotateY(180deg);
+}
+.back {
+  background-image: url(../img/shirts/6shirt.png);
+  z-index: 2;
 }
 
 .rotate {
-  -webkit-animation: 2s linear 0s rot;
-  animation: 2s linear 0s rot;
-  animation-fill-mode: forwards;
+  transform: rotateY(180deg);
 }
-.unrotate {
-  -webkit-animation: 2s linear 0s unrot;
-  animation: 2s linear 0s unrot;
-  animation-fill-mode: forwards;
-}
+
+
+
+
+
 .hide {
   -webkit-animation: 1s linear 0s slowhide;
   animation: 1s linear 0s slowhide;
   animation-fill-mode: forwards;
-
 }
 @keyframes slowhide {
   0% {

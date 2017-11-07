@@ -32,7 +32,13 @@ class Game {
         let desk = document.getElementById('desk');
         desk.addEventListener('click', function(event) {
             console.log('target desk id='+event.target.id);
-            if (event.target.classList.contains('card')) gamer.rotate(event.target.id);
+            if (event.target.classList.contains('cardType')) {
+                let target = event.target;
+                while (document.getElementById(target.parentNode.id).classList.contains('cardType')) {
+                    target = target.parentNode;
+                }
+                gamer.rotate(target.id);
+            }
         });
 
         let shirtSection = document.getElementById('shirts');
@@ -72,7 +78,7 @@ class Game {
             let gamer = this;
             let desk = document.getElementById('desk');
             desk.addEventListener('click', function startTimer(event) {
-                if (event.target.classList.contains('card')) {
+                if (event.target.classList.contains('cardType')) {
                     desk.removeEventListener('click', startTimer);
                     gamer.gameStartTimer();
                     //alert('123');
@@ -111,6 +117,20 @@ class Game {
                     let style = 'background-image: url(../img/shirts/'+i+'shirt.png)';
                     card.setAttribute('style',style);
                     card.id = i + 'shirt';
+            } else {
+                    let both = document.createElement('div');
+                    both.className = 'cardType cardContainer';
+                    both.id = i + 'both';
+                    card.appendChild(both);
+                    let face = document.createElement('div');
+                    face.className = 'cardType face';
+                    face.id = i + 'face';
+                    both.appendChild(face);
+
+                    let back = document.createElement('div');
+                    back.className = 'cardType back';
+                    back.id = i + 'back';
+                    both.appendChild(back);
             }
             section.appendChild(card);
         };
@@ -134,7 +154,7 @@ class Game {
     shirt(id) {
         console.log('start shirts id='+id);
         let style = document.getElementById('shirtsStyle');
-        style.innerHTML = '.card{background-image: url(../img/shirts/'+id+'.png);}';
+        style.innerHTML = '.back{background-image: url(../img/shirts/'+id+'.png);}';
 
         console.log('end shirts id='+id);
     };
@@ -149,13 +169,21 @@ class Game {
             (this.difficulty * 2 / this.unicCardsCount) + 'card');
     }
     styleRotate(obj) {
+
+        /*
         obj.classList.remove('unrotate');
         obj.classList.add('rotate');
-        //let t = obj.id<this.game[obj.id]?obj.id:this.game[obj.id];
+        */
         let t = this.resolveImg(obj.id);
+        obj.classList.toggle('rotate');
         console.log('obj = '+obj.id+' t='+t);
-        let style = 'background-image: url(../img/cards/'+t+'.png)';
-        obj.setAttribute('style',style);
+        let style = 'background-image: url(../img/cards/'+t+'.png);';
+        let face = obj.getElementsByClassName('face');
+        face[0].setAttribute('style',style);
+
+
+
+
         console.log('rotate object id='+obj.id);
     }
     styleHide() {
@@ -175,13 +203,18 @@ class Game {
     unrotate() {
         console.log('start unrotate');
 
+
         for (let i = 0; (i < arguments.length && arguments[i]); i++) {
             let j = document.getElementById(arguments[i]);
+            /*
             j.classList.remove('rotate');
             j.classList.add('unrotate');
             j.removeAttribute('style');
+            */
+            j.classList.toggle('rotate');
             console.log('unrotate id='+j.id)
         }
+
 
         console.log('end unrotate')
     }
