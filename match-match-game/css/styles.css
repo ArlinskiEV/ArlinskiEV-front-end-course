@@ -37,10 +37,6 @@ main {
   height: 100%;
 }
 
-/*debag*/
-.game * {
-    border: 1px solid red;
-}
 
 .cards {
   text-align: center;
@@ -129,10 +125,13 @@ main {
 /*difficulty*/
 .difficulty {
   background-image: radial-gradient(white 0%, gray 25%, black 100%);
+  text-align: center;
+  position: relative;
 }
 form {
   font-size: 18pt;
   width: 80%;
+  margin: 0 auto;
   text-align: center;
 }
 input {

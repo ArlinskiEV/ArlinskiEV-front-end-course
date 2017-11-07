@@ -28,7 +28,7 @@ class Game {
         this.maxUnicCardsCount = 12;
         this.shirtsCount = 9;
 
-        this.difficulty = 4;//pair count;
+        this.difficulty = 6;//pair count;
         this.unicCardsCount = 2; //same card on desk %2 == 0
 
         /*listeners*/
@@ -387,5 +387,5 @@ function shirt() {
     g.shirts();
 }
 function difficulty() {
-    g.setDifficulty();
+//    g.setDifficulty();
 }
