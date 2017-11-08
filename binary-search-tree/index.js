@@ -65,7 +65,7 @@ BinarySearchTree.prototype.search = function(key) {
       }
     }
 
-    return false;
+    return null;
 }
 
 Node.prototype.contains = function(value) {
