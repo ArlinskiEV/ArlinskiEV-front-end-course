@@ -74,7 +74,7 @@ BinarySearchTree.prototype.delete = function(key) {
             }
             node = null;
         } else if ((node.left)&&(node.right)) { //both child != null
-            
+
 
 
 
@@ -111,6 +111,7 @@ Node.prototype.contains = function(value) {
         (this.right?this.right.contains(value):false));
     }
 }
+
 BinarySearchTree.prototype.contains = function(value) {
     let node = this._root;
     if (node === null) return false;
@@ -119,8 +120,21 @@ BinarySearchTree.prototype.contains = function(value) {
 BinarySearchTree.prototype.traverse = function(order) {
     return this;
 }
+
+Node.prototype.verify = function() {
+    if (this === null) return true;
+    if (((this.left)&&(this.left.key >= this.key))||
+        ((this.right)&&(this.right.key <= this.key))) {
+      return false;
+    } else {
+      return ((this.left?this.left.verify():true)&&
+        (this.right?this.right.verify():true));
+    }
+}
 BinarySearchTree.prototype.verify = function() {
-    return this;
+    let node = this._root;
+    if (node === null) return true;
+    return node.verify();
 }
 
 
