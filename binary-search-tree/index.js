@@ -39,16 +39,16 @@ BinarySearchTree.prototype.insert = function(key, value) {
         }
     }
     if (node === null) {
-      node = new Node(key, value);
-      if (key < prev.key) {
+        node = new Node(key, value);
+        if (key < prev.key) {
           prev.left = node;
-      } else {
+        } else {
           prev.right = node;
-      }
+        }
     } else {
-      //throw new Error('key is already exist');
-      //console.log('key is already exist');
-      node.value = value;
+        //throw new Error('key is already exist');
+        //console.log('key is already exist');
+        node.value = value;
     }
     return this;
 }
@@ -58,13 +58,13 @@ BinarySearchTree.prototype.delete = function(key) {
     let prev = node;
 
     while ((node !== null)&&(key !== node.key)) {
-      if (key < node. key) {
-          prev = node;
-          node = node.left;
-      } else {
-          prev = node;
-          node = node.right
-      }
+        if (key < node. key) {
+            prev = node;
+            node = node.left;
+        } else {
+            prev = node;
+            node = node.right
+        }
     }
     let isRoot = (prev === node);
     if (node) {
@@ -106,34 +106,42 @@ BinarySearchTree.prototype.delete = function(key) {
 BinarySearchTree.prototype.search = function(key) {
     let node = this._root;
     while (node !== null) {
-      if (key === node.key) return node.value;
-      if (key < node. key) {
-        node = node.left;
-      } else {
-        node = node.right
-      }
+        if (key === node.key) {
+            return node.value;
+        }
+        if (key < node. key) {
+            node = node.left;
+        } else {
+            node = node.right
+        }
     }
     return null;
 }
 
 Node.prototype.contains = function(value) {
-    if (this === null) return false;
+    if (this === null) {
+        return false;
+    }
     if (this.value === value) {
-      return true;
+        return true;
     } else {
-      return ((this.left?this.left.contains(value):false)||
-        (this.right?this.right.contains(value):false));
+        return ((this.left?this.left.contains(value):false)||
+            (this.right?this.right.contains(value):false));
     }
 }
 
 BinarySearchTree.prototype.contains = function(value) {
     let node = this._root;
-    if (node === null) return false;
+    if (node === null) {
+        return false;
+    }
     return node.contains(value);
 }
 
 Node.prototype.traverse = function(order) {
-    if (this === null) return [];
+    if (this === null) {
+        return [];
+    }
     //this.left?this.left.traverse(order):[]
     //this.right?this.right.traverse(order):[]
     if (order) {
@@ -148,19 +156,23 @@ BinarySearchTree.prototype.traverse = function(order) {
 }
 
 Node.prototype.verify = function() {
-    if (this === null) return true;
+    if (this === null) {
+        return true;
+    }
     if (((this.left)&&(this.left.key >= this.key))||
-        ((this.right)&&(this.right.key <= this.key))) {
-      return false;
+    ((this.right)&&(this.right.key <= this.key))) {
+        return false;
     } else {
-      return ((this.left?this.left.verify():true)&&
-        (this.right?this.right.verify():true));
+        return ((this.left?this.left.verify():true)&&
+                (this.right?this.right.verify():true));
     }
 }
 
 BinarySearchTree.prototype.verify = function() {
     let node = this._root;
-    if (node === null) return true;
+    if (node === null) {
+        return true;
+    }
     return node.verify();
 }
 
