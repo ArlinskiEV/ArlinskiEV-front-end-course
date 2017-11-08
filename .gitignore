@@ -4,6 +4,9 @@ node_modules
 *.log
 match-match-game/
 ngrok*
-binary-search-tree/
-!binary-search-tree/index.js
+binary-search-tree/*.log
+binary-search-tree/*.json
+binary-search-tree/*.md
+binary-search-tree/test/
+binary-search-tree/node_modules
 css-recipes-and-layouts/
