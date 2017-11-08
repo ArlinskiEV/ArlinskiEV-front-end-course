@@ -52,6 +52,40 @@ BinarySearchTree.prototype.insert = function(key, value) {
     return this;
 }
 BinarySearchTree.prototype.delete = function(key) {
+    let node = this._root;
+    let prev = node;
+
+    while ((node !== null)&&(key === node.key)) {
+      if (key < node. key) {
+          prev = node;
+          node = node.left;
+      } else {
+          prev = node;
+          node = node.right
+      }
+    }
+
+    if (node) {
+        if ((!node.left)&&(!node.right)) {//both child null
+            if (key < prev.key) {
+                prev.left = null;
+            } else {
+                prev.right = null;
+            }
+            node = null;
+        } else if ((node.left)&&(node.right)) { //both child != null
+            
+
+
+
+        } else {//one child === null
+            if (key < prev.key) {
+                prev.left = node.left?node.left:node.right;
+            } else {
+                prev.right = node.left?node.left:node.right;
+            }
+        }
+    }
     return this;
 }
 BinarySearchTree.prototype.search = function(key) {
