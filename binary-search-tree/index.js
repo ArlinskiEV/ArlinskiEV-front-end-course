@@ -11,41 +11,48 @@ function BinarySearchTree() {
 }
 
 BinarySearchTree.prototype.root = function() {
-
+    return this._root.value;
 }
 
+BinarySearchTree.prototype.insert = function(key, value) {
 
+    return this;
+}
+BinarySearchTree.prototype.delete = function(key) {
+    return this;
+}
+BinarySearchTree.prototype.search = function(key) {
+    let node = this._root;
+    while (node !== null) {
+      if (key === node.key) return node.value;
+      if (key < node. key) {
+        node = node.left;
+      } else {
+        node = node.right
+      }
+    }
 
+    return false;
+}
 
-
-const bst = new BinarySearchTree();
-// returns root of the tree;
-bst.root();
-
-// stores specified value in tree using key; method should be chainable;
-bst.insert(key, value);
-
-// removes node from tree by provided key; method should be chainable;
-bst.delete(key);
-
-// looking for stored data in tree using key;
-bst.search(key);
-
-// returns whether BST contains such value or not;
-bst.contains(value);
-
-// returns ordered sequence of stored values in given oreder (order is boolean)
-bst.traverse(order);
-
-// verifies whether tree is well-formed binary search tree or not
-bst.verify();
-
-
-
-
-
-
-
+Node.prototype.contains = function(value) {
+    if (this === null) return false;
+    if (this.value === value) {
+      return true;
+    } else {
+      return this.left.contains(value)||this.right.contains(value);
+    }
+}
+BinarySearchTree.prototype.contains = function(value) {
+    let node = this._root;
+    return node.contains(value);
+}
+BinarySearchTree.prototype.traverse = function(order) {
+    return this;
+}
+BinarySearchTree.prototype.verify = function() {
+    return this;
+}
 
 
 
