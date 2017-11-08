@@ -141,8 +141,18 @@ BinarySearchTree.prototype.contains = function(value) {
     return node.contains(value);
 }
 
+Node.prototype.traverse = function(order) {
+    if (this === null) return [];
+    //this.left?this.left.traverse(order):[]
+    //this.right?this.right.traverse(order):[]
+    if (order) {
+        return (this.left?this.left.traverse(order):[]).concat([this.value], this.right?this.right.traverse(order):[]);
+    } else {
+        return (this.right?this.right.traverse(order):[]).concat([this.value], this.left?this.left.traverse(order):[]);
+    }
+}
 BinarySearchTree.prototype.traverse = function(order) {
-    return this;
+    return this._root?this._root.traverse(order):[];
 }
 
 Node.prototype.verify = function() {
