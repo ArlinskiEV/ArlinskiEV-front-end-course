@@ -51,11 +51,12 @@ BinarySearchTree.prototype.insert = function(key, value) {
     }
     return this;
 }
+
 BinarySearchTree.prototype.delete = function(key) {
     let node = this._root;
     let prev = node;
 
-    while ((node !== null)&&(key === node.key)) {
+    while ((node !== null)&&(key !== node.key)) {
       if (key < node. key) {
           prev = node;
           node = node.left;
@@ -64,7 +65,7 @@ BinarySearchTree.prototype.delete = function(key) {
           node = node.right
       }
     }
-
+    let root = (prev === node);
     if (node) {
         if ((!node.left)&&(!node.right)) {//both child null
             if (key < prev.key) {
@@ -88,6 +89,7 @@ BinarySearchTree.prototype.delete = function(key) {
     }
     return this;
 }
+
 BinarySearchTree.prototype.search = function(key) {
     let node = this._root;
     while (node !== null) {
@@ -117,6 +119,7 @@ BinarySearchTree.prototype.contains = function(value) {
     if (node === null) return false;
     return node.contains(value);
 }
+
 BinarySearchTree.prototype.traverse = function(order) {
     return this;
 }
@@ -131,6 +134,7 @@ Node.prototype.verify = function() {
         (this.right?this.right.verify():true));
     }
 }
+
 BinarySearchTree.prototype.verify = function() {
     let node = this._root;
     if (node === null) return true;
