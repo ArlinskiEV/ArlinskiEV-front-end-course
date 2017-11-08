@@ -7,7 +7,7 @@ function Node(key, value) {
 }
 
 function BinarySearchTree() {
-    this._root = new Node(null);
+    this._root = new Node(null, null);
 }
 
 BinarySearchTree.prototype.root = function() {
@@ -65,7 +65,7 @@ BinarySearchTree.prototype.delete = function(key) {
           node = node.right
       }
     }
-    let root = (prev === node);
+    let isRoot = (prev === node);
     if (node) {
         if ((!node.left)&&(!node.right)) {//both child null
             if (key < prev.key) {
@@ -74,8 +74,29 @@ BinarySearchTree.prototype.delete = function(key) {
                 prev.right = null;
             }
             node = null;
+            if (isRoot) {
+                this._root = new Node(null, null);
+            }
         } else if ((node.left)&&(node.right)) { //both child != null
-
+            if (!node.right.left) {
+                //Если левый узел m правого поддерева отсутствует (n->right->left)
+                //Копируем из правого узла в удаляемый
+                //поля K, V и ссылку на правый узел правого потомка.
+                node.key = node.right.key;
+                node.value = node.right.value;
+                node.right = node.right.right;
+            } else {
+                //Возьмём самый левый узел m, правого поддерева n->right;
+                //Скопируем данные (кроме ссылок на дочерние элементы) из m в n;
+                //Рекурсивно удалим узел m.
+                let temp = node.right;
+                while (temp.left.left) {
+                    temp = temp.left;
+                }
+                node.key = temp.left.key;
+                node.value = temp.left.value;
+                temp.left = null;
+            }
 
 
 
