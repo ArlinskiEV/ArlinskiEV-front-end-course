@@ -7,7 +7,7 @@ function Node(key, value) {
 }
 
 function BinarySearchTree() {
-    this._root = new Node();
+    this._root = new Node(null);
 }
 
 BinarySearchTree.prototype.root = function() {
@@ -15,7 +15,40 @@ BinarySearchTree.prototype.root = function() {
 }
 
 BinarySearchTree.prototype.insert = function(key, value) {
+    let node = this._root;
 
+    if (node.key === null) {
+      node.key = key;
+      node.value = value;
+      return this;
+    };
+
+    let flag = true;
+    let prev = node;
+    while ((node !== null)&&(flag)) {
+      flag = false;
+      if (key < node.key) {
+          prev = node;
+          node = node.left;
+          flag = true;
+      }
+      if ((!flag)&&(key > node.key)) {
+          prev = node;
+          node = node.right;
+          flag = true;
+      }
+    }
+    if (node === null) {
+      node = new Node(key, value);
+      if (key < prev.key) {
+          prev.left = node;
+      } else {
+          prev.right = node;
+      }
+    } else {
+      //throw new Error('key is already exist');
+      console.log('key is already exist');
+    }
     return this;
 }
 BinarySearchTree.prototype.delete = function(key) {
@@ -70,5 +103,5 @@ module.exports = {
   left: 'left',
   right: 'right',
   //NAME FOR REPORTS
-  student: 'STUDENT NAME'
+  student: 'ArlinskiEV'
 };
