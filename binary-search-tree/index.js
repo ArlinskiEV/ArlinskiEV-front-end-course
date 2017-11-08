@@ -47,7 +47,8 @@ BinarySearchTree.prototype.insert = function(key, value) {
       }
     } else {
       //throw new Error('key is already exist');
-      console.log('key is already exist');
+      //console.log('key is already exist');
+      node.value = value;
     }
     return this;
 }
@@ -151,8 +152,9 @@ Node.prototype.traverse = function(order) {
         return (this.right?this.right.traverse(order):[]).concat([this.value], this.left?this.left.traverse(order):[]);
     }
 }
+
 BinarySearchTree.prototype.traverse = function(order) {
-    return this._root?this._root.traverse(order):[];
+    return this._root?this._root.traverse((!order)?false:true):[];
 }
 
 Node.prototype.verify = function() {
