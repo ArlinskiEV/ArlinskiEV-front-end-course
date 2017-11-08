@@ -18,25 +18,25 @@ BinarySearchTree.prototype.insert = function(key, value) {
     let node = this._root;
 
     if (node.key === null) {
-      node.key = key;
-      node.value = value;
-      return this;
+        node.key = key;
+        node.value = value;
+        return this;
     };
 
     let flag = true;
     let prev = node;
     while ((node !== null)&&(flag)) {
-      flag = false;
-      if (key < node.key) {
+        flag = false;
+        if (key < node.key) {
           prev = node;
           node = node.left;
           flag = true;
-      }
-      if ((!flag)&&(key > node.key)) {
+        }
+        if ((!flag)&&(key > node.key)) {
           prev = node;
           node = node.right;
           flag = true;
-      }
+        }
     }
     if (node === null) {
       node = new Node(key, value);
@@ -80,16 +80,10 @@ BinarySearchTree.prototype.delete = function(key) {
             }
         } else if ((node.left)&&(node.right)) { //both child != null
             if (!node.right.left) {
-                //Если левый узел m правого поддерева отсутствует (n->right->left)
-                //Копируем из правого узла в удаляемый
-                //поля K, V и ссылку на правый узел правого потомка.
                 node.key = node.right.key;
                 node.value = node.right.value;
                 node.right = node.right.right;
             } else {
-                //Возьмём самый левый узел m, правого поддерева n->right;
-                //Скопируем данные (кроме ссылок на дочерние элементы) из m в n;
-                //Рекурсивно удалим узел m.
                 let temp = node.right;
                 while (temp.left.left) {
                     temp = temp.left;
@@ -98,9 +92,6 @@ BinarySearchTree.prototype.delete = function(key) {
                 node.value = temp.left.value;
                 temp.left = null;
             }
-
-
-
         } else {//one child === null
             if (key < prev.key) {
                 prev.left = node.left?node.left:node.right;
@@ -122,7 +113,6 @@ BinarySearchTree.prototype.search = function(key) {
         node = node.right
       }
     }
-
     return null;
 }
 
@@ -173,13 +163,6 @@ BinarySearchTree.prototype.verify = function() {
     if (node === null) return true;
     return node.verify();
 }
-
-
-
-
-
-
-
 
 module.exports = {
   BinarySearchTree,
