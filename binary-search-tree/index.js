@@ -73,11 +73,13 @@ Node.prototype.contains = function(value) {
     if (this.value === value) {
       return true;
     } else {
-      return this.left.contains(value)||this.right.contains(value);
+      return ((this.left?this.left.contains(value):false)||
+        (this.right?this.right.contains(value):false));
     }
 }
 BinarySearchTree.prototype.contains = function(value) {
     let node = this._root;
+    if (node === null) return false;
     return node.contains(value);
 }
 BinarySearchTree.prototype.traverse = function(order) {
