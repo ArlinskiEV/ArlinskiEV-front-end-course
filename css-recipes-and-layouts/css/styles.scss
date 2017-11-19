@@ -103,18 +103,55 @@ header {
             .user:hover,
             .search:hover {
                 color: $activeColor;
+                cursor: pointer;
             }
             .region:hover .lister {
                 border-top-color: $activeColor;
+                cursor: pointer;
             }
         }
     }
 
     .headMenu {
         margin-top: 30px;
+        margin-bottom: 20px;
+        .wrapper.container {
+            align-items: center;
+        }
+        nav.container {
+            .link {
+                margin-right:  20px;
+                font-size: 16pt;
+                font-family: Arial, Helvetica, sans-serif;
+                color: black;
+                .lister{
+                    width: 0;
+                    height: 0;
+                    margin: auto 5px;
+                    border-left: 3px solid transparent;
+                    border-right: 3px solid transparent;
+                    border-top: 6px solid black;
+                }
+
+                &:hover {
+                    background-color: #ffa687;
+                    cursor: pointer;
+                }
+            }
+            .lowMenu {
+                width: 100%;
+                padding: 5px 15px;
+                background-color: #ffa687;
+                &:hover {
+                    background-color: #dd6b44;
+                    cursor: pointer;
+                }
+            }
+        }
         .basket {
-            flex-basis: 215px;
             border: 1px solid #ddd;
+            flex-shrink: 0;
+            margin-bottom: 15px;
             & .container {
                 align-items: center;
                 color: #949393;
@@ -135,6 +172,7 @@ header {
                 }
                 &:hover {
                     color: $activeColor;
+                    cursor: pointer;
                     .lister {
                         border-top-color: $activeColor;
                     }
@@ -142,16 +180,81 @@ header {
             }
             .items:hover {
                 color: $activeColor;
+                cursor: pointer;
             }
         }
     }
 
+    .slider {
+        text-align: center;
+        .slide {
+            img {
+                width: 100%;
+            }
+        }
+        .slideControl {
+            margin: 30px auto;
+            justify-content: center;
+            .point {
+                width: 15px;
+                height: 15px;
+                margin: 0 5px;
+                border-radius: 50%;
+                background-color: #ffa687;
+                &:hover {
+                    cursor: pointer;
+                    background-color: $activeColor;
+                }
+            }
+            .point.active {
+                background-color: #dd6b44;
+            }
+        }
+    }
 }
 
 
 /*------------------------main------------------------*/
 
 main {
+
+
+    .articles {
+        figure img {
+            width: 100%;
+        }
+        figure {
+            flex-grow: 1;
+        }
+        .main {
+            width: 50%;
+        }
+        .second {
+            width: 50%;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+
+
+            figure {
+                &:first-child {
+                    flex-grow: 2;
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

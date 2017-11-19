@@ -47,6 +47,9 @@ header {
         nav {
             order: 1;
             width: 100%;
+            .fullMenu {
+                display: none;
+            }
         }
     }
 }
@@ -59,6 +62,6 @@ header {
     }
 }
 
-nav .fullMenu {
+footer nav .fullMenu {
     display: none;
 }
