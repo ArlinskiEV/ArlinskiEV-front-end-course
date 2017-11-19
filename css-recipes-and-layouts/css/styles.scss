@@ -1,0 +1,415 @@
+@import 'reset';
+@import 'fonts';
+
+/*------------------------variables------------------------*/
+$darkWhite: #f7f7f7;
+$fontGray: #8d8d8d;
+$contentGray: #ededed;
+$articleGray: #544f4d;
+$pictureGray: #a59d9a;
+$payGray: #414141;
+$userGray: #666666;
+$socialGray: #4c4c4b;
+$accauntColor: black;
+$footColor: black;
+$footActiveColor: white;
+$activeColor: mediumblue;
+$aboutContentColor: #999999;
+$lineColor: #d8d8d8;
+$aboutHeadColor: $payGray;
+$brandHeadColor: $payGray;
+$payBackgroundColor: $darkWhite;
+$footContectColor: $contentGray;
+$footArticleColor: $articleGray;
+$fontColor: $fontGray;
+$payColor: $payGray;
+$socialColor: $socialGray;
+$pictureTextColor: $pictureGray;
+$userColor: $userGray;
+
+/*------------------------responsive------------------------*/
+@media (max-width: 640px) {
+    @import "small";
+}
+@media (min-width: 641px) and (max-width: 768px) {
+    @import "medium";
+}
+@media (min-width: 769px) {
+    @import "original";
+}
+
+
+
+/*active elements*/
+.active:hover,
+.active:active,
+a {
+    cursor: pointer;
+}
+
+/*scaled elements*/
+.scaled:hover {
+    transform: scale(1.2); 
+}
+
+
+html {
+font-size: 10px;
+}
+.wrapper {
+    padding: 0px 10px;
+}
+
+/*------------------------flexContainers------------------------*/
+body,
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+.item {
+    flex-grow:1;
+}
+
+/*------------------------header------------------------*/
+header {
+    .accaunt {
+        background-color: $accauntColor;
+        color: white;
+        .accauntInfo {
+            padding: 10px 0;
+            p {
+                span {
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+            }
+        }
+        .accauntMenu {
+            padding: 10px;
+            .lister {
+                width: 0;
+                height: 0;
+                margin: auto 5px;
+            }
+            .user {
+                margin: 0 5px;
+                i {
+                    color: $userColor;
+                }
+            }
+            .search {
+                color: white;
+            }
+            .region:hover,
+            .user:hover,
+            .search:hover {
+                color: $activeColor;
+            }
+            .region:hover .lister {
+                border-top-color: $activeColor;
+            }
+        }
+    }
+
+    .headMenu {
+        margin-top: 30px;
+        .basket {
+            flex-basis: 215px;
+            border: 1px solid #ddd;
+            & .container {
+                align-items: center;
+                color: #949393;
+                font-size: 12pt;
+                font-family: Arial, Helvetica, sans-serif;
+                height: 30px;
+                padding: 0 15px;
+            }
+            .cart {
+                border-bottom: 1px solid #ddd;
+                .lister {
+                    width: 0;
+                    height: 0;
+                    margin: auto 5px;
+                    border-left: 5px solid transparent;
+                    border-right: 5px solid transparent;
+                    border-top: 10px solid #949393;
+                }
+                &:hover {
+                    color: $activeColor;
+                    .lister {
+                        border-top-color: $activeColor;
+                    }
+                }
+            }
+            .items:hover {
+                color: $activeColor;
+            }
+        }
+    }
+
+}
+
+
+/*------------------------main------------------------*/
+
+main {
+
+
+
+    header.container {
+        align-items: center;
+        h2 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            font-size: 12pt;
+            color: $brandHeadColor;
+            flex-shrink: 0;
+        }
+    }
+    .decor {
+        height: 1px;
+        width: 42%;
+        display: block;
+        background-color: $lineColor;
+    }
+    .brends {
+        align-items: center;
+        img {
+            flex: 0;
+        }
+        margin: 20px 0px;
+    }
+    .wrapper.line {
+        &::before {
+            content: '';
+            display: block;
+            height: 1px;
+            width: 100%;
+            background-color: $lineColor;
+        }
+    }
+    .content {
+        text-align: center;
+        margin-top: 35px;
+        margin-bottom: 30px;
+        h2 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 24px;
+            color:$aboutHeadColor;
+            margin-bottom: 20px;
+        }
+        article {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 15px;
+            text-align: center;
+            color: $aboutContentColor;
+        }
+    }
+}
+
+
+
+
+
+
+/*------------------------footer------------------------*/
+@mixin sprite($n) {
+    width: 34px;
+    height: 22px;
+    margin: 0px 5px;
+    background-position: -5-$n*44px -5px;
+}
+
+.pay .wrapper.container {
+    justify-content: center;
+    align-items: center;
+}
+
+footer {
+    background-color: $footColor;
+    .pay {
+        background-color: $payBackgroundColor;
+        color: $payColor;
+        padding: 16px 0px;
+        p {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12pt;
+            margin-right: 5px;
+        }
+        i.sprite {
+            background-image: url(../img/pay2.png);
+            background-repeat: no-repeat;
+            display: block;
+        }
+        i.one {
+            @include sprite(0);
+        }
+        i.two {
+            @include sprite(1);
+        }
+        i.three {
+            @include sprite(2);
+        }
+        i.four {
+            @include sprite(3);
+        }
+        i.five {
+            @include sprite(4);
+        }
+        i.six {
+            @include sprite(5);
+        }
+        i.seven {
+            @include sprite(6);
+        }
+        i.eight {
+            @include sprite(7);
+        }
+        i.nine {
+            @include sprite(8);
+        }
+        i.ten {
+            @include sprite(9);
+        }
+        i.eleven {
+            @include sprite(10);
+        }
+    }
+    .footContent {
+        background-color: $footContectColor;
+        .content {
+            align-items: center;
+            .item {
+                margin: 35px 0;
+                font-family: Arial, Helvetica, sans-serif;
+                header {
+                    h3 {
+                        font-size: 16pt;
+                        font-weight: bold;
+                        color: $footArticleColor;
+                    }
+                }
+                section {
+                    font-size: 12pt;
+                    a {
+                        color: $footArticleColor;
+                        &:hover {
+                            color: $footActiveColor;
+                        }
+                    }
+                }
+                .socials.container {
+                    flex-wrap: wrap;
+                    width: 140px;
+                    .social {
+                        width: 35px;
+                        height: 35px;
+                        margin: 5px;
+                        text-align: center;
+                        border-radius: 50%;
+                        background-color: $socialColor;
+                        position: relative;
+                        a {
+                            display: block;
+                            height: 100%;
+                            width: 100%;
+                            position: absolute;
+                            i {
+                                color: white;
+                                position: relative;
+                                top: 7px;
+                                font-size: 20px;
+                            }
+                            &:hover i {
+                                color: $activeColor;
+                            }
+                        }
+                    }
+                }
+            }
+            .picture {
+                background-image: url(../img/100secured.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+                position: relative;
+                width: 107px;
+                height: 107px;
+                flex-shrink: 0;
+                .pictureText {
+                    position: absolute;
+                    margin: 5px;
+                    text-align: center;
+                    top:25px;
+                    left: 14px;
+                    line-height: 1;
+                    color: $pictureTextColor;
+                    h4 {
+                        font-size: 24pt;
+                        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+                    }
+                    p {
+                        font-size: 13pt;
+                        font-family: 'HelveticaNeueLTStd-Cn';
+                    }
+                }
+            }
+        }
+        section.container {
+            flex-grow: 5;
+        }
+    }
+    .footMenu {
+        padding: 16px 0px;
+        nav {
+            justify-content: space-around;
+            flex-wrap: wrap;
+            .lowMenu {
+                position: relative;
+                a {
+                    display: block;
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    top: 0;
+                    left: 0;
+                    i {
+                        color: white;
+                        font-size: 30px;
+                        line-height: 2;
+                    }
+                    &:hover i {
+                        color: mediumblue;
+                    }
+                }
+            }
+            .link {
+                color: $fontColor;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 11pt;
+                line-height: 2;
+                a {
+                    color: $fontColor;
+                    &:hover {
+                        color: $footActiveColor;
+                    }
+                }
+            }
+            .link:not(:last-child)::after {
+                content:'|';
+                margin: 0px 5px;
+            }
+        }
+        .copyright {
+            flex-shrink: 0;
+            p {
+                color: $fontColor;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+        }
+    }
+}
+
+/*footer down*/
+body {
+    flex-direction: column;
+    min-height: 100vh;
+}

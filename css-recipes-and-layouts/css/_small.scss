@@ -1,0 +1,64 @@
+$lightGrey: #fafafa;
+$accauntInfoColor: $lightGrey;
+
+
+/*------------------------noDisplay------------------------*/
+.noSmall,
+.noMediun {
+    display: none;
+}
+
+/*------------------------flex-direction------------------------*/
+.accaunt .wrapper,
+.headMenu .wrapper{
+    flex-direction: column;
+}
+
+/*------------------------header------------------------*/
+header {
+    .accaunt {
+        .wrapper {
+            padding: 0;
+            .accauntInfo {
+                font-size: 30pt;
+                padding: 0 10px;
+                background-color: $accauntInfoColor;
+                p {
+                    color: $fontColor;
+                    text-align: center;
+                }
+            }
+            .accauntMenu {
+                font-size: 30pt;
+                .lister {
+                    border-left: 7px solid transparent;
+                    border-right: 7px solid transparent;
+                    border-top: 14px solid white;
+                }
+            }
+        }
+    }
+    .headMenu {
+        .logo {
+            img {
+                width: 100%;
+            }
+        }
+        nav {
+            order: 1;
+            width: 100%;
+        }
+    }
+}
+
+
+/*------------------------footer------------------------*/
+.copyright {
+    p {
+        font-size: 17pt;
+    }
+}
+
+nav .fullMenu {
+    display: none;
+}

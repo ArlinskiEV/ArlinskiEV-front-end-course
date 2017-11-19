@@ -4,3 +4,5 @@ node_modules
 *.log
 match-match-game/
 ngrok*
+css-recipes-and-layouts/css/.sass-cache/
+css-recipes-and-layouts/css/*.map
