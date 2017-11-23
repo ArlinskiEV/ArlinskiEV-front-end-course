@@ -75,6 +75,13 @@ function taskBinaryArithmetic(task, bits, data) {
     } else {
         wait = null;
     }
-    console.log(`bits=${bits} data=${data}`);
-    
+    let arr = (bits === 8) ? new Uint8Array(data) : new Uint16Array(data);
+    console.log(`bits=${bits} data=${data} arr=${arr} type(arr)=${typeof arr}`);
+    let result = 0;
+    arr.forEach(function (item, i, arr) {
+        result += item;
+    });
+    console.log(`result:${result}`);
+    console.log(`{ "token": "${myToken}", "command": "binary_arithmetic", "answer": ${result} }`);
+    ws.send(`{ "token": "${myToken}", "command": "binary_arithmetic", "answer": ${result} }`);
 };
