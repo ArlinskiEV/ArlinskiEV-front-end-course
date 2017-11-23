@@ -41,8 +41,8 @@ ws.onmessage = function(event) {
 
 function next(message) {
     console.log(`next:`);
-    console.log(`{"token": "${myToken}", "command":"${message === 'win' ? win_command : message}"}`);
-    ws.send(`{"token": "${myToken}", "command":"${message === 'win' ? win_command : message}"}`);
+    console.log(`{"token": "${myToken}", "command":"${message === 'win' ? 'win' : message}"}`);
+    ws.send(`{"token": "${myToken}", "command":"${message === 'win' ? 'win' : message}"}`);
 };
 
 function taskArithmetic(task) {
