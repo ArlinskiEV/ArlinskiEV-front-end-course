@@ -28,10 +28,10 @@ ws.onmessage = function(event) {
         default://task
             switch (incomingMessage.name) {
                 case 'arithmetic':
-                    taskArithmetic();
+                    taskArithmetic(incomingMessage.task);
                     break;
                 case 'binary_arithmetic':
-                    taskBinaryArithmetic();
+                    taskBinaryArithmetic(incomingMessage.task);
                     break;
                 default://win
                     console.log('server say:'+incomingMessage);
@@ -39,8 +39,41 @@ ws.onmessage = function(event) {
     }
 };
 
-//{ token: my_saved_token, command: saved_next_task_name }
+/*{ token: my_saved_token,
+command: saved_next_task_name }*/
 function next(message) {
-    ws.send({token: myToken,
-        command: message === 'win' ? win_command : message});
+    ws.send({
+        'token': myToken,
+        'command': message === 'win' ? win_command : message
+    });
 }
+
+taskArithmetic(task) {
+/*"task":{"sign": OPERATION ,"values": ARRAY}*/
+    function basicOp(operation, value1, value2) {
+        let operationFunctions = {
+            '+': function(x, y) {return x+y;},
+            '-': function(x, y) {return x-y;},
+            '*': function(x, y) {return x*y;},
+            '/': function(x, y) {return x/y;}
+        };
+        return operationFunctions[operation](value1,value2);
+    }
+
+    let values = task.values;
+    let result = values.pop();
+    while (values.length) {
+        result = basicOp(task.sign, result, values.pop());
+    }
+
+
+     ws.send({
+         'token': myToken,
+         'command': 'arithmetic',
+         'answer': result
+     });
+};
+
+taskBinaryArithmetic(task) {
+
+};
