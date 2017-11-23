@@ -6,37 +6,39 @@ ws.onopen = function() {
 };
 
 let myToken = null;
+let wait = null;
 ws.onmessage = function(event) {
     let incomingMessage = event.data;
     console.log(`server:${incomingMessage}`);
-    let obj = JSON.parse(incomingMessage);
-
-    switch (obj.message) {
-        case 'You successfully accept challenge':
-            myToken = obj.token;
-            console.log('myToken='+myToken);
-            next(obj.next);
-            break;
-        case 'You solve task':
-            next(obj.nextTask);
-            break;
-        default://task
-            console.log(`task`);
-            switch (obj.name) {
-                case 'arithmetic':
-                    taskArithmetic(obj.task);
-                    break;
-                case 'binary_arithmetic':
-                    taskBinaryArithmetic(obj.task);
-                    break;
-                default://win
-                    console.log('WIN:'+obj);
-            }
+    if (!wait) {
+        let obj = JSON.parse(incomingMessage);
+        switch (obj.message) {
+            case 'You successfully accept challenge':
+                myToken = obj.token;
+                console.log('myToken='+myToken);
+                next(obj.next);
+                break;
+            case 'You solve the task'://'You solve (!)task'
+                next(obj.next);//.nextTask(!)
+                break;
+            default://task
+                console.log(`task`);
+                switch (obj.name) {
+                    case 'arithmetic':
+                        taskArithmetic(obj.task);
+                        break;
+                    case 'binary_arithmetic':
+                        taskBinaryArithmetic(obj.task);
+                        break;
+                    default://win
+                        console.log('WIN:'+obj);
+                }
+        }
+    } else {
+        wait(incomingMessage);
     }
 };
 
-/*{ token: my_saved_token,
-command: saved_next_task_name }*/
 function next(message) {
     console.log(`next:`);
     console.log(`{"token": "${myToken}", "command":"${message === 'win' ? win_command : message}"}`);
@@ -44,7 +46,6 @@ function next(message) {
 };
 
 function taskArithmetic(task) {
-/*"task":{"sign": OPERATION ,"values": ARRAY}*/
     function basicOp(operation, value1, value2) {
         let operationFunctions = {
             '+': function(x, y) {return x + y;},
@@ -67,7 +68,13 @@ function taskArithmetic(task) {
     ws.send(`{ "token": "${myToken}", "command": "arithmetic", "answer": ${result} }`);
 };
 
-function taskBinaryArithmetic(task) {
-
-    console.log(`binary`);
+function taskBinaryArithmetic(task, bits, data) {
+    if (!bits) {
+        wait = taskBinaryArithmetic.bind(null, null, task.bits);
+        return true;
+    } else {
+        wait = null;
+    }
+    console.log(`bits=${bits} data=${data}`);
+    
 };
