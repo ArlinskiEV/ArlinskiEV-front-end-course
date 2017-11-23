@@ -29,6 +29,7 @@ ws.onmessage = function(event) {
                 break;
 
             default://task
+
                 switch (obj.name) {
                     case 'arithmetic':
                         taskArithmetic(obj.task);
@@ -84,12 +85,12 @@ function taskBinaryArithmetic(task, bits, data) {
     }
 
     let arr = (bits === 8) ? new Uint8Array(data) : new Uint16Array(data);
-    console.log(`bits=${bits} data=${data} arr=${arr}`);
     let result = 0;
     arr.forEach(function (item, i, arr) {
         result += item;
     });
 
+    console.log(`bits=${bits} data=${data} arr=${arr}`);
     console.log(`{ "token": "${myToken}", "command": "binary_arithmetic", "answer": ${result} }`);
     ws.send(`{ "token": "${myToken}", "command": "binary_arithmetic", "answer": ${result} }`);
 };
