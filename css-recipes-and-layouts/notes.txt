@@ -10,30 +10,15 @@ https://www.youtube.com/watch?v=k2GtDJKC6HQ&feature=youtu.be
 
 
 
-
-
 .main__what-is-hot_content:hover .shop-it{        display: flex;    }
-
-
-
-
-
 
 
 transform: translate на блок с девушкой
 
 
- от 320px до 1920px
-desktop = 1200px--
-tablet = 768px--
-mobile = 320px
-mobile 320-640
-
 Я сейчас осознал, что строчки display : flex; 
 justify-contetn-centeraligen-items: center;
 Занимают %20 всего css Только ради этого сокращения пора переходить на scss
-
-
 
 
 кнопка 
@@ -57,17 +42,15 @@ flex-direction: column;
 min-height: 100vh;
 }
 
-footer {
+body {
 flex: 1;
 }
 
 
 
-
-
-
 на всякий случай, по иконкам соцсетей: 
-можно использовать шрифты (и даже лучше, потренеруетесь), можно спрайты. Платежные системы - только спрайтами
+можно использовать шрифты (и даже лучше, потренеруетесь), можно спрайты. 
+Платежные системы - только спрайтами
 условия в таске апдейтнуты
 
 
@@ -88,7 +71,11 @@ http://fontawesome.io/icon/shopping-bag/
 
 http://flexbox.help/
 
-@font-face {    font-family: "Helvetica Neue Lt Std BlkCn";    src: url("../fonts/HelveticaNeueLTStd/HelveticaNeueLTStd-BlkCn.otf") format("otf");}Отправлено:21:28От:maks_ryan вот так прописываешь в css каждый шрифт
+@font-face {
+    font-family: "Helvetica Neue Lt Std BlkCn";
+    src: url("../fonts/HelveticaNeueLTStd/HelveticaNeueLTStd-BlkCn.otf") format("otf");
+}
+Отправлено:21:28От:maks_ryan вот так прописываешь в css каждый шрифт
 
 
 
@@ -100,13 +87,25 @@ position absolute для кнопки и в поле ввод
 на общем родителе - релатив
 
 
-от табов работы не ожидается. Но хочу пояснить, что значит активность - Если делать класс, наподобие "active", убрать его с первого таба, и повесить на второй - то визуально ничего ломаться не должно, просто теперь подсвечена вторая вкладка. А делать надо ховер, курсор, да.
+от табов работы не ожидается. 
+Но хочу пояснить, что значит активность - Если делать класс, 
+наподобие "active", убрать его с первого таба, 
+и повесить на второй - то визуально ничего ломаться не должно, 
+просто теперь подсвечена вторая вкладка. 
+А делать надо ховер, курсор, да.
 
 
 да, этот блок (кейс с девушками) тянется на всю ширину
 
 
 
- background-image: url("../img/text-background.png");      background-repeat:  no-repeat;      background-size: cover;      background-clip: text;      -webkit-background-clip: text;      -webkit-text-fill-color: transparent;Отправлено:18:16От:nikitos106219 вот так делается маска для CRAZY SUMMER. Несмотря на префикс -webkit, в Firefox тоже работает
+background-image: url("../img/text-background.png");
+background-repeat:  no-repeat;
+background-size: cover;
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
  
+вот так делается маска для CRAZY SUMMER. 
+Несмотря на префикс -webkit, в Firefox тоже работает
  

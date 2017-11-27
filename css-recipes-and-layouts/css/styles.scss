@@ -219,29 +219,24 @@ header {
 main {
 
 
-    .articles {
-        figure img {
-            width: 100%;
-        }
-        figure {
-            flex-grow: 1;
-        }
-        .main {
-            width: 50%;
-        }
+    .arts {
+        /*justify-content: center;*/
+        justify-content: space-around;
+        align-items: center;
         .second {
-            width: 50%;
-            flex-wrap: wrap;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+        }
 
-
-            figure {
-                &:first-child {
-                    flex-grow: 2;
-                }
+        item {
+            flex-grow: 1;
+            img {
+                width: 100%;
             }
         }
+
+
     }
 
 

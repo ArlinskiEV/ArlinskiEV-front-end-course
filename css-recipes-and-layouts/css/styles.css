@@ -248,19 +248,18 @@ header .slider {
       background-color: #dd6b44; }
 
 /*------------------------main------------------------*/
-main .articles figure img {
-  width: 100%; }
-main .articles figure {
-  flex-grow: 1; }
-main .articles .main {
-  width: 50%; }
-main .articles .second {
-  width: 50%;
-  flex-wrap: wrap;
-  justify-content: center;
+main .arts {
+  /*justify-content: center;*/
+  justify-content: space-around;
   align-items: center; }
-  main .articles .second figure:first-child {
-    flex-grow: 2; }
+  main .arts .second {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+  main .arts item {
+    flex-grow: 1; }
+    main .arts item img {
+      width: 100%; }
 main header.container {
   align-items: center; }
   main header.container h2 {
