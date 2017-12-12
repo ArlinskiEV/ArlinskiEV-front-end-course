@@ -16,12 +16,19 @@ class Game {
         this.lastTime = 0;
 
 
-        //mouse - listener
+        //listeners
         this.canvas.addEventListener('mouseup', function (e) {
             let x = e.pageX - e.target.offsetLeft,
                 y = e.pageY - e.target.offsetTop;
 
             Game.prototype.mouseHandler.bind(myGame)(x, y);
+        });
+        document.getElementById('reset').addEventListener('mouseup', function (e) {
+            Game.prototype.reset.bind(myGame)();
+            Game.prototype.main.bind(myGame)();
+        });
+        document.getElementById('play-pause').addEventListener('mouseup', function (e) {
+            Game.prototype.pause.bind(myGame)();
         });
 
         // States
@@ -42,6 +49,7 @@ class Game {
             fragsEl: document.getElementById('frags'),
             gameTime: 0,
             isGameOver: false,
+            isPaused: true,
             terrainPattern: null,
 
             bullets: [],
@@ -56,7 +64,7 @@ class Game {
         let now = Date.now();
         let dt = (now - this.lastTime) / 1000.0;
 
-        if (!this.states.isGameOver) {
+        if ((!this.states.isGameOver) && (!this.states.isPaused)) {
             this.update(dt);
             this.render();
 
@@ -71,7 +79,8 @@ class Game {
         alert('GAME OVER');
     };
     reset() {
-        this.states.isGameOver = false
+        this.states.isGameOver = false;
+        this.states.isPaused = true;
         this.states.gameTime = 0;
         this.states.score = 0;
         this.states.frags = 0;
@@ -80,6 +89,12 @@ class Game {
         this.states.explosions = [];
         this.states.deaths = [];
         this.states.tower.health = 1000;
+    };
+    pause() {
+        this.states.isPaused = !this.states.isPaused;
+        if (!this.states.isPaused) {
+            this.main();
+        }
     };
 
     // Update states of all objects
@@ -189,7 +204,7 @@ class Game {
         //create bullet
         let a = x - this.states.tower.pos[0],
             b = y - this.states.tower.pos[1];
-        if (this.states.bullets.length < 2) {
+        if ((!this.states.isPaused) && (this.states.bullets.length < 2)) {
             this.states.bullets.push({
                 pos: [this.states.tower.pos[0], this.states.tower.pos[1]],
                 sprite: new Sprite('./img/bullet.png',
@@ -309,5 +324,5 @@ resources.load([
     './img/enemies/skeleton.png',
     './img/enemies/skeleton2.png'
 ]);
-//resources.onReady(init);
-//myGame.main();
+//resources.onReady();
+myGame.main();
