@@ -43,7 +43,10 @@ class Game {
                                     [128, 178],
                                     6,
                                     [0,1,2,3,4]
-                                )
+                                ),
+                firePoint: [
+                    (this.canvas.width - 128 + 71),
+                    (this.canvas.height - 178 + 17)]
             },
             terrainPattern: null
         };
@@ -165,10 +168,8 @@ class Game {
 
     mouseHandler(x, y) {
         //create bullet
-        let a = x - this.states.tower.pos[0],
-            b = y - this.states.tower.pos[1];
         if ((!this.states.isPaused) && (this.states.bullets.length < 2)) {
-            this.shoot(a, b);
+            this.shoot(x, y);//a,b
         }
     };
 
@@ -212,11 +213,11 @@ class Game {
             bullet.pos[1] = bullet.pos[1] + bullet.target[1] * bullet.speed;
             bullet.sprite.update(dt);
             // Remove the bullet if it goes offscreen
-            if(bullet.pos[1] < 0 || bullet.pos[1] > this.canvas.height ||
-               bullet.pos[0] > this.canvas.width) {
-                this.states.bullets.splice(i, 1);
-                i--;
-            }
+            if( bullet.pos[0] < 0 || bullet.pos[0] > this.canvas.width ||
+                bullet.pos[1] < 0 || bullet.pos[1] > this.canvas.height) {
+                    this.states.bullets.splice(i, 1);
+                    i--;
+            };
         };
 
 
@@ -262,8 +263,16 @@ class Game {
 
 //---------------------------------------------------------actions
     shoot(x, y) {
+        let a = x - this.states.tower.firePoint[0],
+            b = y - this.states.tower.firePoint[1],
+            l = Math.sqrt(a*a+b*b);
+        //normolize (a,b) vector
+        a /= l;
+        b /= l;
         let bullet = {
-            pos: [this.states.tower.pos[0], this.states.tower.pos[1]],
+            pos: [//minus half-size fo center-to-center
+                this.states.tower.firePoint[0] - 22,
+                this.states.tower.firePoint[1] - 22],
             sprite: new Sprite('./img/bullets/bullet.png',
                                 [0, 0],
                                 [44, 44],
@@ -272,8 +281,8 @@ class Game {
                                 'vertical'
                             ),
             damage: 1,
-            speed: 0.3, //bullet speed
-            target: [-1, 1]//[x, y]
+            speed: 10, //bullet speed
+            target: [a, b]
         };
         this.states.bullets.push(bullet);
     };
@@ -301,11 +310,13 @@ class Game {
     };
 
     hitting(bullet, enemy) {
-        enemy.health -= bullet.damage;
+        if (enemy && bullet) {
+            enemy.health -= bullet.damage;
+        };
     };
     getHit(enemy) {
         this.states.tower.health -= enemy.damage;
-        console.log('hit');
+        console.log(`hit, health: ${this.states.tower.health}`);
     };
 
 };
