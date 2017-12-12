@@ -36,11 +36,15 @@
             var x = this.pos[0];
             var y = this.pos[1];
 
-            if(this.dir == 'vertical') {
-                y += frame * this.size[1];
-            }
-            else {
-                x += frame * this.size[0];
+            switch (this.dir) {
+                case 'vertical':
+                    y += frame * this.size[1];
+                    break;
+                case 'horizontal':
+                    x += frame * this.size[0];
+                    break;
+                default:
+                    console.info('default directional frame');
             }
 
             ctx.drawImage(resources.get(this.url),
