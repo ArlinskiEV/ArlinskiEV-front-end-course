@@ -330,5 +330,9 @@ resources.load([
     './img/bullets/bullet.png',
     './img/enemies/skeleton.png'
 ]);
-//resources.onReady();
+resources.onReady(() => {
+    myGame.states.terrainPattern = myGame.ctx.createPattern(resources.get('./img/terrain.png'), 'repeat');
+});
+
+
 myGame.main();
