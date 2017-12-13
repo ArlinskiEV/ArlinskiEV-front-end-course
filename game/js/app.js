@@ -16,8 +16,6 @@ class Game {
         this.canvas.height = this.gameHeight;
         document.getElementById(this.containerId).appendChild(this.canvas);
 
-        this.lastTime = 0;
-
 
         //listeners
         this.canvas.addEventListener('mouseup', function (e) {
@@ -55,15 +53,18 @@ class Game {
 
     // Set default params
     reset() {
+        let now = Date.now();
+        this.lastTime = now;
         this.states.isGameOver = false;
         this.states.isPaused = true;
+        this.states.timePause = now;
         this.states.gameTime = 0;
         this.states.score = 0;
         this.states.frags = 0;
         this.states.enemies = [];
         this.states.bullets = [];
         this.states.bulletType = 0;
-        this.states.lastShoot = [Date.now()];
+        this.states.lastShoot = [now];
         this.states.explosions = [];
         this.states.deaths = [];
         this.states.tower.health = 1000;
@@ -73,6 +74,7 @@ class Game {
     main(game) {
         let now = Date.now();
         let dt = (now - this.lastTime) / 1000.0;
+
 
         if ((!this.states.isGameOver) && (!this.states.isPaused)) {
             this.update(dt);
@@ -89,9 +91,23 @@ class Game {
         alert('GAME OVER');
     };
     pause() {
+        let time = Date.now();
         this.states.isPaused = !this.states.isPaused;
         if (!this.states.isPaused) {
+            time -= this.states.timePause;
+            //-------------------------------
+            this.lastTime += time;
+            this.states.lastShoot = this.states.lastShoot
+                .map((item) => {return item + time;});
+            this.states.enemies = this.states.enemies
+                .map((enemy) => {
+                    enemy.lastHit += time;
+                    return enemy;
+                });
+            //-------------------------------
             this.main();
+        } else {
+            this.states.timePause = time;
         }
     };
 
@@ -117,8 +133,6 @@ class Game {
             if (boxCollides(pos, size, this.states.tower.pos, this.states.tower.sprite.size)) {
 
                 this.getHit(this.states.enemies[i]);
-                this.states.enemies.splice(i, 1);
-                i--;
             }
 
             //enemies-bullet
@@ -184,12 +198,12 @@ class Game {
         this.updateEntities(dt);
 
         let ddt = Date.now() - (this.lastadd || 0);
-        let flag = ddt > (1000 - this.states.score * 10); //times between enemies
-        flag = flag && (this.states.enemies.length < 1+this.states.score);
-        if (flag) {
+        if (ddt > 700) { //min-times between enemies
             let enemy = this.getEnemy();
-            this.states.enemies.push(enemy);
-            this.lastadd = Date.now();
+            if (enemy) {
+                this.states.enemies.push(enemy);
+                this.lastadd = Date.now();
+            };
         };
 
         this.checkCollisions();
@@ -202,7 +216,6 @@ class Game {
     updateEntities(dt) {
         // Update the tower
         this.states.tower.sprite.update(dt);
-
         if (this.states.tower.health <= 0) {
             this.states.isGameOver = true;
             this.gameOver();
@@ -312,7 +325,9 @@ class Game {
                 cost: 2,
                 start: 0
             },
-            //enemy health,damage,speed
+            //enemy
+            reload: 500,
+            lastHit: 0,
             health: 1,
             damage: 100,
             speed: 100
@@ -326,8 +341,12 @@ class Game {
         };
     };
     getHit(enemy) {
-        this.states.tower.health -= enemy.damage;
-        console.log(`hit, health: ${this.states.tower.health}`);
+        let time = Date.now();
+        if (enemy.lastHit + enemy.reload < time) {
+            this.states.tower.health -= enemy.damage;
+            enemy.lastHit = time;
+            console.log(`hit, health: ${this.states.tower.health}`);
+        };
     };
 
 };
