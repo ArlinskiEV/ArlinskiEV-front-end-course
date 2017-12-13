@@ -26,7 +26,7 @@ class Game {
         });
         document.getElementById('reset').addEventListener('click', function (e) {
             Game.prototype.reset.bind(myGame)();
-            Game.prototype.main.bind(myGame)();
+            Game.prototype.pause.bind(myGame)();
         });
         document.getElementById('play-pause').addEventListener('click', function (e) {
             Game.prototype.pause.bind(myGame)();
@@ -362,7 +362,7 @@ resources.load([
 ]);
 resources.onReady(() => {
     myGame.states.terrainPattern = myGame.ctx.createPattern(resources.get('./img/terrain.png'), 'repeat');
+    myGame.pause();
 });
-
 
 myGame.main();
