@@ -62,6 +62,8 @@ class Game {
         this.states.frags = 0;
         this.states.enemies = [];
         this.states.bullets = [];
+        this.states.bulletType = 0;
+        this.states.lastShoot = [Date.now()];
         this.states.explosions = [];
         this.states.deaths = [];
         this.states.tower.health = 1000;
@@ -168,7 +170,7 @@ class Game {
 
     mouseHandler(x, y) {
         //create bullet
-        if ((!this.states.isPaused) && (this.states.bullets.length < 2)) {
+        if (!this.states.isPaused) {
             this.shoot(x, y);//a,b
         }
     };
@@ -269,7 +271,7 @@ class Game {
         //normolize (a,b) vector
         a /= l;
         b /= l;
-        let bullet = {
+        let bullet = [{
             pos: [//minus half-size fo center-to-center
                 this.states.tower.firePoint[0] - 22,
                 this.states.tower.firePoint[1] - 22],
@@ -280,16 +282,25 @@ class Game {
                                 [0,1,2,1],
                                 'vertical'
                             ),
+            //bullet
             damage: 1,
-            speed: 10, //bullet speed
+            reload: 1000,
+            speed: 10,
             target: [a, b]
-        };
-        this.states.bullets.push(bullet);
+        }];
+
+        //check reload
+        let time = Date.now();
+        if (this.states.lastShoot[this.states.bulletType] +
+            bullet[this.states.bulletType].reload < time) {
+                this.states.bullets.push(bullet[this.states.bulletType]);
+                this.states.lastShoot[this.states.bulletType] = time;
+        }
     };
 
     getEnemy() {
         let enemy = {
-            pos: [50, (this.canvas.height - 80)], //ground minus enemy size
+            pos: [-90, (this.canvas.height - 80)], //ground minus enemy size
             sprite: new Sprite('./img/enemies/skeleton.png',
                                 [0, 0],
                                 [90, 80],
