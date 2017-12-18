@@ -15,6 +15,9 @@ class Game {
         this.canvas.width = this.gameWidth;
         this.canvas.height = this.gameHeight;
         document.getElementById(this.containerId).appendChild(this.canvas);
+        // Create bulletType
+        //let weaponsEL = document.getElementById('weapons');
+
 
 
         //listeners
@@ -30,6 +33,16 @@ class Game {
         });
         document.getElementById('play-pause').addEventListener('click', function (e) {
             Game.prototype.pause.bind(myGame)();
+        });
+        document.getElementById('weapons').addEventListener('click', function(e) {
+            let target = event.target;
+            if (target.id !='weapons') {
+                while (target.parentNode.id != 'weapons') {
+                    //console.log(`target=${target}`);
+                    target = target.parentNode;
+                }
+                Game.prototype.setWeapon.bind(myGame)(target.id);
+            };
         });
 
         // States
@@ -65,7 +78,7 @@ class Game {
         this.states.enemies = [];
         this.states.bullets = [];
         this.states.bulletType = 0;
-        this.states.lastShoot = [now];
+        this.states.lastShoot = [now,now];
         this.states.explosions = [];
         this.states.deaths = [];
         this.states.tower.health = 1000;
@@ -201,8 +214,8 @@ class Game {
     update(dt) {
         this.states.gameTime += dt;
 
-        //-----------------------------------------------------------off
-        //handleInput(dt);
+
+        this.handleInput(dt);
         this.updateEntities(dt);
 
 
@@ -222,6 +235,19 @@ class Game {
         this.scoreEl.innerHTML = this.states.score;
         this.fragsEl.innerHTML = this.states.frags;
         this.healthEl.innerHTML = this.states.tower.health;
+    };
+
+    handleInput(dt) {
+        if (input.isDown('UP')) {
+            console.log(`up`);
+        };
+        //49-57=1-9 48=0
+        for (let i = 0; i <= 8; i++) {
+            if (input.isDown(i + 1) && this.states.lastShoot[i]) {
+                this.setWeapon(i);
+            }
+
+        };
     };
 
     updateEntities(dt) {
@@ -295,23 +321,43 @@ class Game {
         //normolize (a,b) vector
         a /= l;
         b /= l;
-        let bullet = [{
-            pos: [//minus half-size fo center-to-center
-                this.states.tower.firePoint[0] - 22,
-                this.states.tower.firePoint[1] - 22],
-            sprite: new Sprite('./img/bullets/bullet.png',
-                                [0, 0],
-                                [44, 44],
-                                6,
-                                [0,1,2,1],
-                                'vertical'
-                            ),
-            //bullet
-            damage: 1,
-            reload: 1000,
-            speed: 10,
-            target: [a, b]
-        }];
+        let bullet = [
+            {
+                pos: [//minus half-size fo center-to-center
+                    this.states.tower.firePoint[0] - 22,
+                    this.states.tower.firePoint[1] - 22],
+                sprite: new Sprite('./img/bullets/bullet.png',
+                                    [0, 0],
+                                    [44, 44],
+                                    6,
+                                    [0,1,2,1],
+                                    'vertical'
+                                ),
+                //bullet
+                damage: 1,
+                reload: 1000,
+                speed: 10,
+                target: [a, b]
+            },
+
+            {
+                pos: [//minus half-size fo center-to-center
+                    this.states.tower.firePoint[0] - 22,
+                    this.states.tower.firePoint[1] - 22],
+                sprite: new Sprite('./img/bullets/bullet.png',
+                                    [0, 0],
+                                    [44, 44],
+                                    6,
+                                    [0,1,2,1],
+                                    'vertical'
+                                ),
+                //bullet
+                damage: 1,
+                reload: 10,
+                speed: 2,
+                target: [a, b]
+            },
+        ];
 
         //check reload
         let time = Date.now();
@@ -385,6 +431,11 @@ class Game {
             console.log(`hit, health: ${this.states.tower.health}`);
         };
     };
+
+    setWeapon(id) {
+        this.states.bulletType = id;
+        console.log(`bulletType=${id}`);
+    }
 
 };
 

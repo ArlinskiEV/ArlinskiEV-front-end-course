@@ -7,4 +7,12 @@ body {
   background-color: black;
   color: red; }
 
+.weapons {
+  display: flex;
+  width: 1200px;
+  margin: 0px auto;
+  justify-content: flex-end; }
+  .weapons .weapon {
+    float: right; }
+
 /*# sourceMappingURL=styles.css.map */
