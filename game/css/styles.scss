@@ -1,4 +1,11 @@
 .wrapper {
     margin: 0px auto;
     text-align: center;
+    user-select: none;
+}
+
+
+body {
+    background-color: black;
+    color: red;
 }

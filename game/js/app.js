@@ -60,6 +60,7 @@ class Game {
         this.states.timePause = now;
         this.states.gameTime = 0;
         this.states.score = 0;
+        this.states.difficult = 1000;
         this.states.frags = 0;
         this.states.enemies = [];
         this.states.bullets = [];
@@ -75,6 +76,9 @@ class Game {
         let now = Date.now();
         let dt = (now - this.lastTime) / 1000.0;
 
+        //--------------------------------------------------temp
+        this.states.difficult = (1000 - this.states.score*10) < 0 ?
+            0 : (1000 - this.states.score*10);
 
         if ((!this.states.isGameOver) && (!this.states.isPaused)) {
             this.update(dt);
@@ -140,7 +144,11 @@ class Game {
                 let pos2 = this.states.bullets[j].pos;
                 let size2 = this.states.bullets[j].sprite.size;
 
-                if (boxCollides(pos, size, pos2, size2)) {
+                //target = center 25x25
+                if (boxCollides([(pos[0]+size[0]/2-12), (pos[1]+size[1]/2-12)],
+                                [25,25],
+                                pos2,
+                                size2)) {
                     this.hitting(this.states.bullets[j], this.states.enemies[i]);
                     // Remove the enemy
                     if (this.states.enemies[i].health <= 0) {
@@ -197,14 +205,17 @@ class Game {
         //handleInput(dt);
         this.updateEntities(dt);
 
+
+        //add enemy
         let ddt = Date.now() - (this.lastadd || 0);
-        if (ddt > 700) { //min-times between enemies
+        if (ddt > (700 + this.states.difficult)) { //min-time between enemies
             let enemy = this.getEnemy();
             if (enemy) {
                 this.states.enemies.push(enemy);
                 this.lastadd = Date.now();
             };
         };
+
 
         this.checkCollisions();
 
@@ -306,33 +317,59 @@ class Game {
         let time = Date.now();
         if (this.states.lastShoot[this.states.bulletType] +
             bullet[this.states.bulletType].reload < time) {
+
                 this.states.bullets.push(bullet[this.states.bulletType]);
                 this.states.lastShoot[this.states.bulletType] = time;
         }
     };
 
     getEnemy() {
-        let enemy = {
-            pos: [-90, (this.canvas.height - 80)], //ground minus enemy size
-            sprite: new Sprite('./img/enemies/skeleton.png',
-                                [0, 0],
-                                [90, 80],
-                                8,
-                                [0,1,2,3,4,5,6,7,8,9,10,11],
-                                'vertical'
-                            ),
-            score: {
-                cost: 2,
-                start: 0
-            },
-            //enemy
-            reload: 500,
-            lastHit: 0,
-            health: 1,
-            damage: 100,
-            speed: 100
-        };
-        return enemy;
+        let enemiesArr = [
+                {
+                    pos: [-90, (this.canvas.height - 80)], //ground minus enemy size
+                    sprite: new Sprite('./img/enemies/skeleton.png',
+                                        [0, 0],
+                                        [90, 80],
+                                        8,
+                                        [0,1,2,3,4,5,6,7,8,9,10,11],
+                                        'vertical'
+                                    ),
+                    score: {
+                        cost: 2,
+                        start: 0,
+                        typeID: 0
+                    },
+                    //enemy
+                    reload: 500,
+                    lastHit: 0,
+                    health: 1,
+                    damage: 100,
+                    speed: 100
+                },
+
+                {
+                    pos: [-90, (this.canvas.height - 39)],
+                    sprite: new Sprite('./img/enemies/temp.png',
+                                        [0, 0],
+                                        [80, 39],
+                                        6,
+                                        [0, 1, 2, 3, 2, 1]),
+                    score: {
+                        cost: 5,
+                        start: 100,
+                        typeID: 1
+                    },
+                    //enemy
+                    reload: 500,
+                    lastHit: 0,
+                    health: 1,
+                    damage: 100,
+                    speed: 50
+                }
+        ];
+        let i = Math.floor(Math.random() * this.states.score/50);//random between 0 and score
+        for (;!enemiesArr[i]; i--);
+        return enemiesArr[i];
     };
 
     hitting(bullet, enemy) {
@@ -358,7 +395,8 @@ resources.load([
     './img/terrain.png',
     './img/tower.png',
     './img/bullets/bullet.png',
-    './img/enemies/skeleton.png'
+    './img/enemies/skeleton.png',
+    './img/enemies/temp.png'
 ]);
 resources.onReady(() => {
     myGame.states.terrainPattern = myGame.ctx.createPattern(resources.get('./img/terrain.png'), 'repeat');
