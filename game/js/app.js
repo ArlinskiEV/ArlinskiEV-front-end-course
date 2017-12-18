@@ -87,6 +87,13 @@ class Game {
         this.states.explosions = [];
         this.states.deaths = [];
         this.states.tower.health = 1000;
+
+        let el = document.getElementsByClassName('active')[0];
+        while (el) {
+            el.classList.remove('active');
+            el = document.getElementsByClassName('active')[0];
+        };
+        document.getElementById('0').classList.add('active');
     };
 
     // The main game loop
@@ -438,8 +445,16 @@ class Game {
     };
 
     setWeapon(id) {
-        this.states.bulletType = id;
-        console.log(`bulletType=${id}`);
+        if (this.states.bulletType !== id) {
+            let el = document.getElementsByClassName('active')[0];
+            while (el) {
+                el.classList.remove('active');
+                el = document.getElementsByClassName('active')[0];
+            };
+            document.getElementById(id).classList.add('active');
+
+            this.states.bulletType = id;
+        };
     }
 
 };
