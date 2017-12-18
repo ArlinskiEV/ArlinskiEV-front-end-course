@@ -44,6 +44,11 @@ class Game {
                 Game.prototype.setWeapon.bind(myGame)(target.id);
             };
         });
+        document.addEventListener('keyup', function(e) {
+            if (e.keyCode === 32) {
+                Game.prototype.pause.bind(myGame)();
+            }
+        });
 
         // States
         this.states = {
@@ -246,8 +251,8 @@ class Game {
             if (input.isDown(i + 1) && this.states.lastShoot[i]) {
                 this.setWeapon(i);
             }
-
         };
+
     };
 
     updateEntities(dt) {

@@ -13,6 +13,12 @@ body {
   margin: 0px auto;
   justify-content: flex-end; }
   .weapons .weapon {
-    float: right; }
+    float: right;
+    border-radius: 5%;
+    border: 2px solid blue; }
+  .weapons .active {
+    border-color: yellow; }
+  .weapons .disabled {
+    border-color: red; }
 
 /*# sourceMappingURL=styles.css.map */

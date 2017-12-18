@@ -17,5 +17,13 @@ body {
     justify-content: flex-end;
     .weapon {
         float: right;
+        border-radius: 5%;
+        border: 2px solid rgba(0, 0, 255, 1); //0 - transparent
+    }
+    .active {
+        border-color: rgba(255, 255, 0, 1);
+    }
+    .disabled {
+        border-color: rgba(255, 0, 0, 1);
     }
 }
