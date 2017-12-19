@@ -21,8 +21,9 @@ export default class Game {
         this.canvas.width = this.gameWidth;
         this.canvas.height = this.gameHeight;
         document.getElementById(this.containerId).appendChild(this.canvas);
-        // Create bulletType
-        //let weaponsEL = document.getElementById('weapons');
+
+        // Create enemiesType
+        this.enemiesArr = new Enemies(this.canvas.width, this.canvas.height);
 
 
 
@@ -175,7 +176,7 @@ export default class Game {
                     // Remove the enemy
                     if (this.states.enemies[i].health <= 0) {
                         // Add score and frags
-                        this.states.score += this.states.enemies[i].score.cost;
+                        this.states.score += this.states.enemies[i].score;
                         this.states.frags++;
 
                         // Add an explosion and death
@@ -231,7 +232,7 @@ export default class Game {
         //add enemy
         let ddt = Date.now() - (this.lastadd || 0);
         if (ddt > (700 + this.states.difficult)) { //min-time between enemies
-            let enemy = this.getEnemy();
+            let enemy = this.enemiesArr.getEnemy(this.states.score);
             if (enemy) {
                 this.states.enemies.push(enemy);
                 this.lastadd = Date.now();
@@ -344,14 +345,6 @@ export default class Game {
                 this.states.bullets.push(bullet[this.states.bulletType]);
                 this.states.lastShoot[this.states.bulletType] = time;
         }
-    };
-
-    getEnemy() {
-        let enemiesArr = new Enemies(this.canvas.width, this.canvas.height);
-
-        let i = Math.floor(Math.random() * this.states.score/50);//random between 0 and score
-        for (;!enemiesArr[i]; i--);
-        return enemiesArr[i];
     };
 
     hitting(bullet, enemy) {

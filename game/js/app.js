@@ -1,7 +1,6 @@
 import Game from './game.js';
 
 
-
 //start Game
 let myGame = new Game();
 resources.load([
