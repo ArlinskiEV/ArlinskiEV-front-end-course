@@ -3,6 +3,7 @@ import Sprite from './sprite.js';
 import Towers from './towers.js';
 import Weapons from './weapons.js';
 import Enemies from './enemies.js';
+import Deaths from './deaths.js';
 
 export default class Game {
     constructor(containerId, gameWidth, gameHeight) {
@@ -62,8 +63,10 @@ export default class Game {
             terrainPattern: null
         };
         // Create enemiesType & weapons
+        this.weapons = new Weapons(this.states.tower.firePoint[0],
+                                    this.states.tower.firePoint[1]);
         this.enemiesArr = new Enemies(this.canvas.width, this.canvas.height);
-        this.weapons = new Weapons(this.states.tower.firePoint[0], this.states.tower.firePoint[1]);
+        this.deathsArr = new Deaths();
 
         this.reset();
     };
@@ -86,12 +89,14 @@ export default class Game {
         this.states.deaths = [];
         this.states.tower.health = 1000;
 
-        let el = document.getElementsByClassName('activeWeapon')[0];
-        while (el) {
+
+        for (let i = 1; i < this.weapons.weapons.length; i++) {
+            let el = document.getElementById(i);
             el.classList.remove('activeWeapon');
-            el = document.getElementsByClassName('activeWeapon')[0];
+            el.classList.add('disabled');
         };
         document.getElementById('0').classList.add('activeWeapon');
+        document.getElementById('0').classList.remove('disabled');
     };
 
     // The main game loop
@@ -180,7 +185,13 @@ export default class Game {
                         this.states.score += this.states.enemies[i].score;
                         this.states.frags++;
 
-                        // Add an explosion and death
+                        // Add death
+                        this.states.deaths.push(
+                            this.deathsArr.died(this.states.enemies[i].pos[0],
+                                            this.states.enemies[i].pos[1],
+                                            this.states.enemies[i].typeId,)
+                        );
+
                         this.states.enemies.splice(i, 1);
                         i--;
                     };
@@ -242,6 +253,14 @@ export default class Game {
 
 
         this.checkCollisions();
+
+        //check score
+        for (let i = 1; i < this.weapons.weapons.length; i++) {
+            if (this.weapons.weapons[i].minScore <= this.states.score) {
+                let el = document.getElementById(i);
+                el.classList.remove('disabled');
+            };
+        };
 
         this.scoreEl.innerHTML = this.states.score;
         this.fragsEl.innerHTML = this.states.frags;
@@ -317,7 +336,6 @@ export default class Game {
             // Remove if animation is done
             if(death.sprite.done) {
                 deaths.splice(i, 1);
-                console.log('death done');
             }
 
         });
@@ -361,13 +379,9 @@ export default class Game {
     setWeapon(id) {
         let targetWeapon = document.getElementById(id);
         if ((targetWeapon) && (this.states.activeWeapon !== id) &&
-        (!targetWeapon.classList.contains('denied'))) {
-            let el = document.getElementsByClassName('activeWeapon')[0];
-
-            while (el) {
+        (!targetWeapon.classList.contains('disabled'))) {
+            let el = document.getElementById(this.states.activeWeapon);
                 el.classList.remove('activeWeapon');
-                el = document.getElementsByClassName('activeWeapon')[0];
-            };
 
             targetWeapon.classList.add('activeWeapon');
             this.states.activeWeapon = id;

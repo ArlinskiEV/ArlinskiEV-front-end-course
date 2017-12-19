@@ -16,6 +16,7 @@ export default class Weapons {
                                 'vertical'],
             damage: 1,
             reload: 1000,
+            minScore: 0,
             bulletSpeed: 10,
             lastShoot: 0
         });
@@ -32,6 +33,7 @@ export default class Weapons {
                         'vertical'],
             damage: 1,
             reload: 10,
+            minScore: 90,
             bulletSpeed: 2,
             lastShoot: 0
         });
@@ -41,6 +43,7 @@ export default class Weapons {
         this.weapons.forEach((item, i) => {
             let el = document.createElement('div');
             el.classList.add('weapon');
+            el.classList.add('denied');
             el.id = i;
             //title-img
             let prev = document.createElement('div');
