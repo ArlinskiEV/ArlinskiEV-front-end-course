@@ -1,14 +1,26 @@
+* {
+    box-sizing: border-box;
+};
 .wrapper {
     margin: 0px auto;
     text-align: center;
     user-select: none;
-}
+};
 
 
 body {
     background-color: black;
     color: red;
-}
+};
+
+
+.controls {
+    p {
+        font-family: 'Courier New';
+        margin: 0 auto;
+    };
+};
+
 
 .weapons {
     display: flex;
@@ -17,13 +29,21 @@ body {
     justify-content: flex-end;
     .weapon {
         float: right;
+        margin: 5px;
+        padding: 5px;
+        width: 100px;
         border-radius: 5%;
         border: 2px solid rgba(0, 0, 255, 1); //0 - transparent
-    }
+        p {
+            margin: 0 auto;
+            text-align: left;
+            font-family: 'Courier New';
+        };
+    };
     .active {
         border-color: rgba(255, 255, 0, 1);
-    }
+    };
     .disabled {
         border-color: rgba(255, 0, 0, 1);
-    }
-}
+    };
+};

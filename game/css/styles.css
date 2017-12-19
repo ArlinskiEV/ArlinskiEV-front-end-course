@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box; }
+
 .wrapper {
   margin: 0px auto;
   text-align: center;
@@ -7,6 +10,10 @@ body {
   background-color: black;
   color: red; }
 
+.controls p {
+  font-family: 'Courier New';
+  margin: 0 auto; }
+
 .weapons {
   display: flex;
   width: 1200px;
@@ -14,8 +21,15 @@ body {
   justify-content: flex-end; }
   .weapons .weapon {
     float: right;
+    margin: 5px;
+    padding: 5px;
+    width: 100px;
     border-radius: 5%;
     border: 2px solid blue; }
+    .weapons .weapon p {
+      margin: 0 auto;
+      text-align: left;
+      font-family: 'Courier New'; }
   .weapons .active {
     border-color: yellow; }
   .weapons .disabled {
