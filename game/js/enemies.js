@@ -43,6 +43,8 @@ export default class Enemies {
 
     getEnemy(score) {
         let i = Math.floor(Math.random() * score/50);//random between 0 and score
+        i = (i >= this.enemiesArr.length) ? (this.enemiesArr.length - 1) : i;
+
         for (;((i > 0) && (this.enemiesArr[i].score.start > score));i--);
         let j = this.enemiesArr[i];
         let enemy = {
