@@ -1,7 +1,7 @@
 import Sprite from './sprite.js';
 
 import Towers from './towers.js';
-import Bullets from './bullets.js';
+import Weapons from './weapons.js';
 import Enemies from './enemies.js';
 
 export default class Game {
@@ -21,9 +21,6 @@ export default class Game {
         this.canvas.width = this.gameWidth;
         this.canvas.height = this.gameHeight;
         document.getElementById(this.containerId).appendChild(this.canvas);
-
-        // Create enemiesType
-        this.enemiesArr = new Enemies(this.canvas.width, this.canvas.height);
 
 
 
@@ -64,6 +61,10 @@ export default class Game {
 
             terrainPattern: null
         };
+        // Create enemiesType & weapons
+        this.enemiesArr = new Enemies(this.canvas.width, this.canvas.height);
+        this.weapons = new Weapons(this.states.tower.firePoint[0], this.states.tower.firePoint[1]);
+
         this.reset();
     };
 
@@ -80,18 +81,17 @@ export default class Game {
         this.states.frags = 0;
         this.states.enemies = [];
         this.states.bullets = [];
-        this.states.bulletType = 0;
-        this.states.lastShoot = [now,now];
+        this.states.activeWeapon = 0;
         this.states.explosions = [];
         this.states.deaths = [];
         this.states.tower.health = 1000;
 
-        let el = document.getElementsByClassName('active')[0];
+        let el = document.getElementsByClassName('activeWeapon')[0];
         while (el) {
-            el.classList.remove('active');
-            el = document.getElementsByClassName('active')[0];
+            el.classList.remove('activeWeapon');
+            el = document.getElementsByClassName('activeWeapon')[0];
         };
-        document.getElementById('0').classList.add('active');
+        document.getElementById('0').classList.add('activeWeapon');
     };
 
     // The main game loop
@@ -124,8 +124,9 @@ export default class Game {
             time -= this.states.timePause;
             //-------------------------------
             this.lastTime += time;
-            this.states.lastShoot = this.states.lastShoot
-                .map((item) => {return item + time;});
+
+            this.weapons.addTime(time);
+
             this.states.enemies = this.states.enemies
                 .map((enemy) => {
                     enemy.lastHit += time;
@@ -252,8 +253,8 @@ export default class Game {
             console.log(`up`);
         };
         //49-57=1-9 48=0
-        for (let i = 0; i <= 8; i++) {
-            if (input.isDown(i + 1) && this.states.lastShoot[i]) {
+        for (let i = 0; i <= 8; i++) {//0-8=>1-9, max weapons
+            if (input.isDown(i + 1)) {
                 this.setWeapon(i);
             }
         };
@@ -332,19 +333,15 @@ export default class Game {
         a /= l;
         b /= l;
 
-        let bullet = new Bullets(this.states.tower.firePoint[0],
-                                this.states.tower.firePoint[1]
-                                );
-
         //check reload
         let time = Date.now();
-        if (this.states.lastShoot[this.states.bulletType] +
-            bullet[this.states.bulletType].reload < time) {
 
-                bullet[this.states.bulletType].target = [a, b];
-                this.states.bullets.push(bullet[this.states.bulletType]);
-                this.states.lastShoot[this.states.bulletType] = time;
-        }
+        let bullet = this.weapons.getBullet(this.states.activeWeapon, time);
+        if (bullet) {
+            bullet.target = [a, b];
+            this.states.bullets.push(bullet);
+        };
+
     };
 
     hitting(bullet, enemy) {
@@ -362,15 +359,18 @@ export default class Game {
     };
 
     setWeapon(id) {
-        if (this.states.bulletType !== id) {
-            let el = document.getElementsByClassName('active')[0];
-            while (el) {
-                el.classList.remove('active');
-                el = document.getElementsByClassName('active')[0];
-            };
-            document.getElementById(id).classList.add('active');
+        let targetWeapon = document.getElementById(id);
+        if ((targetWeapon) && (this.states.activeWeapon !== id) &&
+        (!targetWeapon.classList.contains('denied'))) {
+            let el = document.getElementsByClassName('activeWeapon')[0];
 
-            this.states.bulletType = id;
+            while (el) {
+                el.classList.remove('activeWeapon');
+                el = document.getElementsByClassName('activeWeapon')[0];
+            };
+
+            targetWeapon.classList.add('activeWeapon');
+            this.states.activeWeapon = id;
         };
     }
 

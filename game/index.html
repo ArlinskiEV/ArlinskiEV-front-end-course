@@ -10,19 +10,21 @@
 
         </header>
         <main>
-            <div class="wrapper">
+            <div class="wrapper application" id="application">
                 <section class="controls">
                     <button id="play-pause">Play/Pause</button>
                     <button id="reset">Reset</button>
-                    <p class="info">Heath: <span id="health">1000</span></p>
-                    <p class="info">Frags: <span id="frags">0</span></p>
-                    <p class="info">Score: <span id="score">0</span></p>
+                    <div class="info">
+                        <p>Heath: <span id="health">1000</span></p>
+                        <p>Frags: <span id="frags">0</span></p>
+                        <p>Score: <span id="score">0</span></p>
+                    </div>
                 </section>
 
                 <section id="game"></section>
 
                 <section class="weapons" id='weapons'>
-                    <div class="weapon active" id='0'>
+                    <div class="weapon activeWeapon" id='0'>
                         <div class="prev">
                             <img src="./img/bullets/bullet_title.png" alt="">
                         </div>
@@ -43,8 +45,6 @@
         </main>
         <script src="./js/resources.js" charset="utf-8"></script>
         <script src="./js/input.js" charset="utf-8"></script>
-        <!--script src="./js/sprite.js" charset="utf-8"></script-->
-        <!--script src="./js/app.js" charset="utf-8"></script-->
         <script src="./js/app.bundle.js" charset="utf-8"></script>
     </body>
 </html>
