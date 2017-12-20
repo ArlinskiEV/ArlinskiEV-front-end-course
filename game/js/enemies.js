@@ -59,6 +59,7 @@ export default class Enemies {
         return this.enemiesArr.reduce((arr, enemy) => {
             arr.push(enemy.sprite[0]);
             arr.push(enemy.soundAttack);
+            return arr;
         }, []);
     };
 

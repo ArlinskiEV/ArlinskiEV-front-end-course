@@ -34,6 +34,7 @@ export default class Deaths {
         return this.deaths.reduce((arr, death) => {
             arr.push(death.sprite[0]);
             arr.push(death.sound);
+            return arr;
         }, []);
     };
 

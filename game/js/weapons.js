@@ -64,9 +64,10 @@ export default class Weapons {
     };
 
     getUrls() {
-        return this.weapons.reduce((arr, weapon) => {
+        return this.weapons.reduce((arr, weapon, i, weaS) => {
             arr.push(weapon.sprite[0]);
             arr.push(weapon.title);
+            return arr;
         }, []);
     };
 

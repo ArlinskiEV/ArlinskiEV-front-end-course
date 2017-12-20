@@ -1,3 +1,4 @@
+import Resources from './resources';
 import Sprite from './sprite';
 
 import Towers from './towers';
@@ -6,23 +7,53 @@ import Enemies from './enemies';
 import Deaths from './deaths';
 
 export default class Game {
-    constructor(res, containerId, gameWidth, gameHeight) {
+    constructor(containerId, gameWidth, gameHeight) {
         //variables
         this.thisGame = this;
         this.containerId = containerId || 'game';
         this.gameWidth = gameWidth || 1200;
         this.gameHeight = gameHeight || 250;
-        this.resources = res;
-        //this.terrain = './img/terrain.png';
-        this.scoreEl = document.getElementById('score');
-        this.fragsEl = document.getElementById('frags');
-        this.healthEl = document.getElementById('health');
+        this.resources = new Resources();
+        this.terrain = './img/terrain.png';
+
 
         // Create the canvas
         this.canvas = document.createElement('canvas');
         this.ctx = this.canvas.getContext("2d");
         this.canvas.width = this.gameWidth;
         this.canvas.height = this.gameHeight;
+
+        // States
+        this.states = {
+            tower: new Towers(this.canvas.width,
+                            this.canvas.height,
+                        ),
+
+            terrainPattern: null
+        };
+
+        // Create enemiesType & weapons
+        this.weapons = new Weapons(this.states.tower.firePoint[0],
+                                    this.states.tower.firePoint[1]);
+        this.enemiesArr = new Enemies(this.canvas.width, this.canvas.height);
+        this.deathsArr = new Deaths();
+
+        this.resources.onReady(() => {
+            this.states.terrainPattern = this.ctx.createPattern(this.resources.get(this.terrain), 'repeat');
+            this.pause();
+        });
+
+        this.resources.load([this.terrain].concat(
+            this.states.tower.getUrls(),
+            this.weapons.getUrls(),
+            this.enemiesArr.getUrls(),
+            this.deathsArr.getUrls()
+        ));
+
+
+        this.scoreEl = document.getElementById('score');
+        this.fragsEl = document.getElementById('frags');
+        this.healthEl = document.getElementById('health');
         document.getElementById(this.containerId).appendChild(this.canvas);
 
         //listeners
@@ -58,20 +89,6 @@ export default class Game {
                 e.preventDefault ? e.preventDefault() : e.returnValue = false;
             }
         });
-
-        // States
-        this.states = {
-            tower: new Towers(this.canvas.width,
-                            this.canvas.height,
-                        ),
-
-            terrainPattern: null//this.ctx.createPattern(resources.get(this.terrain), 'repeat');
-        };
-        // Create enemiesType & weapons
-        this.weapons = new Weapons(this.states.tower.firePoint[0],
-                                    this.states.tower.firePoint[1]);
-        this.enemiesArr = new Enemies(this.canvas.width, this.canvas.height);
-        this.deathsArr = new Deaths();
 
         this.reset();
     };
@@ -324,7 +341,6 @@ export default class Game {
                 enemy.speed = 0;
                 console.log('enemy stop');
                 enemy.pos[0] = 1200 - 128 + 1;
-                //enemy.sprite.speed = 0;
             };
         };
 
