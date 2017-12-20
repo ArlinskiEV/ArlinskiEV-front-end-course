@@ -1,3 +1,4 @@
+import Resources from './resources';
 import Sprite from './sprite.js';
 
 export default class Deaths {
@@ -6,6 +7,7 @@ export default class Deaths {
 
         this.deaths.push({
             pos: [0, -40], //shift
+            sound: './music/2.mp3',
             sprite: ['./img/enemies/skeleton.png',
                         [90, 0],
                         [90, 120],
@@ -17,6 +19,7 @@ export default class Deaths {
 
         this.deaths.push({
             pos: [0, 39],
+            sound: './music/2.mp3',
             sprite: ['./img/enemies/temp.png',
                         [0, 0],
                         [80, 39],
@@ -27,12 +30,24 @@ export default class Deaths {
         });
     };
 
-    died(x, y, typeId) {
+    getUrls() {
+        return this.deaths.reduce((arr, death) => {
+            arr.push(death.sprite[0]);
+            arr.push(death.sound);
+        }, []);
+    };
+
+    died(resources, x, y, typeId) {
         let j = this.deaths[typeId];
         let death = {
             pos: [x + j.pos[0], y + j.pos[1]],
+            //sound: new Audio(),
+            sound: resources.get(j.sound),
             sprite: new Sprite(j.sprite)
         };
+        //death.sound.src = j.sound;
+        death.sound.currentTime = 0.0;
+        death.sound.play();
 
         return death;
     };

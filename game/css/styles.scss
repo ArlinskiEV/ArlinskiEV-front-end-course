@@ -3,10 +3,12 @@
 };
 .wrapper {
     margin: 0px auto;
+};
+
+.application {
     text-align: center;
     user-select: none;
 };
-
 
 body {
     background-color: black;
@@ -34,6 +36,7 @@ body {
 
         .info {
             margin: 5px;
+            width: 120px;
         };
     };
     .weapons {

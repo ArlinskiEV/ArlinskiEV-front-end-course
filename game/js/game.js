@@ -1,17 +1,19 @@
-import Sprite from './sprite.js';
+import Sprite from './sprite';
 
-import Towers from './towers.js';
-import Weapons from './weapons.js';
-import Enemies from './enemies.js';
-import Deaths from './deaths.js';
+import Towers from './towers';
+import Weapons from './weapons';
+import Enemies from './enemies';
+import Deaths from './deaths';
 
 export default class Game {
-    constructor(containerId, gameWidth, gameHeight) {
+    constructor(res, containerId, gameWidth, gameHeight) {
         //variables
         this.thisGame = this;
         this.containerId = containerId || 'game';
         this.gameWidth = gameWidth || 1200;
         this.gameHeight = gameHeight || 250;
+        this.resources = res;
+        //this.terrain = './img/terrain.png';
         this.scoreEl = document.getElementById('score');
         this.fragsEl = document.getElementById('frags');
         this.healthEl = document.getElementById('health');
@@ -23,10 +25,8 @@ export default class Game {
         this.canvas.height = this.gameHeight;
         document.getElementById(this.containerId).appendChild(this.canvas);
 
-
-
         //listeners
-        this.canvas.addEventListener('mouseup', e => {
+        this.canvas.addEventListener('click', e => {
             let x = e.pageX - e.target.offsetLeft,
                 y = e.pageY - e.target.offsetTop;
 
@@ -53,6 +53,11 @@ export default class Game {
                 this.pause();
             }
         });
+        document.addEventListener('keydown', e => {
+            if (e.keyCode === 32) {
+                e.preventDefault ? e.preventDefault() : e.returnValue = false;
+            }
+        });
 
         // States
         this.states = {
@@ -60,7 +65,7 @@ export default class Game {
                             this.canvas.height,
                         ),
 
-            terrainPattern: null
+            terrainPattern: null//this.ctx.createPattern(resources.get(this.terrain), 'repeat');
         };
         // Create enemiesType & weapons
         this.weapons = new Weapons(this.states.tower.firePoint[0],
@@ -77,6 +82,7 @@ export default class Game {
         this.lastTime = now;
         this.states.isGameOver = false;
         this.states.isPaused = true;
+        this.states.currentState = 'pause';
         this.states.timePause = now;
         this.states.gameTime = 0;
         this.states.score = 0;
@@ -84,9 +90,9 @@ export default class Game {
         this.states.frags = 0;
         this.states.enemies = [];
         this.states.bullets = [];
-        this.states.activeWeapon = 0;
         this.states.explosions = [];
         this.states.deaths = [];
+        this.states.activeWeapon = 0;
         this.states.tower.health = 1000;
 
 
@@ -113,15 +119,17 @@ export default class Game {
             this.render();
 
             this.lastTime = now;
-            requestAnimationFrame(Game.prototype.main.bind(this));
+            requestAnimationFrame( () => { this.main(); });
         };
     };
 
     gameOver() {
         this.states.isGameOver = true;
+        this.states.currentState = 'gameover';
         console.log(`------------------------------GAME OVER--------------`);
-        alert('GAME OVER');
+        //alert('GAME OVER');
     };
+
     pause() {
         let time = Date.now();
         this.states.isPaused = !this.states.isPaused;
@@ -129,19 +137,19 @@ export default class Game {
             time -= this.states.timePause;
             //-------------------------------
             this.lastTime += time;
-
             this.weapons.addTime(time);
-
             this.states.enemies = this.states.enemies
                 .map((enemy) => {
                     enemy.lastHit += time;
                     return enemy;
                 });
             //-------------------------------
+            this.states.currentState = 'run';
             this.main();
         } else {
             this.states.timePause = time;
-        }
+            this.states.currentState = 'pause';
+        };
     };
 
     checkCollisions() {
@@ -163,10 +171,10 @@ export default class Game {
             let size = this.states.enemies[i].sprite.size;
 
             //enemies-tower
-            if (boxCollides(pos, size, this.states.tower.pos, this.states.tower.sprite.size)) {
-
-                this.getHit(this.states.enemies[i]);
-            }
+            if (boxCollides(pos, size, this.states.tower.pos,
+                this.states.tower.sprite.size)) {
+                    this.getHit(this.states.enemies[i]);
+            };
 
             //enemies-bullet
             for (let j = 0; j < this.states.bullets.length; j++) {
@@ -187,7 +195,8 @@ export default class Game {
 
                         // Add death
                         this.states.deaths.push(
-                            this.deathsArr.died(this.states.enemies[i].pos[0],
+                            this.deathsArr.died(this.resources,
+                                            this.states.enemies[i].pos[0],
                                             this.states.enemies[i].pos[1],
                                             this.states.enemies[i].typeId,)
                         );
@@ -215,13 +224,14 @@ export default class Game {
             this.states.enemies,
             this.states.explosions,
             this.states.deaths)
-            .forEach(Game.prototype.renderEntity.bind(this));
+                //.forEach(Game.prototype.renderEntity.bind(this));
+                .forEach( (entity) => { this.renderEntity(entity); });
     };
 
     renderEntity(entity) {
         this.ctx.save();
         this.ctx.translate(entity.pos[0], entity.pos[1]);
-        entity.sprite.render(this.ctx); //from Sprite.js
+        entity.sprite.render(this.ctx, this.resources); //from Sprite.js
         this.ctx.restore();
     };
 
@@ -229,7 +239,7 @@ export default class Game {
         //create bullet
         if (!this.states.isPaused) {
             this.shoot(x, y);//a,b
-        }
+        };
     };
 
     // Update states of all objects
@@ -275,7 +285,7 @@ export default class Game {
         for (let i = 0; i <= 8; i++) {//0-8=>1-9, max weapons
             if (input.isDown(i + 1)) {
                 this.setWeapon(i);
-            }
+            };
         };
 
     };
@@ -286,7 +296,7 @@ export default class Game {
         if (this.states.tower.health <= 0) {
             this.states.isGameOver = true;
             this.gameOver();
-        }
+        };
 
         // Update all the bullets
         for (let i = 0; i < this.states.bullets.length; i++) {
@@ -308,12 +318,13 @@ export default class Game {
             let enemy = this.states.enemies[i];
             enemy.pos[0] += enemy.speed * dt;
             enemy.sprite.update(dt);
+
             // Stop if near tower
             if (enemy.pos[0] > 1200 - 128 + 2) {
                 enemy.speed = 0;
                 console.log('enemy stop');
                 enemy.pos[0] = 1200 - 128 + 1;
-                enemy.sprite.speed = 0;
+                //enemy.sprite.speed = 0;
             };
         };
 
@@ -326,7 +337,7 @@ export default class Game {
             if(explosion.sprite.done) {
                 explosions.splice(i, 1);
                 console.log('expl done');
-            }
+            };
 
         });
         // Update all the deaths
@@ -335,8 +346,9 @@ export default class Game {
 
             // Remove if animation is done
             if(death.sprite.done) {
+                //death.sound.pause();
                 deaths.splice(i, 1);
-            }
+            };
 
         });
     };
@@ -369,7 +381,12 @@ export default class Game {
     };
     getHit(enemy) {
         let time = Date.now();
+        if (!enemy.lastHit) {//first
+            this.enemiesArr.inAttack(this.resources, enemy);
+        };
         if (enemy.lastHit + enemy.reload < time) {
+            enemy.soundAttack.currentTime = 0.0;
+            enemy.soundAttack.play();
             this.states.tower.health -= enemy.damage;
             enemy.lastHit = time;
             console.log(`hit, health: ${this.states.tower.health}`);
@@ -386,6 +403,6 @@ export default class Game {
             targetWeapon.classList.add('activeWeapon');
             this.states.activeWeapon = id;
         };
-    }
+    };
 
 };

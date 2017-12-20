@@ -1,3 +1,5 @@
+import Resources from './resources';
+
 export default class Sprite {
     constructor(url, pos, size, speed, frames, dir, once) {
         if (arguments.length != 1) {
@@ -25,7 +27,7 @@ export default class Sprite {
         this._index += this.speed*dt;
     };
 
-    render(ctx) {
+    render(ctx, res) {
         let frame;
 
         if (this.speed > 0) {
@@ -55,7 +57,7 @@ export default class Sprite {
                 console.info('default directional frame');
         };
 
-        ctx.drawImage(resources.get(this.url),
+        ctx.drawImage(res.get(this.url),
                       x, y,
                       this.size[0], this.size[1],
                       0, 0,

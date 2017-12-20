@@ -12,4 +12,8 @@ export default class Towers {
         this.firePoint = [(x - 128 + 71),
                             (y - 178 + 17)];
     };
+
+    getUrls() {
+        return ['./img/tower.png'];
+    };
 };

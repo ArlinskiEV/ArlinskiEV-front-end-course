@@ -1,4 +1,4 @@
-import Sprite from './sprite.js';
+import Sprite from './sprite';
 
 export default class Weapons {
     constructor(x, y) {
@@ -18,7 +18,7 @@ export default class Weapons {
             reload: 1000,
             minScore: 0,
             bulletSpeed: 10,
-            lastShoot: 0
+            lastShoot: 0,
         });
 
 
@@ -63,6 +63,13 @@ export default class Weapons {
         });
     };
 
+    getUrls() {
+        return this.weapons.reduce((arr, weapon) => {
+            arr.push(weapon.sprite[0]);
+            arr.push(weapon.title);
+        }, []);
+    };
+
     getBullet(type, time) {
         let j = this.weapons[type];
 
@@ -77,13 +84,13 @@ export default class Weapons {
             sprite: new Sprite(j.sprite),
             damage: j.damage,
             speed: j.bulletSpeed,
-            target: [0, 0] //change in shoot
+            target: [0, 0], //change-in-shoot
         };
 
         return bullet;
     };
 
     addTime(time) {
-        this.weapons.map((item) => {item.lastShoot += time; return item;});
+        this.weapons.map((item) => { item.lastShoot += time; return item; });
     }
 };

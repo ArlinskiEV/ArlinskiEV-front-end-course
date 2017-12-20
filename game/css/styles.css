@@ -2,7 +2,9 @@
   box-sizing: border-box; }
 
 .wrapper {
-  margin: 0px auto;
+  margin: 0px auto; }
+
+.application {
   text-align: center;
   user-select: none; }
 
@@ -23,7 +25,8 @@ body {
   .application .controls button {
     margin: 5px; }
   .application .controls .info {
-    margin: 5px; }
+    margin: 5px;
+    width: 120px; }
 .application .weapons {
   display: flex;
   justify-content: flex-end;
