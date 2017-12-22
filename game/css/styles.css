@@ -48,7 +48,8 @@ body {
       border-radius: 25%; }
       .start .menu .menuButton:hover, .start .menu .menuButton a:hover {
         background-color: red;
-        color: black; }
+        color: black;
+        cursor: pointer; }
 
 .application p {
   font-family: 'Courier New';
