@@ -223,7 +223,9 @@ export default class Game {
           pos2,
           size2,
         )) {
-          this.hitting(this.states.bullets[j], this.states.enemies[i]);
+          // this.hitting(this.states.bullets[j], this.states.enemies[i]);
+          this.states.enemies[i].health -= this.states.bullets[j].damage;
+
           // Remove the enemy
           if (this.states.enemies[i].health <= 0) {
             // Add score and frags
@@ -261,7 +263,6 @@ export default class Game {
       this.states.explosions,
       this.states.deaths,
     )
-    // .forEach(Game.prototype.renderEntity.bind(this));
       .forEach((entity) => { this.renderEntity(entity); });
   }
 
@@ -314,9 +315,6 @@ export default class Game {
   }
 
   handleInput() { // (dt) in params
-    if (this.input.isDown('UP')) {
-      console.log('up');
-    }
     // 49-57=1-9 48=0
     for (let i = 0; i <= 8; i += 1) { // 0-8=>1-9, max weapons
       if (this.input.isDown(i + 1)) {
@@ -405,11 +403,13 @@ export default class Game {
     }
   }
 
+  /*
   hitting(bullet, enemy) {
+    this.score += 1;
     if (enemy && bullet) {
-      enemy.health -= bullet.damage;
     }
   }
+  */
 
   getHit(enemy) {
     const time = Date.now();
@@ -419,6 +419,7 @@ export default class Game {
 
     if (enemy.lastHit + enemy.reload < time) {
       if (!enemy.soundAttack) alert('1');
+      // why without alerts soundAttack may be undefined??
       enemy.soundAttack.currentTime = 0.0;
       enemy.soundAttack.play();
       this.states.tower.health -= enemy.damage;

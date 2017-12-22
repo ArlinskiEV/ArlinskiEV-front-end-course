@@ -27,7 +27,7 @@ export default class Resources {
 
       if (url.indexOf('mp3') >= 0) { // mp3 file=audio
         const aud = new Audio();
-        aud.addEventListener('loadeddata', () => {
+        aud.addEventListener('loadedmetadata', () => {
           this.resourceCache[url] = aud;
           if (this.isReady()) {
           // this.readyCallbacks.forEach( (foo) => foo() );

@@ -11,13 +11,13 @@ export default class Sprite {
         dir,
         this.once] = args;
     } else {
-      [this.url,
+      [[this.url,
         this.pos,
         this.size,
         speed,
         this.frames,
         dir,
-        this.once] = [args];
+        this.once]] = args;
     }
     this.speed = typeof speed === 'number' ? speed : 0;
     this.dir = dir || 'horizontal';
