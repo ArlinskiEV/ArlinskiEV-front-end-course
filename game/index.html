@@ -10,24 +10,29 @@
 
         </header>
         <main>
-          <audio src="./music/main.mp3" autoplay id="mainMusic">
-
-          </audio>
-            <div class="wrapper application" id="application">
-              <section class="start">
+          <audio src="./music/main.mp3" id="mainMusic"></audio>
+            <section class="wrapper start" id="menu" >
+              <div class="menu">
                 <div class="result" id="result">
                   <p>Score: <span id="resultScore">0</span></p>
                 </div>
-                <div class="startButton" id="startButton">Start</div>
-                <div class="aboutButton" id="aboutButton">About</div>
-              </section>
-              <section class="gameover">
-                <div class="startButton" id="startButton">Play Again</div>
-                <div class="aboutButton" id="aboutButton">About</div>
-              </section>
+                <div class="menuButton" id="startButton"><p>Start</p></div>
+                <div class="menuButton" id="pauseButton"><p>Coninue</p></div>
+                <div class="menuButton" id="aboutButton">
+                  <p><a href="./about/index.html">About</a></p>
+                </div>
+                <div class="result disabled" id="isOver">
+                  <p>Game Over</p>
+                </div>
+              </div>
+            </section>
+
+            <div class="wrapper application" id="application" >
                 <section class="controls">
-                    <div class="controlButton" id="play-pause">Play/Pause</div>
-                    <div class="controlButton" id="reset">Reset</div>
+                    <div class="container">
+                      <div class="controlButton" id="play-pause">Play/Pause</div>
+                      <div class="controlButton" id="reset">Reset</div>
+                    </div>
                     <div class="info">
                         <p>Heath: <span id="health">1000</span></p>
                         <p>Frags: <span id="frags">0</span></p>

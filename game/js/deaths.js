@@ -17,13 +17,13 @@ export default class Deaths {
     });
 
     this.deaths.push({
-      pos: [0, 39],
-      sound: './music/zmb_d.mp3',
-      sprite: ['./img/enemies/temp.png',
-        [0, 0],
-        [80, 39],
+      pos: [0, 0],
+      sound: './music/uni_d.mp3',
+      sprite: ['./img/enemies/horse.png',
+        [0, 800],
+        [125, 100],
         6,
-        [0, 1, 2, 3, 2, 1],
+        [0, 1, 2, 3, 4, 5],
         null,
         true],
     });

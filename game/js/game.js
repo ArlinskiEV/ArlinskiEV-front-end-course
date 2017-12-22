@@ -44,7 +44,6 @@ export default class Game {
 
     this.resources.onReady(() => {
       this.states.terrainPattern = this.ctx.createPattern(this.resources.get(this.terrain), 'repeat');
-      this.pause();
     });
 
     this.resources.load([this.terrain].concat(
@@ -100,6 +99,15 @@ export default class Game {
       }
     });
 
+    // main-menu
+    document.getElementById('startButton').addEventListener('click', () => {
+      this.reset();
+      this.pause();
+    });
+    document.getElementById('pauseButton').addEventListener('click', () => {
+      this.pause();
+    });
+
     this.reset();
   }
 
@@ -121,6 +129,8 @@ export default class Game {
     this.states.deaths = [];
     this.states.activeWeapon = 0;
     this.states.tower.health = 1000;
+    const result = document.getElementById('isOver');
+    result.classList.add('disabled');
 
 
     for (let i = 1; i < this.weapons.weapons.length; i += 1) {
@@ -155,17 +165,21 @@ export default class Game {
   gameOver() {
     this.states.isGameOver = true;
     this.states.currentState = 'gameover';
-    console.log('------------------------------GAME OVER--------------');
-    // alert('GAME OVER');
+    let el = document.getElementById('isOver');
+    el.classList.remove('disabled');
+    el = document.getElementById('menu');
+    el.classList.remove('disabled');
   }
 
   pause() {
     let time = Date.now();
     const audio = document.getElementById('mainMusic');
+    const el = document.getElementById('menu');
     audio.volume = 0.1;
     this.states.isPaused = !this.states.isPaused;
     if (!this.states.isPaused) {
       audio.play();
+      el.classList.add('disabled');
       time -= this.states.timePause;
       //-------------------------------
       this.lastTime += time;
@@ -181,6 +195,9 @@ export default class Game {
       this.main();
     } else {
       audio.pause();
+      let menuScore = document.getElementById('resultScore');
+      menuScore.innerHTML = this.states.score;
+      el.classList.remove('disabled');
       this.states.timePause = time;
       this.states.currentState = 'pause';
     }
@@ -242,9 +259,9 @@ export default class Game {
               this.states.enemies[i].pos[1],
               this.states.enemies[i].typeId,
             );
-            if (this.states.enemies[i].speed === 0) {
-              death.pos[1] = this.canvas.height - death.sprite.size[1];
-            }
+            // if (this.states.enemies[i].speed === 0) {
+            death.pos[1] = this.canvas.height - death.sprite.size[1];
+            // }
             this.states.deaths.push(death);
 
             this.states.enemies.splice(i, 1);
@@ -419,8 +436,10 @@ export default class Game {
     }
 
     if (enemy.lastHit + enemy.reload < time) {
-      enemy.soundAttack.currentTime = 0.0;
-      enemy.soundAttack.play();
+      if (enemy.soundAttack) {
+        enemy.soundAttack.currentTime = 0.0;
+        enemy.soundAttack.play();
+      }
       this.states.tower.health -= enemy.damage;
       enemy.lastHit = time;
       console.log(`hit, health: ${this.states.tower.health}`);

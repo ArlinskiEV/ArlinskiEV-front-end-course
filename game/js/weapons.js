@@ -32,10 +32,10 @@ export default class Weapons {
         8,
         [0, 1, 2, 3],
       ],
-      damage: 1,
-      reload: 10,
+      damage: 2,
+      reload: 500,
       minScore: 5,
-      bulletSpeed: 2,
+      bulletSpeed: 4,
       lastShoot: 0,
     });
 
