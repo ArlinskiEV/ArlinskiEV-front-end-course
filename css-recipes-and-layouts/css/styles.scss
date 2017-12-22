@@ -216,11 +216,22 @@ header {
 
 main {
 
-    .stayUpdatet {
-        height: 56px;
+    .stayUpdatet {//background
         margin-bottom: 40px;
-        .wrapper.contacts {
-
+        display: flex;
+        .wrapper.contacts {//content-ceter
+            width: 100%;
+            .contacts.container {
+                align-items: center;
+                .email {
+                    p {
+                        line-height: 1;
+                        color: gray;
+                        font-size: 1.17em;
+                        align-items: center;
+                    }
+                }
+            }
         }
     }
 
@@ -427,32 +438,6 @@ footer {
                                 color: $activeColor;
                             }
                         }
-                    }
-                }
-            }
-            .picture {
-                background-image: url(../img/100secured.png);
-                background-size: cover;
-                background-repeat: no-repeat;
-                position: relative;
-                width: 107px;
-                height: 107px;
-                flex-shrink: 0;
-                .pictureText {
-                    position: absolute;
-                    margin: 5px;
-                    text-align: center;
-                    top:25px;
-                    left: 14px;
-                    line-height: 1;
-                    color: $pictureTextColor;
-                    h4 {
-                        font-size: 24pt;
-                        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-                    }
-                    p {
-                        font-size: 13pt;
-                        font-family: 'HelveticaNeueLTStd-Cn';
                     }
                 }
             }

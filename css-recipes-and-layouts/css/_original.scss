@@ -37,6 +37,17 @@
 /*------------------------main------------------------*/
 main .stayUpdatet {
     background-color: $stayUpdateBackgroundColor;
+    height: 56px;
+    align-items: center;
+    .wrapper.contacts {
+        .contacts.container {
+            height: 29px;
+            .email.container p{
+                width: 80px;
+                margin-right: 5px;
+            }
+        }
+    }
 }
 
 

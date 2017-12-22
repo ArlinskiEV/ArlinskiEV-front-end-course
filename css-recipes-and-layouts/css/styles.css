@@ -92,7 +92,9 @@ a {
 
   /*------------------------main------------------------*/
   main .stayUpdatet {
-    background-color: #ededed; }
+    background-color: #ededed;
+    height: 56px;
+    align-items: center; }
 
   /*------------------------footer------------------------*/
   .footContent .content .container {
@@ -128,7 +130,14 @@ a {
 
   /*------------------------main------------------------*/
   main .stayUpdatet {
-    background-color: #ededed; }
+    background-color: #ededed;
+    height: 56px;
+    align-items: center; }
+    main .stayUpdatet .wrapper.contacts .contacts.container {
+      height: 29px; }
+      main .stayUpdatet .wrapper.contacts .contacts.container .email.container p {
+        width: 80px;
+        margin-right: 5px; }
 
   /*------------------------footer------------------------*/
   nav .lowMenu {
@@ -283,8 +292,17 @@ header .slider {
 
 /*------------------------main------------------------*/
 main .stayUpdatet {
-  height: 56px;
-  margin-bottom: 40px; }
+  margin-bottom: 40px;
+  display: flex; }
+  main .stayUpdatet .wrapper.contacts {
+    width: 100%; }
+    main .stayUpdatet .wrapper.contacts .contacts.container {
+      align-items: center; }
+      main .stayUpdatet .wrapper.contacts .contacts.container .email p {
+        line-height: 1;
+        color: gray;
+        font-size: 1.17em;
+        align-items: center; }
 main .arts {
   /*justify-content: center;*/
   justify-content: space-around;
@@ -450,28 +468,6 @@ footer {
                 font-size: 20px; }
               footer .footContent .content .item .socials.container .social a:hover i {
                 color: mediumblue; }
-      footer .footContent .content .picture {
-        background-image: url(../img/100secured.png);
-        background-size: cover;
-        background-repeat: no-repeat;
-        position: relative;
-        width: 107px;
-        height: 107px;
-        flex-shrink: 0; }
-        footer .footContent .content .picture .pictureText {
-          position: absolute;
-          margin: 5px;
-          text-align: center;
-          top: 25px;
-          left: 14px;
-          line-height: 1;
-          color: #a59d9a; }
-          footer .footContent .content .picture .pictureText h4 {
-            font-size: 24pt;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; }
-          footer .footContent .content .picture .pictureText p {
-            font-size: 13pt;
-            font-family: 'HelveticaNeueLTStd-Cn'; }
     footer .footContent section.container {
       flex-grow: 5; }
   footer .footMenu {
