@@ -3,6 +3,7 @@ node_modules
 *.bundle.js
 *.log
 match-match-game/
+binary-search-tree/
 ngrok*
 css-recipes-and-layouts/css/.sass-cache/
 css-recipes-and-layouts/css/*.map
