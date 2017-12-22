@@ -6,18 +6,21 @@ export default class Enemies {
 
     this.enemiesArr.push({
       pos: [-90, (y - 80)], // ground minus enemy size
-      soundAttack: './music/3.mp3',
+      soundAttack: './music/skl_a.mp3',
       sprite: ['./img/enemies/skeleton.png',
         [0, 0],
         [90, 80],
         8,
         [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-        'vertical'],
-      spriteAttack: ['./img/enemies/temp.png',
-        [0, 0],
-        [80, 39],
-        6,
-        [0, 1, 2, 3, 2, 1]],
+        'vertical',
+      ],
+      spriteAttack: ['./img/enemies/skeleton.png',
+        [180, 0],
+        [100, 115],
+        7,
+        [0, 1, 2, 3, 4, 5, 6, 7],
+        'vertical',
+      ],
       score: {
         cost: 2,
         start: 0,
@@ -31,7 +34,7 @@ export default class Enemies {
 
     this.enemiesArr.push({
       pos: [-90, (y - 39)],
-      soundAttack: './music/3.mp3',
+      soundAttack: './music/zmb_a.mp3',
       sprite: ['./img/enemies/temp.png',
         [0, 0],
         [80, 39],
@@ -57,6 +60,7 @@ export default class Enemies {
   getUrls() {
     return this.enemiesArr.reduce((arr, enemy) => {
       arr.push(enemy.sprite[0]);
+      arr.push(enemy.spriteAttack[0]);
       arr.push(enemy.soundAttack);
       return arr;
     }, []);
@@ -83,11 +87,10 @@ export default class Enemies {
   }
 
   inAttack(resources, enemy) {
-    const j = this.enemiesArr[enemy.typeId];
+    const j = resources.get(this.enemiesArr[enemy.typeId].soundAttack);
 
-    enemy.soundAttack = resources.get(j.soundAttack);
-    enemy.soundAttack.currentTime = 0.0;
-    enemy.soundAttack.play();
-    enemy.sprite = new Sprite(j.spriteAttack);
+    j.currentTime = 0.0;
+    j.play();
+    return [j, new Sprite(this.enemiesArr[enemy.typeId].spriteAttack)];
   }
 }

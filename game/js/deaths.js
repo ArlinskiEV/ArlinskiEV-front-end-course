@@ -6,7 +6,7 @@ export default class Deaths {
 
     this.deaths.push({
       pos: [0, -40], // shift
-      sound: './music/2.mp3',
+      sound: './music/skl_d.mp3',
       sprite: ['./img/enemies/skeleton.png',
         [90, 0],
         [90, 120],
@@ -18,7 +18,7 @@ export default class Deaths {
 
     this.deaths.push({
       pos: [0, 39],
-      sound: './music/2.mp3',
+      sound: './music/zmb_d.mp3',
       sprite: ['./img/enemies/temp.png',
         [0, 0],
         [80, 39],
@@ -41,11 +41,10 @@ export default class Deaths {
     const j = this.deaths[typeId];
     const death = {
       pos: [x + j.pos[0], y + j.pos[1]],
-      // sound: new Audio(),
       sound: resources.get(j.sound),
       sprite: new Sprite(j.sprite),
     };
-      // death.sound.src = j.sound;
+
     death.sound.currentTime = 0.0;
     death.sound.play();
 

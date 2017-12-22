@@ -6,12 +6,12 @@ module.exports = {
   output: {
     filename: './js/app.bundle.js',
   },
-
+/*
   module: {
     rules: [
       { enforce: 'pre', test: /\.js$/, loader: 'eslint-loader' },
       // {test: /\.scss/, loader: }
     ],
   },
-
+*/
 };

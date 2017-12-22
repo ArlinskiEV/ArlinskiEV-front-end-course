@@ -13,7 +13,8 @@ export default class Weapons {
         [44, 44],
         6,
         [0, 1, 2, 1],
-        'vertical'],
+        'vertical',
+      ],
       damage: 1,
       reload: 1000,
       minScore: 0,
@@ -23,17 +24,17 @@ export default class Weapons {
 
 
     this.weapons.push({
-      pos: [x - 22, y - 22],
-      title: './img/bullets/bullet_title.png',
-      sprite: ['./img/bullets/bullet.png',
+      pos: [x - 5, y - 5],
+      title: './img/bullets/small_title.png',
+      sprite: ['./img/bullets/small.png',
         [0, 0],
-        [44, 44],
-        6,
-        [0, 1, 2, 1],
-        'vertical'],
+        [10, 10],
+        8,
+        [0, 1, 2, 3],
+      ],
       damage: 1,
       reload: 10,
-      minScore: 90,
+      minScore: 5,
       bulletSpeed: 2,
       lastShoot: 0,
     });
@@ -53,13 +54,17 @@ export default class Weapons {
       prev.appendChild(img);
       el.appendChild(prev);
 
-      const info = document.createElement('p');
+      let info = document.createElement('p');
       info.innerHTML = `DMG:${item.damage}`;
-      el.appendChild(info.cloneNode());
+      el.appendChild(info);
+      info = document.createElement('p');
       info.innerHTML = `SPD:${item.bulletSpeed}`;
-      el.appendChild(info.cloneNode());
+      el.appendChild(info);
+      info = document.createElement('p');
       info.innerHTML = `REL:${item.reload}`;
       el.appendChild(info);
+
+      this.weaponsEL.appendChild(el);
     });
   }
 

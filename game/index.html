@@ -10,10 +10,24 @@
 
         </header>
         <main>
+          <audio src="./music/main.mp3" autoplay id="mainMusic">
+
+          </audio>
             <div class="wrapper application" id="application">
+              <section class="start">
+                <div class="result" id="result">
+                  <p>Score: <span id="resultScore">0</span></p>
+                </div>
+                <div class="startButton" id="startButton">Start</div>
+                <div class="aboutButton" id="aboutButton">About</div>
+              </section>
+              <section class="gameover">
+                <div class="startButton" id="startButton">Play Again</div>
+                <div class="aboutButton" id="aboutButton">About</div>
+              </section>
                 <section class="controls">
-                    <button id="play-pause">Play/Pause</button>
-                    <button id="reset">Reset</button>
+                    <div class="controlButton" id="play-pause">Play/Pause</div>
+                    <div class="controlButton" id="reset">Reset</div>
                     <div class="info">
                         <p>Heath: <span id="health">1000</span></p>
                         <p>Frags: <span id="frags">0</span></p>
@@ -22,25 +36,7 @@
                 </section>
 
                 <section id="game"></section>
-
-                <section class="weapons" id='weapons'>
-                    <div class="weapon activeWeapon" id='0'>
-                        <div class="prev">
-                            <img src="./img/bullets/bullet_title.png" alt="">
-                        </div>
-                        <p>DMG:1</p>
-                        <p>SPD:1000</p>
-                        <p>REL:100</p>
-                    </div>
-                    <div class="weapon" id='1'>
-                        <div class="prev">
-                            <img src="./img/bullets/bullet_title.png" alt="">
-                        </div>
-                        <p>DMG:1</p>
-                        <p>SPD:2</p>
-                        <p>REL:10</p>
-                    </div>
-                </section>
+                <section class="weapons" id='weapons'></section>
             </div>
         </main>
         <!--script src="./js/input.js" charset="utf-8"></script-->

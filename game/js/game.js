@@ -161,8 +161,11 @@ export default class Game {
 
   pause() {
     let time = Date.now();
+    const audio = document.getElementById('mainMusic');
+    audio.volume = 0.1;
     this.states.isPaused = !this.states.isPaused;
     if (!this.states.isPaused) {
+      audio.play();
       time -= this.states.timePause;
       //-------------------------------
       this.lastTime += time;
@@ -177,6 +180,7 @@ export default class Game {
       this.states.currentState = 'run';
       this.main();
     } else {
+      audio.pause();
       this.states.timePause = time;
       this.states.currentState = 'pause';
     }
@@ -223,7 +227,6 @@ export default class Game {
           pos2,
           size2,
         )) {
-          // this.hitting(this.states.bullets[j], this.states.enemies[i]);
           this.states.enemies[i].health -= this.states.bullets[j].damage;
 
           // Remove the enemy
@@ -233,12 +236,16 @@ export default class Game {
             this.states.frags += 1;
 
             // Add death
-            this.states.deaths.push(this.deathsArr.died(
+            const death = this.deathsArr.died(
               this.resources,
               this.states.enemies[i].pos[0],
               this.states.enemies[i].pos[1],
               this.states.enemies[i].typeId,
-            ));
+            );
+            if (this.states.enemies[i].speed === 0) {
+              death.pos[1] = this.canvas.height - death.sprite.size[1];
+            }
+            this.states.deaths.push(death);
 
             this.states.enemies.splice(i, 1);
             i -= 1;
@@ -355,7 +362,6 @@ export default class Game {
       // Stop if near tower
       if (enemy.pos[0] > (1200 - 128) + 2) {
         enemy.speed = 0;
-        console.log('enemy stop');
         enemy.pos[0] = (1200 - 128) + 1;
       }
     }
@@ -403,23 +409,16 @@ export default class Game {
     }
   }
 
-  /*
-  hitting(bullet, enemy) {
-    this.score += 1;
-    if (enemy && bullet) {
-    }
-  }
-  */
 
   getHit(enemy) {
     const time = Date.now();
     if (!enemy.lastHit) { // first
-      this.enemiesArr.inAttack(this.resources, enemy);
+      let [x, y] = [enemy.sprite.size];
+      [enemy.soundAttack, enemy.sprite] = this.enemiesArr.inAttack(this.resources, enemy);
+      enemy.pos[1] = this.canvas.height - enemy.sprite.size[1];
     }
 
     if (enemy.lastHit + enemy.reload < time) {
-      if (!enemy.soundAttack) alert('1');
-      // why without alerts soundAttack may be undefined??
       enemy.soundAttack.currentTime = 0.0;
       enemy.soundAttack.play();
       this.states.tower.health -= enemy.damage;
