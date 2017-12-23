@@ -97,6 +97,9 @@ export default class Weapons {
   }
 
   addTime(time) {
-    this.weapons.map((item) => { item.lastShoot += time; return item; });
+    this.weapons.forEach((item, index) => {
+      this.weapons[index].lastShoot += time;
+      // item.lastShoot += time; // param reassign
+    });
   }
 }

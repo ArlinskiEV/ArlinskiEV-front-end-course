@@ -169,6 +169,8 @@ export default class Game {
     el.classList.remove('disabled');
     el = document.getElementById('menu');
     el.classList.remove('disabled');
+    el = document.getElementById('resultScore');
+    el.innerHTML = this.states.score;
   }
 
   pause() {
@@ -195,7 +197,7 @@ export default class Game {
       this.main();
     } else {
       audio.pause();
-      let menuScore = document.getElementById('resultScore');
+      const menuScore = document.getElementById('resultScore');
       menuScore.innerHTML = this.states.score;
       el.classList.remove('disabled');
       this.states.timePause = time;
@@ -430,7 +432,7 @@ export default class Game {
   getHit(enemy) {
     const time = Date.now();
     if (!enemy.lastHit) { // first
-      let [x, y] = [enemy.sprite.size];
+      // let [x, y] = [enemy.sprite.size];
       [enemy.soundAttack, enemy.sprite] = this.enemiesArr.inAttack(this.resources, enemy);
       enemy.pos[1] = this.canvas.height - enemy.sprite.size[1];
     }
@@ -442,7 +444,6 @@ export default class Game {
       }
       this.states.tower.health -= enemy.damage;
       enemy.lastHit = time;
-      console.log(`hit, health: ${this.states.tower.health}`);
     }
   }
 
