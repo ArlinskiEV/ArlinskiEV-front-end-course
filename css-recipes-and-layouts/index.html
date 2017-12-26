@@ -104,17 +104,17 @@
                 <div class="wrapper contacts">
                     <section class="contacts container">
                         <section class="email container">
-                            <p>Stay updated</p>
+                            <p class="noSmall">Stay updated</p>
                             <form class="yourEmail" action="index.html" method="post">
-                                <input type="email" name="yourEmail" value="" required="required" placeholder="Your email address">
-                                <input type="submit" name="Submit" value="+">
+                                <input type="email"  class="emailInput" name="yourEmail" value="" required="required" placeholder="Your email address">
+                                <input type="submit" class="emailSubmit" name="Submit" value="+">
                             </form>
                         </section>
                         <section class="socials container">
                             <p>Find us here</p>
-                            <p>facebook</p>
-                            <p>twitter</p>
-                            <p>printerest</p>
+                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
                         </section>
                     </section>
                 </div>
@@ -124,33 +124,55 @@
 
 
             <div class="wrapper noSmall">
-                <section class="arts container">
-                    <div class="main item">
-                        <figure class="item">
+                <section class="arts">
+                    <div class="item">
+                        <figure class="active" id="artsItem1">
                             <img src="./img/aart_01.jpg" alt="">
                         </figure>
                     </div>
-                    <div class="second item container">
-                        <figure class="item">
+                    <div class="item">
+                        <figure class="active" id="artsItem2">
                             <img src="./img/aart_02.jpg" alt="">
                         </figure>
-                        <div class="item container">
-                            <figure class="item">
-                                <img src="./img/aart_03.jpg" alt="">
-                            </figure>
-                            <figure class="item">
-                                <img src="./img/aart_04.jpg" alt="">
-                            </figure>
-                        </div>
+                    </div>
+                    <div class="item">
+                        <figure class="active" id="artsItem3">
+                            <img src="./img/aart_03.jpg" alt="">
+                        </figure>
+                    </div>
+                    <div class="item">
+                        <figure class="active" id="artsItem4">
+                            <img src="./img/aart_04.jpg" alt="">
+                        </figure>
                     </div>
                 </section>
             </div>
 
 
 
-            <section class="tabs"></section>
-
-
+            <section class="tabs">
+                <div class="wrapper">
+                    <nav class="tabControls container">
+                        <div class="tabNames container">
+                            <div class="tab current" id="tab1">what's hot?</div>
+                            <div class="tab fullMenu" id="tab2">designers</div>
+                            <div class="tab fullMenu" id="tab3">featured</div>
+                            <div class="tab fullMenu" id="tab4">latest</div>
+                        </div>
+                        <div class="tabNav container">
+                            <div class="tabBack fullMenu" id="tabBack">&#8249;</div>
+                            <div class="tabForward fullMenu able" id="tabForward">&#8250;</div>
+                            <div class="tabLowNav lowMenu"></div>
+                        </div>
+                    </nav>
+                </div>
+                <div class="tabContent" id="tabContent">
+                    <figure class="product scaled" id="product1">
+                        <img src="" alt="">
+                        <figcaption></figcaption>
+                    </figure>
+                </div>
+            </section>
 
 
             <section class="sales">

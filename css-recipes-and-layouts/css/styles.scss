@@ -2,20 +2,12 @@
 @import 'fonts';
 @import 'variables';
 
-/*------------------------responsive------------------------*/
-@media (max-width: 640px) {
-    @import "small";
-}
-@media (min-width: 641px) and (max-width: 768px) {
-    @import "medium";
-}
-@media (min-width: 769px) {
-    @import "original";
-}
+
 
 
 
 /*active elements*/
+input,
 .active:hover,
 .active:active,
 a {
@@ -33,6 +25,7 @@ font-size: 10px;
 }
 .wrapper {
     padding: 0px 10px;
+    box-sizing: border-box;
 }
 
 /*------------------------flexContainers------------------------*/
@@ -86,7 +79,6 @@ header {
             }
         }
     }
-
     .headMenu {
         margin-top: 30px;
         margin-bottom: 20px;
@@ -179,8 +171,15 @@ header {
                 background-color: $sliderScrollColor;
 
                 position: absolute;
-                top: 40%;
+                top: calc(50% - 58px);
                 padding-top: 40px;
+
+                &:hover {
+                    background-color: $sliderScrollActiveColor;
+                    & a {
+                        color: white;
+                    }
+                }
 
             }
             .slideBack {
@@ -198,7 +197,7 @@ header {
                 height: 10px;
                 margin: 0 10px;
                 border-radius: 50%;
-                background-color: #ffa687;
+                background-color: $slideControlPassive;
                 &:hover {
                     cursor: pointer;
                     background-color: $activeColor;
@@ -223,12 +222,60 @@ main {
             width: 100%;
             .contacts.container {
                 align-items: center;
+                font-family: "Arial", serif;
+                p {
+                    align-self: center;
+                    color: $stayUpdateFontColor;
+                    font-size: 13px;
+                    margin-right: 7px;
+                }
                 .email {
-                    p {
-                        line-height: 1;
-                        color: gray;
-                        font-size: 1.17em;
-                        align-items: center;
+                    .yourEmail {
+                        font-size: 0;
+                        .emailInput {
+                            background: $emailBackgroundColor;
+                            width: 130px;
+                            height: 29px;
+                            font-size: 12px;
+                            padding: 0px 7px;
+                            border: none;
+                            &:hover {
+                                background-color: $inputActiveColor;
+                            }
+                        }     
+                                       
+                        .emailSubmit {
+                            font-size: 20px;
+                            width: 29px;
+                            height: 29px;
+                            border: 0px;
+    
+                            color: $emailSubmitColor;
+                            background: $emailSubmitBackgroundColor;
+                            border-bottom: 4px solid $emailSubmitBottomColor;
+    
+                            &:hover {
+                                background-color: $activeColor;
+                            }
+                        }
+                    }
+                }
+                .socials {
+                    a {
+                        height: 56px;
+                        i {
+                            margin-top: 30%;
+                            font-size: 20px;
+                            color: $socialsColor;
+                            width: 52px;
+                            text-align: center;
+                            &:hover {
+                                color: $activeColor;
+                            }
+                        }
+                        &:nth-child(even) {
+                            background-color: $cocialsNextColor;
+                        }
                     }
                 }
             }
@@ -237,19 +284,19 @@ main {
 
 
     .arts {
-        /*justify-content: center;*/
-        justify-content: space-around;
-        align-items: center;
-        .second {
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        item {
-            flex-grow: 1;
+        margin-bottom: 50px;
+        display: grid;
+        grid-template: 25% 25% 25% 25% / 25% 25% 25% 25%;
+        .item {
             img {
                 width: 100%;
+            }
+            &:first-child {
+                grid-column: 1 / 3;
+                grid-row: 1 / 3;
+            }
+            &:nth-child(2) {
+                grid-column: 3 / 5;
             }
         }
 
@@ -257,10 +304,31 @@ main {
     }
 
 
-
-
-
-
+    .tabs {
+        .tabControls {
+            align-content: space-between;
+            .tabNames {
+                .tab {
+                    height: 47px;
+                    font-size: 15px;
+                    &.current {
+                        background-color: $tabBackgroundColor;
+                    }
+                }
+            }
+            .tabNav {
+                .fullMenu {
+                    width: 47px;
+                    &.able {
+                        background-color: $tabBackgroundColor;
+                    }
+                }
+            }
+        }
+        .tabContent {
+            background-color: $tabBackgroundColor;
+        }
+    }
 
 
 
@@ -501,4 +569,16 @@ footer {
 body {
     flex-direction: column;
     min-height: 100vh;
+}
+
+
+/*------------------------responsive------------------------*/
+@media (max-width: 640px) {
+    @import "small";
+}
+@media (min-width: 641px) and (max-width: 768px) {
+    @import "medium";
+}
+@media (min-width: 769px) {
+    @import "original";
 }
