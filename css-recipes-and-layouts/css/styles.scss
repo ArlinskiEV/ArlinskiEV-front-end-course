@@ -83,6 +83,8 @@ header {
             align-items: center;
         }
         nav.container {
+            flex-wrap: wrap;
+            padding-left: 10px;
             .link {
                 margin-right:  20px;
                 font-size: 16pt;
@@ -305,6 +307,8 @@ main {
 
 
     .tabs {
+        margin-bottom: 25px;
+        padding-bottom: 30px;
         .tabControls {
             align-content: space-between;
             .tabNames {
@@ -316,7 +320,6 @@ main {
                     height: 47px;
                     font-size: 15px;
                     color: $tabColor;
-                    min-width: 140px;
                     padding: 0 10px;
                     text-transform: uppercase;
                     &.current {
@@ -360,13 +363,16 @@ main {
         }
         .tabContent {
             background-color: $tabBackgroundColor;
-            padding: 30px 0;
+            padding: 30px 0px;
             width: 100%;
             overflow: hidden;
             &.container {
                 justify-content: center;
             }
         }
+    }
+    .loadMore {
+        display: none;
     }
 
     .product {
@@ -495,36 +501,12 @@ main {
     }
 
 
-
-
-
-
-
-
-    header.container {
-        align-items: center;
-        h2 {
-            font-family: Arial, Helvetica, sans-serif;
-            font-weight: bold;
-            font-size: 12pt;
-            color: $brandHeadColor;
-            flex-shrink: 0;
-        }
-    }
-    .decor {
-        height: 1px;
-        width: 42%;
-        display: block;
-        background-color: $lineColor;
-    }
-    .brends {
+    .banner {
+        display: flex;
         align-items: center;
         img {
-            flex: 0;
+            margin: 0 15px;
         }
-        margin: 20px 0px;
-    }
-    .wrapper.line {
         &::before {
             content: '';
             display: block;
@@ -532,7 +514,60 @@ main {
             width: 100%;
             background-color: $lineColor;
         }
+        &::after {
+            content: '';
+            display: block;
+            height: 1px;
+            width: 100%;
+            background-color: $lineColor;
+        }
     }
+
+    .sales {
+        margin-bottom: 35px;
+        overflow: hidden;
+        .banner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .additionalContent  {
+            padding-top: 20px;
+            padding-bottom: 25px;
+            align-content: center;
+            justify-content: center;
+        }
+
+    }
+
+
+
+
+    .banner h2 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            font-size: 12pt;
+            white-space: nowrap;
+            margin: 0 20px;
+            color: $brandHeadColor;
+    }
+    .brends {
+        align-items: center;
+        img {
+            flex: 0;
+        }
+        margin: 20px auto;
+    }
+
+    .partners {
+        &::after {
+            content: '';
+            display: block;
+            height: 1px;
+            width: 100%;
+            background-color: $lineColor;
+        }
+    }
+
     .content {
         text-align: center;
         margin-top: 35px;

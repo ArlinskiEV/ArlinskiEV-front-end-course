@@ -123,9 +123,15 @@ main {
         }
     }
 
+
     .tabs {
-        background-color: $tabControlSmallColor;
+        background-color: $tabBackgroundColor;
+        .wrapper {
+            padding: 0;
+        }
         .tabControls {
+            padding: 0 10px;
+            background-color: $tabControlSmallColor;
             .tabNames {
                 .tab {
                     &.current {
@@ -152,6 +158,29 @@ main {
 
     .product {
         width: 270px;
+    }
+
+    .loadMore {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 220px;
+        height: 60px;
+        margin: 0px auto;
+        color: $loadMoreFontColor;
+        background-color: $loadMoreBackgroundColor;
+
+        &::before {
+            font-size: 15px;
+            font-family: "webfont", sans-serif;
+            content: "LOAD MORE"
+        }
+
+        &:hover {
+            cursor: pointer;
+            color: $activeColor;
+            background-color: $userColor;
+        }
     }
 }
 
