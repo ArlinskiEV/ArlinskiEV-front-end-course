@@ -30,10 +30,8 @@ header {
             }
             .accauntMenu {
                 font-size: 30pt;
-                .lister {
-                    border-left: 7px solid transparent;
-                    border-right: 7px solid transparent;
-                    border-top: 14px solid white;
+                i {
+                    padding-top: 3px;
                 }
             }
         }
@@ -113,10 +111,47 @@ main {
                         &:nth-child(odd) {
                             background-color: $contentGray;
                         }
+                        &:hover {
+                            background-color: $inputActiveColor;
+                            i {
+                                color: $activeColor;
+                            }
+                        }
                     }
                 }
             }
         }
+    }
+
+    .tabs {
+        background-color: $tabControlSmallColor;
+        .tabControls {
+            .tabNames {
+                .tab {
+                    &.current {
+                        background-color: $tabControlSmallColor;
+                    }
+                    &:not(.current) {
+                        display: none;
+                    }
+                }
+            }
+        }
+        .tabNav .tabLowNav p i {
+            color: $tabFontColor;
+        }
+        .tabNav .tabLowNav {
+            &:hover {
+                cursor: pointer;
+                i {
+                    color: $activeTabFontColor
+                }
+            }
+        }
+    }
+
+    .product {
+        width: 270px;
     }
 }
 

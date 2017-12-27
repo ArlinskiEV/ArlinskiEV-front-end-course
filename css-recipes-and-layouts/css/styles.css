@@ -25,7 +25,10 @@ a {
 
 /*scaled elements*/
 .scaled:hover {
-  transform: scale(1.2); }
+  transform: scale(1.1);
+  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.32);
+  -webkit-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.32);
+  -moz-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.32); }
 
 html {
   font-size: 10px; }
@@ -53,10 +56,8 @@ header .accaunt {
       font-family: Arial, Helvetica, sans-serif; }
   header .accaunt .accauntMenu {
     padding: 10px; }
-    header .accaunt .accauntMenu .lister {
-      width: 0;
-      height: 0;
-      margin: auto 5px; }
+    header .accaunt .accauntMenu i {
+      margin-left: 3px; }
     header .accaunt .accauntMenu .user {
       margin: 0 5px; }
       header .accaunt .accauntMenu .user i {
@@ -68,9 +69,6 @@ header .accaunt {
     header .accaunt .accauntMenu .search:hover {
       color: mediumblue;
       cursor: pointer; }
-    header .accaunt .accauntMenu .region:hover .lister {
-      border-top-color: mediumblue;
-      cursor: pointer; }
 header .headMenu {
   margin-top: 30px;
   margin-bottom: 20px; }
@@ -81,13 +79,9 @@ header .headMenu {
     font-size: 16pt;
     font-family: Arial, Helvetica, sans-serif;
     color: black; }
-    header .headMenu nav.container .link .lister {
-      width: 0;
-      height: 0;
-      margin: auto 5px;
-      border-left: 3px solid transparent;
-      border-right: 3px solid transparent;
-      border-top: 6px solid black; }
+    header .headMenu nav.container .link i {
+      margin-left: 3px;
+      padding-top: 3px; }
     header .headMenu nav.container .link:hover {
       background-color: #ffa687;
       cursor: pointer; }
@@ -144,9 +138,11 @@ header .slider {
       position: absolute;
       top: calc(50% - 58px);
       padding-top: 40px; }
+      header .slider .slide .slideBack i, header .slider .slide .slideForward i {
+        color: #c6c6c6; }
       header .slider .slide .slideBack:hover, header .slider .slide .slideForward:hover {
         background-color: #ffa687; }
-        header .slider .slide .slideBack:hover a, header .slider .slide .slideForward:hover a {
+        header .slider .slide .slideBack:hover i, header .slider .slide .slideForward:hover i {
           color: white; }
     header .slider .slide .slideBack {
       left: 0px; }
@@ -210,10 +206,12 @@ main .stayUpdatet {
           color: gray;
           width: 52px;
           text-align: center; }
-          main .stayUpdatet .wrapper.contacts .contacts.container .socials a i:hover {
-            color: mediumblue; }
         main .stayUpdatet .wrapper.contacts .contacts.container .socials a:nth-child(even) {
           background-color: #f7f7f7; }
+        main .stayUpdatet .wrapper.contacts .contacts.container .socials a:hover {
+          background-color: #ffa687; }
+          main .stayUpdatet .wrapper.contacts .contacts.container .socials a:hover i {
+            color: mediumblue; }
 main .arts {
   margin-bottom: 50px;
   display: grid;
@@ -227,17 +225,148 @@ main .arts {
     grid-column: 3 / 5; }
 main .tabs .tabControls {
   align-content: space-between; }
+  main .tabs .tabControls .tabNames .container {
+    align-items: center;
+    justify-content: center; }
   main .tabs .tabControls .tabNames .tab {
     height: 47px;
-    font-size: 15px; }
+    font-size: 15px;
+    color: #979797;
+    min-width: 140px;
+    padding: 0 10px;
+    text-transform: uppercase; }
     main .tabs .tabControls .tabNames .tab.current {
-      background-color: #ff936f; }
-  main .tabs .tabControls .tabNav .fullMenu {
+      background-color: #fe926c;
+      color: white; }
+    main .tabs .tabControls .tabNames .tab:hover {
+      cursor: pointer;
+      background-color: #ffa687;
+      color: blue; }
+  main .tabs .tabControls .tabNav .container {
+    align-items: center;
+    justify-content: center; }
+  main .tabs .tabControls .tabNav i {
+    font-size: 40px;
+    color: #979797; }
+  main .tabs .tabControls .tabNav .tabBack, main .tabs .tabControls .tabNav .tabForward {
     width: 47px; }
-    main .tabs .tabControls .tabNav .fullMenu.able {
-      background-color: #ff936f; }
+    main .tabs .tabControls .tabNav .tabBack.able, main .tabs .tabControls .tabNav .tabForward.able {
+      background-color: #fe926c; }
+    main .tabs .tabControls .tabNav .tabBack:not(.able), main .tabs .tabControls .tabNav .tabForward:not(.able) {
+      background-color: #f5f1ee; }
+    main .tabs .tabControls .tabNav .tabBack:hover, main .tabs .tabControls .tabNav .tabForward:hover {
+      cursor: pointer;
+      background-color: #ffa687; }
+      main .tabs .tabControls .tabNav .tabBack:hover i, main .tabs .tabControls .tabNav .tabForward:hover i {
+        color: blue; }
 main .tabs .tabContent {
-  background-color: #ff936f; }
+  background-color: #fe926c;
+  padding: 30px 0;
+  width: 100%;
+  overflow: hidden; }
+  main .tabs .tabContent.container {
+    justify-content: center; }
+main .product {
+  width: 220px;
+  position: relative;
+  /*height: fit-content;*/
+  flex-basis: 220px;
+  flex-shrink: 0;
+  margin: 0 10px; }
+  main .product .preView {
+    position: relative;
+    height: 290px;
+    overflow: hidden; }
+    main .product .preView img {
+      width: 100%;
+      height: 100%; }
+  main .product figcaption {
+    background-color: #f7f7f7;
+    text-align: center;
+    overflow: hidden;
+    padding: 10px; }
+    main .product figcaption p {
+      font-size: 12px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      line-height: 1; }
+      main .product figcaption p.productPrice {
+        font-size: 22px; }
+        main .product figcaption p.productPrice::before {
+          content: '$'; }
+      main .product figcaption p.productName {
+        overflow: hidden;
+        max-height: 12px; }
+    main .product figcaption .add {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 120px;
+      height: 30px;
+      margin: 0 auto;
+      color: white;
+      font-size: 12px;
+      text-transform: uppercase;
+      background: #fd926d;
+      border-bottom: 4px solid #dd6b44; }
+      main .product figcaption .add:hover {
+        background-color: mediumblue; }
+      main .product figcaption .add p {
+        margin: 0; }
+        main .product figcaption .add p::after {
+          font-family: "webfont", sans-serif;
+          content: "\f067";
+          padding-left: 5px;
+          font-weight: bold;
+          font-size: 13px; }
+  main .product.sale::before {
+    position: absolute;
+    z-index: 1;
+    content: "";
+    border: 25px solid #4c4c4c;
+    border-right-color: white;
+    border-bottom-color: white; }
+  main .product.sale::after {
+    position: absolute;
+    box-sizing: border-box;
+    top: 0px;
+    left: 0px;
+    width: 50px;
+    height: 50px;
+    z-index: 1;
+    font-family: "webfont", sans-serif;
+    content: "SALE";
+    color: white;
+    padding-top: 4px;
+    padding-left: 3px;
+    font-size: 10px; }
+  main .product .mark {
+    transform: scale(0.9);
+    visibility: hidden;
+    position: absolute;
+    top: calc(50% - 65px);
+    left: calc(50% - 65px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #3d3d3d;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    font-family: "webfont", sans-serif;
+    color: white; }
+    main .product .mark::before {
+      font-size: 30px;
+      content: "\f290";
+      margin-bottom: 10px; }
+    main .product .mark::after {
+      font-size: 12px;
+      content: "SHOP IT"; }
+    main .product .mark:hover {
+      color: blue; }
+  main .product:hover .mark {
+    visibility: visible; }
 main header.container {
   align-items: center; }
   main header.container h2 {
@@ -460,10 +589,8 @@ body {
         text-align: center; }
     header .accaunt .wrapper .accauntMenu {
       font-size: 30pt; }
-      header .accaunt .wrapper .accauntMenu .lister {
-        border-left: 7px solid transparent;
-        border-right: 7px solid transparent;
-        border-top: 14px solid white; }
+      header .accaunt .wrapper .accauntMenu i {
+        padding-top: 3px; }
   header .headMenu .logo img {
     width: 100%; }
   header .headMenu nav.container {
@@ -518,6 +645,24 @@ body {
             background-color: #f7f7f7; }
           main .stayUpdatet .wrapper.contacts .contacts.container .socials a:nth-child(odd) {
             background-color: #ededed; }
+          main .stayUpdatet .wrapper.contacts .contacts.container .socials a:hover {
+            background-color: #ffa687; }
+            main .stayUpdatet .wrapper.contacts .contacts.container .socials a:hover i {
+              color: mediumblue; }
+  main .tabs {
+    background-color: #f4845e; }
+    main .tabs .tabControls .tabNames .tab.current {
+      background-color: #f4845e; }
+    main .tabs .tabControls .tabNames .tab:not(.current) {
+      display: none; }
+    main .tabs .tabNav .tabLowNav p i {
+      color: white; }
+    main .tabs .tabNav .tabLowNav:hover {
+      cursor: pointer; }
+      main .tabs .tabNav .tabLowNav:hover i {
+        color: blue; }
+  main .product {
+    width: 270px; }
 
   /*------------------------footer------------------------*/
   .copyright p {

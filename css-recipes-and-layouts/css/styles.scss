@@ -16,7 +16,10 @@ a {
 
 /*scaled elements*/
 .scaled:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
+    box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.32);
+    -webkit-box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.32);
+    -moz-box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.32);
 }
 
 
@@ -53,10 +56,8 @@ header {
         }
         .accauntMenu {
             padding: 10px;
-            .lister {
-                width: 0;
-                height: 0;
-                margin: auto 5px;
+            i {
+                margin-left: 3px;
             }
             .user {
                 margin: 0 5px;
@@ -73,10 +74,6 @@ header {
                 color: $activeColor;
                 cursor: pointer;
             }
-            .region:hover .lister {
-                border-top-color: $activeColor;
-                cursor: pointer;
-            }
         }
     }
     .headMenu {
@@ -91,13 +88,9 @@ header {
                 font-size: 16pt;
                 font-family: Arial, Helvetica, sans-serif;
                 color: black;
-                .lister{
-                    width: 0;
-                    height: 0;
-                    margin: auto 5px;
-                    border-left: 3px solid transparent;
-                    border-right: 3px solid transparent;
-                    border-top: 6px solid black;
+                i {
+                    margin-left: 3px;
+                    padding-top: 3px;
                 }
 
                 &:hover {
@@ -174,9 +167,13 @@ header {
                 top: calc(50% - 58px);
                 padding-top: 40px;
 
+                i {
+                    color: $sliderButtonSignColor
+                }
+
                 &:hover {
                     background-color: $sliderScrollActiveColor;
-                    & a {
+                    & i {
                         color: white;
                     }
                 }
@@ -269,12 +266,15 @@ main {
                             color: $socialsColor;
                             width: 52px;
                             text-align: center;
-                            &:hover {
-                                color: $activeColor;
-                            }
                         }
                         &:nth-child(even) {
                             background-color: $cocialsNextColor;
+                        }
+                        &:hover {
+                            background-color: $inputActiveColor;
+                            i {
+                                color: $activeColor;
+                            }
                         }
                     }
                 }
@@ -308,28 +308,191 @@ main {
         .tabControls {
             align-content: space-between;
             .tabNames {
+                .container {
+                    align-items: center;
+                    justify-content: center;
+                }
                 .tab {
                     height: 47px;
                     font-size: 15px;
+                    color: $tabColor;
+                    min-width: 140px;
+                    padding: 0 10px;
+                    text-transform: uppercase;
                     &.current {
                         background-color: $tabBackgroundColor;
+                        color: $tabFontColor;
+                    }
+                    &:hover {
+                        cursor: pointer;
+                        background-color: $inputActiveColor;
+                        color: $activeTabFontColor
                     }
                 }
             }
             .tabNav {
-                .fullMenu {
+                .container {
+                    align-items: center;
+                    justify-content: center;
+                }
+                i {
+                    font-size: 40px;
+                    color: $tabColor;
+                }
+                .tabBack, .tabForward {
                     width: 47px;
                     &.able {
                         background-color: $tabBackgroundColor;
                     }
+                    &:not(.able) {
+                        background-color:$tabPassiveBackgroundColor;
+                    }
+                    &:hover {
+                        cursor: pointer;
+                        background-color: $inputActiveColor;
+                        i {
+                            color: $activeTabFontColor
+                        }
+                    }
                 }
             }
+
         }
         .tabContent {
             background-color: $tabBackgroundColor;
+            padding: 30px 0;
+            width: 100%;
+            overflow: hidden;
+            &.container {
+                justify-content: center;
+            }
         }
     }
 
+    .product {
+        width: 220px;
+        position: relative;
+        /*height: fit-content;*/
+        flex-basis: 220px;
+        flex-shrink: 0;
+        margin: 0 10px;
+        .preView {
+            position: relative;
+            height: 290px;
+            overflow: hidden;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        figcaption {
+            background-color: $figCaptionBackgroundColor;
+            text-align: center;
+            overflow: hidden;
+            padding: 10px;
+            p {
+                font-size: 12px;
+                margin-bottom: 10px;
+                text-transform: uppercase;
+                line-height: 1;
+                &.productPrice {
+                    font-size: 22px;
+                    &::before {
+                        content: '$';
+                    }
+                }
+                &.productName {
+                    overflow: hidden;
+                    max-height: 12px;
+                }
+            }
+            .add {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 120px;
+                height: 30px;
+                margin: 0 auto;
+                color: white;
+                font-size: 12px;
+                text-transform: uppercase;
+                background: $emailSubmitBackgroundColor;
+                border-bottom: 4px solid $emailSubmitBottomColor;
+                &:hover {
+                    background-color: mediumblue;
+                }
+                p {
+                    margin: 0;
+                    &::after {
+                        font-family: "webfont", sans-serif;
+                        content: "\f067";
+                        padding-left: 5px;
+                        font-weight: bold;
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+        &.sale {
+            &::before {
+                position: absolute;
+                z-index: 1;
+                content: "";
+                border: 25px solid $saleColor;
+                border-right-color: $saleFontColor;
+                border-bottom-color: $saleFontColor;
+            }
+            &::after {
+                position: absolute;
+                box-sizing: border-box;
+                top: 0px;
+                left: 0px;
+                width: 50px;
+                height: 50px;
+                z-index: 1;
+                font-family: "webfont", sans-serif;
+                content: "SALE";
+                color: $saleFontColor;
+                padding-top: 4px;
+                padding-left: 3px;
+                font-size: 10px;
+            }
+        }
+        .mark {
+            transform: scale(0.9);
+            visibility: hidden;
+            position: absolute;
+            top: calc(50% - 65px);
+            left: calc(50% - 65px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: $markBackgroundColor;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            font-family: "webfont", sans-serif;
+            color: white;
+            &::before {
+                font-size: 30px;
+                content: "\f290";
+                margin-bottom: 10px;
+            }
+            &::after {
+                font-size: 12px;
+                content: "SHOP IT";
+            }
+            &:hover {
+                color: blue;
+            }
+        }
+        &:hover {
+            .mark {
+                visibility: visible;
+            }
+        }
+    }
 
 
 
