@@ -553,6 +553,7 @@ main {
     }
     .brends {
         align-items: center;
+        flex-wrap: wrap;
         img {
             flex: 0;
         }
