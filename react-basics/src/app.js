@@ -4,6 +4,9 @@ import styled from 'styled-components';
 
 window.console.log('start ReactDOM.render');
 window.console.log(`mode=${process.env.NODE_ENV}`);
+document.title = process.env.NODE_ENV;
+
+//-------------------------------------------------------
 
 const Title = styled.h1`
   font-size: 1.5em;
