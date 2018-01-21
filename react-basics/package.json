@@ -11,8 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=development webpack-dev-server",
     "start:prod": "NODE_ENV=production webpack-dev-server",
-    "build": "NODE_ENV=production webpack",
-    "build:dev": "NODE_ENV=development webpack"
+    "build": "webpack --config prod.config.js",
+    "build:dev": "webpack --config dev.config.js"
   },
   "author": "ArlinskiEV",
   "license": "ISC",
@@ -34,6 +34,7 @@
     "webpack-merge": "^4.1.1"
   },
   "dependencies": {
+    "material-ui": "^0.20.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "styled-components": "^2.4.0"
