@@ -4,9 +4,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const common = {
   
-  entry: path.join(__dirname, 'src/app.js'),
+  // entry: {
+  //   app: path.join(__dirname, './src/app.js'),
+  // },
+  entry: ['babel-polyfill', 'react-hot-loader/patch', './src/app.js'],
+
   output: {
-    filename: 'index.js',
+    filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
   
