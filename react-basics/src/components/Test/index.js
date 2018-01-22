@@ -1,7 +1,7 @@
 import React from 'react';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import MyAwesomeReactComponent from '../MyAwesomeReactComponent/MyAwesomeReactComponent';
+import MyAwesomeReactComponent from '../MyAwesomeReactComponent/';
 
 const Test = () => (
   <MuiThemeProvider>
