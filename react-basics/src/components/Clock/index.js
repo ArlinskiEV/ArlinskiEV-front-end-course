@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Tag = styled.div`
-    display: 
+    display: block;
 `;
 
 export default class Header extends React.Component {

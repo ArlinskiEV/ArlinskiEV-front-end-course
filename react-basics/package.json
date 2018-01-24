@@ -9,8 +9,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=development webpack-dev-server --hotOnly",
-    "start:prod": "NODE_ENV=production webpack-dev-server",
+    "start": "NODE_ENV=development webpack-dev-server --hotOnly --history-api-fallback",
+    "start:prod": "NODE_ENV=production webpack-dev-server --history-api-fallback",
     "build": "webpack --config prod.config.js",
     "build:dev": "webpack --config dev.config.js"
   },
