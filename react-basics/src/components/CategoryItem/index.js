@@ -5,10 +5,10 @@ import styled from 'styled-components';
 const Tag = styled.div.attrs({
     // we can define dynamic props
     shift: props => props.shift || 0,
-    show: props => props.show || "no",
-  })`
-margin-left: ${props => `${props.shift * 5}px`};
-display: ${props => props.show === "yes" ? 'flex' : 'none'};
+    // show: props => props.show || "no",
+})`
+margin-left: ${props => `${props.shift * 20}px`};
+display: flex;
 
 border: 1px solid black;
 
@@ -20,12 +20,19 @@ padding-left: 35px;
 }
 `;
 
-const Nested = styled.i`
-position: absolute;
-left: 20px;
+const Icon = styled.i`
+margin: 0px 5px;
 &:hover {
     background-color: red;
 }
+`;
+
+const Nested = Icon.extend.attrs({
+    show: props => props.show || "no",
+})`
+position: absolute;
+left: 10px;
+display: ${props => props.show === "yes" ? 'inline' : 'none'};
 `;
 
 export default class CategoryItem extends React.Component {
@@ -37,22 +44,27 @@ export default class CategoryItem extends React.Component {
             haveNested: props.haveNested || false,
             isOpen: props.isOpen || false,
             shift: props.shift || 0,
-            visible: props.visible || false,
+            // visible: props.visible || false,
+            showed: props.showed,
         }
+        window.console.log(`constructor:!!!!!!!${this.state.name} id=${this.state.id}!!!!!!!-${this.state.isOpen ? 'up' : 'down'}`);
     }
 
     render() {
+        window.console.log(`render:!!!!!!!${this.state.name} id=${this.state.id}!!!!!!!-${this.state.isOpen ? 'up' : 'down'}`);
         return (
             <Tag
                 shift = {this.state.shift}
-                show = {this.state.visible ? "yes" : "no"}
             >
-                {this.state.haveNested ? <Nested className={`fas fa-angle-${this.state.isOpen ? 'up' : 'down'}`}></Nested> : ''}
-                <span> ||| </span>
-                <span>{this.state.name}</span>
-                <i className="fas fa-edit"></i>
-                <i className="fas fa-trash"></i>
-                <i className="far fa-plus-square"></i>
+                <Nested 
+                    className={`fas fa-angle-${this.state.isOpen ? 'up' : 'down'}`}
+                    show={this.state.haveNested ? "yes" : "no"}
+                    onClick = {()=> {this.state.showed();}}
+                ></Nested>
+                <span>||| {this.state.name} |||</span>
+                <Icon className="fas fa-edit"></Icon>
+                <Icon className="fas fa-trash"></Icon>
+                <Icon className="far fa-plus-square"></Icon>
             </Tag>
         );
     }
@@ -64,5 +76,6 @@ CategoryItem.propTypes = {
     haveNested: PropTypes.bool,
     isOpen: PropTypes.bool,
     shift: PropTypes.number,
-    visible: PropTypes.bool
+    // visible: PropTypes.bool,
+    showed: PropTypes.func,
   };

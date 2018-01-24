@@ -14,3 +14,13 @@ town | today | tommorow
 
 
 fetch()
+
+
+
+
+-----------------------------
+trouble with size: 
+        entry point in common.js
+                no server
+                        1.41 MB
+                4 mb

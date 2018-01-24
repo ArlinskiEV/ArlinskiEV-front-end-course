@@ -36,6 +36,7 @@ export default class Main extends React.Component {
                     {id:5, name:'Cat 3-2', parentId:8},
                     {id:6, name:'Cat 3-3', parentId:8},
                     {id:7, name:'Cat 2-1', parentId:2},
+                    {id:3, name:'Cat 2-1-1', parentId:7},
                   ]}
                 />
               </div>
