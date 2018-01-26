@@ -27,11 +27,6 @@ text-decoration: none;
 color: inherit;
 `;
 
-function check(match, location) {
-    window.console.log(`categoryItem-check: match=${match}, location=${location}`);
-    return match;
-}
-
 const Icon = styled.i`
 margin: 0px 5px;
 &:hover {
@@ -57,7 +52,6 @@ export default class CategoryItem extends React.Component {
             <MyLink 
                 to={`/category/${this.props.itemId}`}
                 activeClassName="selected"
-                isActive={check}
             >
             <Tag
                 shift = {(this.props.shift || 0)}

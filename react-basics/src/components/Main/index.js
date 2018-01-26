@@ -42,7 +42,7 @@ export default class Main extends React.Component {
                 <hr/>
                 <Content>
                   <Left>
-                    <Categories/>
+                    <Route path="/" component={Categories}/>
                   </Left>
                   <Right>
                     <Route path="/category/:id" component={TodoList}/>

@@ -24,12 +24,12 @@ min-width: max-content;
 `;
 
 class Categories extends React.Component {
-    constructor(props) {
-        super(props);
-        // this.state = {
-        //     list: generateState.generate(props.categoriesList), // {id:0, name: "name", parentId: 0} parentId = 0 => root
-        // }
-    }
+    // constructor(props) {
+    //     super(props);
+    //     // this.state = {
+    //     //     list: generateState.generate(props.categoriesList), // {id:0, name: "name", parentId: 0} parentId = 0 => root
+    //     // }
+    // }
 
     showed(id) {
         // this.setState((prevState) => {
@@ -73,13 +73,14 @@ Categories.propTypes = {
     state: PropTypes.array
 };
 
-const mapStateToProps = function(store) {
+const mapStateToProps = function(store, ownProps) {
     // window.console.log('-------Categories----------');
     // window.console.log(`all_store=${JSON.stringify(store)}`);
     // window.console.log(`store.catListState=${JSON.stringify(store.categoriesListState)}`);
     return {
         // state: store.categoriesListState.categoriesState
         state: store.categoriesState,
+        ownProps: ownProps,
     };
 };
 

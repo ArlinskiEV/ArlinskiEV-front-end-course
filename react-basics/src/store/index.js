@@ -15,8 +15,8 @@ import { TOGGLE_CATEGORY, TOGGLE_TODO } from './actions';
 // The Categories Reducer
 const categoriesReducer = function(state = {}, action) {
     let newState = JSON.parse(JSON.stringify(state));
-    window.console.log(`categoriesReducer: type=${action.type}`);
-    window.console.log(`all_state=${JSON.stringify(state)}`);
+    // window.console.log(`categoriesReducer: type=${action.type}`);
+    // window.console.log(`all_state=${JSON.stringify(state)}`);
     // let categoryList = state.categoryList;
     let prevCategoriesState = state.categoriesState
         ? state.categoriesState
@@ -40,21 +40,21 @@ const categoriesReducer = function(state = {}, action) {
 const toggleTodo = function(state = {}, action) {
     let newState = JSON.parse(JSON.stringify(state));
 
-    window.console.log(`toggle todo: state=${JSON.stringify(state)}`);
+    // window.console.log(`toggle todo: state=${JSON.stringify(state)}`);
 
-    window.console.log(`action.index = ${action.index}`);
+    // window.console.log(`action.index = ${action.index}`);
     if (action.type === TOGGLE_TODO) {
         let i = newState.todoList.findIndex((item) => item.id === action.index);
 
         if (i < 0) window.console.log('ERROR: NOT FOUNT TODO');
 
-        window.console.log(`i=${i}, before: compl=${newState.todosState[i].completed}`);
+        // window.console.log(`i=${i}, before: compl=${newState.todosState[i].completed}`);
         newState.todoList[i].completed = ! newState.todoList[i].completed;
         newState.todosState[i].completed = ! newState.todosState[i].completed;
         // re-calculae progress-bar
-        window.console.log(`i=${i}, after: compl=${newState.todosState[i].completed}`);
+        // window.console.log(`i=${i}, after: compl=${newState.todosState[i].completed}`);
     }
-    window.console.log(`toggle todo: newState=${JSON.stringify(newState)}`);
+    // window.console.log(`toggle todo: newState=${JSON.stringify(newState)}`);
     return newState;
 };
 
@@ -139,7 +139,6 @@ const mySingleReduser = function(state = {}, action) {
                     todosState: newState.todosState,
                 },
                 action);
-                window.console.log(`change=${JSON.stringify(change)}`);
             Object.assign(newState, change);
             break;
         }
