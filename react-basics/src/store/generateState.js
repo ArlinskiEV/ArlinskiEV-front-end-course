@@ -1,6 +1,6 @@
 export default class GenerateState {
 
-    static generate(arr) {
+    static generateCategoriesState(arr) {
         let newList = arr.map((item) => item).sort((a, b) => {return (b.id - a.id);}); // in order id
         let result =[]; // all for CategoryItem
 
@@ -39,7 +39,7 @@ export default class GenerateState {
         return result;
     }
 
-    static showed(id, prevList) {
+    static showedCategory(id, prevList) {
         let newList = [...prevList];
         let i = newList.findIndex((item) => {
             return (item.id === id);
@@ -70,6 +70,10 @@ export default class GenerateState {
 
     }
 
+    static generateTodosState(arr) {
+        return arr;
+    }
 
+    
 
 }

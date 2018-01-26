@@ -17,6 +17,7 @@ import Weather from '../../components/Weather';
 import Header from '../../components/Header';
 import ToolBox from '../../components/ToolBox';
 import Categories from '../../containers/Categories';
+import TodoList from '../../components/TodoList';
 
 const Content = styled.div`
 display: flex;
@@ -24,7 +25,9 @@ display: flex;
 const Left = styled.div`
 max-width: 30%;
 `;
-const Right = styled.div``;
+const Right = styled.div`
+width: 100%;
+`;
 
 export default class Main extends React.Component {
     render() {
@@ -42,6 +45,7 @@ export default class Main extends React.Component {
                     <Categories/>
                   </Left>
                   <Right>
+                    <Route path="/category/:id" component={TodoList}/>
                     <Route path="/Weather" component={Weather}/>
                     <Route path="/test" component={Test2}/>
                   </Right>

@@ -36,7 +36,7 @@ export default class Filter extends React.Component {
         <Checkbox
           label="Show done"
           checked={this.state.checked}
-          onCheck={this.updateCheck.bind(this)}
+          onCheck={() => {this.updateCheck()}}
           style={styles.checkbox}
         />
       </div>

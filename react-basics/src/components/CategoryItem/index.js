@@ -28,7 +28,7 @@ color: inherit;
 `;
 
 function check(match, location) {
-    window.console.log(`match=${match}, location=${location}`);
+    window.console.log(`categoryItem-check: match=${match}, location=${location}`);
     return match;
 }
 

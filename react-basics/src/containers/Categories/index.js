@@ -51,7 +51,7 @@ class Categories extends React.Component {
                         .map((item) => {
                             return (
                                 <CategoryItem
-                                    key = {item.id.toString()}
+                                    key = {item.id}
                                     itemId = {item.id}
                                     name = {item.name}
                                     haveNested = {item.haveNested}
@@ -74,12 +74,12 @@ Categories.propTypes = {
 };
 
 const mapStateToProps = function(store) {
-    window.console.log('-------Categories----------');
-    window.console.log(`all_store=${JSON.stringify(store)}`);
+    // window.console.log('-------Categories----------');
+    // window.console.log(`all_store=${JSON.stringify(store)}`);
     // window.console.log(`store.catListState=${JSON.stringify(store.categoriesListState)}`);
     return {
         // state: store.categoriesListState.categoriesState
-        state: store.categoriesState
+        state: store.categoriesState,
     };
 };
 
