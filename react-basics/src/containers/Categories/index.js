@@ -74,11 +74,12 @@ Categories.propTypes = {
 };
 
 const mapStateToProps = function(store) {
-    // window.console.log('-------Categories----------');
-    // window.console.log(`all_store=${JSON.stringify(store)}`);
+    window.console.log('-------Categories----------');
+    window.console.log(`all_store=${JSON.stringify(store)}`);
     // window.console.log(`store.catListState=${JSON.stringify(store.categoriesListState)}`);
     return {
-        state: store.categoriesListState.categoriesState
+        // state: store.categoriesListState.categoriesState
+        state: store.categoriesState
     };
 };
 
