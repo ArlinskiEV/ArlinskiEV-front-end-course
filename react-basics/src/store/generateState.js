@@ -35,7 +35,7 @@ export default class GenerateState {
 
             result.push(current);
         }
-
+        // window.console.log(JSON.stringify(result));
         return result;
     }
 
@@ -54,7 +54,7 @@ export default class GenerateState {
         for (let j = newList[i++].shift;(i< newList.length) && (newList[i].shift > j);i++) {
 
             if (newList[i].shift > newList[i - 1].shift) {
-                stack.push(newList[i - 1].isOpen);
+                stack.push(newList[i - 1].isOpen && newList[i - 1].visible);
             }
 
             if (newList[i].shift < newList[i - 1].shift) {
@@ -66,9 +66,7 @@ export default class GenerateState {
 
         // window.console.log(`end: ${JSON.stringify(newList)}`);
         // window.console.log(newList);
-        return ({
-            list: newList,
-        });
+        return (newList);
 
     }
 

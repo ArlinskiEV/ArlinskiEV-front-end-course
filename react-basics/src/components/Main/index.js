@@ -5,46 +5,51 @@ import {
   // , Link
 } from 'react-router-dom';
 
+import { Provider } from 'react-redux';
+import store from '../../store';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
+import styled from 'styled-components';
 
 import Test2 from '../../components/Test2';
 import Weather from '../../components/Weather';
 
 import Header from '../../components/Header';
 import ToolBox from '../../components/ToolBox';
-import Categories from '../../components/Categories';
+import Categories from '../../containers/Categories';
+
+const Content = styled.div`
+display: flex;
+`;
+const Left = styled.div`
+max-width: 30%;
+`;
+const Right = styled.div``;
 
 export default class Main extends React.Component {
     render() {
       return (
-        <Router>
-          <MuiThemeProvider>
-            <div>
-              <Header/>
-              <hr/>
-              <ToolBox/>
-              <hr/>
+        <Provider store={store}>
+          <Router>
+            <MuiThemeProvider>
               <div>
-                <Categories 
-                  categoriesList={[
-                    {id:1, name:'Cat 1', parentId:0},
-                    {id:2, name:'Cat 2', parentId:0},
-                    {id:8, name:'Cat 3', parentId:0},
-                    {id:4, name:'Cat 3-1', parentId:8},
-                    {id:5, name:'Cat 3-2', parentId:8},
-                    {id:6, name:'Cat 3-3', parentId:8},
-                    {id:7, name:'Cat 2-1', parentId:2},
-                    {id:3, name:'Cat 2-1-1', parentId:7},
-                  ]}
-                />
+                <Header/>
+                <hr/>
+                <ToolBox/>
+                <hr/>
+                <Content>
+                  <Left>
+                    <Categories/>
+                  </Left>
+                  <Right>
+                    <Route path="/Weather" component={Weather}/>
+                    <Route path="/test" component={Test2}/>
+                  </Right>
+                </Content>
               </div>
-              <Route exact path="/Weather" component={Weather}/>
-              <Route exact path="/test" component={Test2}/>
-            </div>
-          </MuiThemeProvider>
-        </Router>
+            </MuiThemeProvider>
+          </Router>
+        </Provider>
       );
     }
   }

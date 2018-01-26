@@ -17,6 +17,11 @@ export default class ToolBox extends React.Component {
         return (
             <Tag>
                 <div>first</div>
+                <div>
+                    <span>undo</span>
+                    <span> || </span>
+                    <span>redo</span>
+                </div>
                 <div>second</div>
             </ Tag>
         );

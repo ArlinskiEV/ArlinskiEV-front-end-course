@@ -11,7 +11,8 @@ const common = {
 
   output: {
     filename: '[name].bundle.[hash].js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
   },
   
   plugins: [
@@ -23,8 +24,17 @@ const common = {
 
   module: {
     rules: [
-        {enforce: 'pre', test: /\.js$/, loader: 'eslint-loader'}
-        , { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
+        {enforce: 'pre', test: /\.js$/, loader: 'eslint-loader'},
+        { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
+        {
+          test: /\.(jpg|png|svg)$/i,
+          use: {
+            loader: "file-loader",
+            options: {
+              name: "[path][name].[hash].[ext]",
+            },
+          },
+        },
     ]
   }
 };
