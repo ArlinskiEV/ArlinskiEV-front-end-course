@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import {NavLink} from 'react-router-dom';
 import Checkbox from 'material-ui/Checkbox';
 
 const Tag = styled.div`
@@ -16,6 +17,11 @@ padding-left: 35px;
 .selected & {
     background-color: yellow;
 }
+`;
+
+const MyLink = styled(NavLink)`
+text-decoration: none;
+color: inherit;
 `;
 
 const Icon = styled.i`
@@ -48,7 +54,9 @@ export default class TodoItem extends React.Component {
                     />
                 </div>
                 <span>{this.props.name}</span>
-                <Icon className="fas fa-edit"></Icon>
+                <MyLink to={`/task/${this.props.itemId}`}>
+                    <Icon className="fas fa-edit"></Icon>
+                </MyLink>
             </Tag>
         );
     }

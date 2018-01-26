@@ -74,6 +74,45 @@ export default class GenerateState {
         return arr;
     }
 
+    static init() {
+
+        let result = JSON.parse(sessionStorage.getItem('APP_STATE'));
+
+        let categoryList = [
+            {id:1, name:'Cat 1', parentId:0},
+            {id:2, name:'Cat 2', parentId:0},
+            {id:3, name:'Cat 2-1-1', parentId:7},
+            {id:4, name:'Cat 3-1', parentId:8},
+            {id:5, name:'Cat 3-2', parentId:8},
+            {id:6, name:'Cat 3-3', parentId:8},
+            {id:7, name:'Cat 2-1', parentId:2},
+            {id:8, name:'Cat 3', parentId:0},
+            {id:9, name:'Cat 2-1-1-1', parentId:3}
+        ];
+        let todoList = [
+            {id:1, name:'Todo 1', text:'', completed: false, categoryId:1},
+            {id:2, name:'Todo 2', text:'', completed: false, categoryId:2},
+            {id:3, name:'Todo 3', text:'', completed: false, categoryId:3},
+            {id:4, name:'Todo 4', text:'', completed: false, categoryId:4},
+            {id:5, name:'Todo 5', text:'', completed: false, categoryId:5},
+            {id:6, name:'Todo 6', text:'', completed: false, categoryId:6},
+            {id:7, name:'Todo 7', text:'', completed: false, categoryId:7},
+            {id:8, name:'Todo 8', text:'', completed: false, categoryId:8},
+            {id:9, name:'Todo 9', text:'', completed: false, categoryId:1},
+        ];
+
+        result = result ? result : {
+            categoryList,
+            todoList,
+            categoriesState: GenerateState.generateCategoriesState(categoryList),
+            todosState: GenerateState.generateTodosState(todoList),
+        };
+
+        sessionStorage.setItem('APP_STATE', JSON.stringify(result));
+
+        return result;
+    }
+
     
 
 }
