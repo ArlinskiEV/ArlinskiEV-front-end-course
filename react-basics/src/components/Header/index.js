@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import ProgressBar from '../../components/ProgressBar';
@@ -16,13 +15,9 @@ justify-content: flex-end;
 `;
 
 export default class Header extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            count: props.count,
-            completed: props.completed,
-        };
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
     render() {
         return (
             <Tag>
@@ -30,13 +25,8 @@ export default class Header extends React.Component {
                     <Filter/>
                     <Search/>
                 </Left>
-                <ProgressBar count={10} completed={6} />
+                <ProgressBar/>
             </Tag>
         );
     }
 }
-
-Header.propTypes = {
-  count: PropTypes.number,
-  completed: PropTypes.number
-};

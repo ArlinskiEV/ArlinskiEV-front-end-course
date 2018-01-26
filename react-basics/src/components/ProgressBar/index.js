@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+import { connect } from 'react-redux';
+
 const Tag = styled.div`
     width: 100%;
     height: 3px;
@@ -19,20 +21,16 @@ const Completed = styled.div`
     background: green;
 `;
 
-export default class ProgressBar extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            count: props.count,
-            completed: props.completed,
-        };
-    }
+class ProgressBar extends React.Component {
+    // constructor(props) {
+    //     super(props);
+    // }
 
     render() {
         return (
-            <Tag title={`${this.state.completed}/${this.state.count}`}>
-                <Completed count={`${this.state.count}`} completed={`${this.state.completed}`}/>
-            </ Tag>
+            <Tag title={`${this.props.completed}/${this.props.count}`}>
+                <Completed count={`${this.props.count}`} completed={`${this.props.completed}`}/>
+            </Tag>
         );
     }
 }
@@ -41,3 +39,15 @@ ProgressBar.propTypes = {
   count: PropTypes.number,
   completed: PropTypes.number
 };
+
+const mapStateToProps = function(store) {
+
+    return {
+        count: store.todoList.length,
+        completed: store.todoList.filter((item) => {
+            return item.completed;
+        }).length,
+    };
+};
+
+export default connect(mapStateToProps)(ProgressBar);
