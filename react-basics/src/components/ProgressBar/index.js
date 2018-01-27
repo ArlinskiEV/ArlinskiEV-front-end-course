@@ -22,10 +22,6 @@ const Completed = styled.div`
 `;
 
 class ProgressBar extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    // }
-
     render() {
         return (
             <Tag title={`${this.props.completed}/${this.props.count}`}>
@@ -43,10 +39,14 @@ ProgressBar.propTypes = {
 const mapStateToProps = function(store) {
 
     return {
-        count: store.todoList.length,
-        completed: store.todoList.filter((item) => {
-            return item.completed;
-        }).length,
+        count: store.categoryList.length,
+        completed: store.categoryList.length - store.categoryList
+            .filter(category => 
+                store.todoList.some( todo => 
+                    (!todo.completed) && (todo.categoryId === category.id)
+                )
+            )
+            .length,
     };
 };
 

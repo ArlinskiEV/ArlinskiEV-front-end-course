@@ -2,7 +2,7 @@ import React from 'react';
 import {
   BrowserRouter as Router
   , Route
-  // , Link
+  , Switch
 } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
@@ -42,8 +42,10 @@ export default class Main extends React.Component {
                     <Route path="/" component={Categories}/>
                   </Left>
                   <Right>
-                    <Route exact path="/category/:id" component={TodoList}/>
-                    <Route path="/category/:categoryId/task/:id" component={TaskEditForm}/>
+                    <Switch>
+                      <Route path="/category/:categoryId/task/:id" component={TaskEditForm}/>
+                      <Route path="/category/:id" component={TodoList}/>
+                    </Switch>
                   </Right>
                 </Content>
               </div>
