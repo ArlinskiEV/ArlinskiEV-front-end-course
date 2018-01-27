@@ -49,6 +49,9 @@ const moveTodoInCategory = function(state = {}, action) {
         if (i < 0) window.console.log('ERROR: NOT FOUNT TODO');
 
         newState.todoList[i].categoryId = action.categoryId;
+        if (newState.taskEditStates[action.index]) {
+            newState.taskEditStates[action.index].categoryId = action.categoryId;
+        }
     }
     return newState;
 };
@@ -129,6 +132,7 @@ const mySingleReduser = function(state = {}, action) {
             let change = moveTodoInCategory(
                 {
                     todoList: newState.todoList,
+                    taskEditStates: newState.taskEditStates
                 },
                 action
             );

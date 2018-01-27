@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import ProgressBar from '../../components/ProgressBar';
-import Search from '../../components/Search';
+import Search from '../../components/SubmitText';
 import Filter from '../../components/Filter';
 
 const Tag = styled.div`
@@ -15,15 +15,15 @@ justify-content: flex-end;
 `;
 
 export default class Header extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    // }
     render() {
         return (
             <Tag>
                 <Left>
                     <Filter/>
-                    <Search/>
+                    <Search
+                        placeholder = "Search..."
+                        buttonName = "Search"
+                    />
                 </Left>
                 <ProgressBar/>
             </Tag>

@@ -36,6 +36,7 @@ class TodoList extends React.Component {
                     <hr/>
                     {this.props.state
                         .filter((item) => this.props.categoryId === item.categoryId)
+                        .sort((a, b) => b.id - a.id)
                         .map((item) => {
                             child = true;
                             return (

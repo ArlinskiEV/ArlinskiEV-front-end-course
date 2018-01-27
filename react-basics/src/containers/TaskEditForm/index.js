@@ -29,7 +29,7 @@ class TaskEditForm extends React.Component {
         //name/toggle/text/save/cansel
         store.dispatch(editParamsTodo([action, this.props.id, value]));
     }
-    render() {window.console.log('stop');
+    render() {
         return (
             (this.props.categoryURLId !== this.props.categoryId )
             ? (
@@ -89,8 +89,6 @@ TaskEditForm.propTypes = {
 const mapStateToProps = function(store, ownProps) {
     let taskId = parseInt(ownProps.match.params.id);
     let categoryURLId = parseInt(ownProps.match.params.categoryId);
-    window.console.log(`own=${JSON.stringify(ownProps)}`);
-    window.console.log(`ownProps.match.params=${JSON.stringify(ownProps.match.params)}`);
     let id = store.todoList.findIndex((item) => item.id === taskId);
     let task = store.todoList[id];
     let state = store.taskEditStates[taskId];

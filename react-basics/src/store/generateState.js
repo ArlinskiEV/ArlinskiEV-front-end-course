@@ -1,13 +1,12 @@
 export default class GenerateState {
 
     static generateCategoriesState(arr) {
-        let newList = arr.map((item) => item).sort((a, b) => {return (b.id - a.id);}); // in order id
+        let newList = arr
+            .sort((a, b) => b.id - a.id); // in order id desc
         let result =[]; // all for CategoryItem
 
         let array = newList
-            .filter((item) => {
-                return (item.parentId === 0);
-            }) // all in root
+            .filter(item => item.parentId === 0) // all in root
             .map((item) => {
                 return {
                     id: item.id,
@@ -18,8 +17,8 @@ export default class GenerateState {
             });
 
         while (array.length) {
-            let current = array.pop();
-            array.push(...(newList
+            let current = array.shift();
+            array.unshift(...(newList
                 .filter((item) => ((item.parentId === current.id) && (item.parentId !== item.id))) // all child of current
                 .map((item) => { 
                     current.haveNested = true;
