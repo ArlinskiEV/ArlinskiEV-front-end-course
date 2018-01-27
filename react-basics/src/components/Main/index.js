@@ -18,7 +18,7 @@ import Header from '../../components/Header';
 import ToolBox from '../../components/ToolBox';
 import Categories from '../../containers/Categories';
 import TodoList from '../../containers/TodoList';
-import TaskEdit from '../../components/TaskEdit';
+import TaskEditForm from '../../containers/TaskEditForm';
 
 const Content = styled.div`
 display: flex;
@@ -47,7 +47,9 @@ export default class Main extends React.Component {
                   </Left>
                   <Right>
                     <Route path="/category/:id" component={TodoList}/>
-                    <Route path="/task/:id" component={TaskEdit}/>
+                    <Route path="/task/:id" component={TaskEditForm}/>
+
+
                     <Route path="/Weather" component={Weather}/>
                     <Route path="/test" component={Test2}/>
                   </Right>

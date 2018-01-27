@@ -67,7 +67,7 @@ const mapStateToProps = function(store, ownProps) {
     // window.console.log(`all_store=${JSON.stringify(store)}`);
     // window.console.log(store);
     return {
-        state: store.todosState,
+        state: store.todoList,
         categoryId: parseInt(ownProps.match.params.id),
     };
 };

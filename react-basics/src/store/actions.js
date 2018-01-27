@@ -4,6 +4,7 @@
 
 export const ADD_TODO = 'ADD_TODO'
 export const TOGGLE_TODO = 'TOGGLE_TODO';
+export const EDIT_PARAMS_TODO = 'EDIT_PARAMS_TODO';
 export const TOGGLE_CATEGORY = 'TOGGLE_CATEGORY';
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
 
@@ -27,6 +28,10 @@ export function addTodo(text) {
 
 export function toggleTodo(index) {
   return { type: TOGGLE_TODO, index }
+}
+
+export function editParamsTodo(params) {
+  return { type: EDIT_PARAMS_TODO, params }
 }
 
 export function toggleSubCategories(index) {

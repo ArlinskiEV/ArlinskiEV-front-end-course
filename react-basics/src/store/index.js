@@ -1,15 +1,7 @@
 // import { createStore, combineReducers } from 'redux';
 import { createStore } from 'redux';
 import generateState from './generateState'; 
-import { TOGGLE_CATEGORY, TOGGLE_TODO } from './actions';
-
-
-// The User Reducer
-// const userReducer = function(state = {}, action) {
-//     window.console.log(`a=${action}`);
-//   return state;
-// }
-
+import { TOGGLE_CATEGORY, TOGGLE_TODO, EDIT_PARAMS_TODO } from './actions';
 
 
 // The Categories Reducer
@@ -40,23 +32,58 @@ const categoriesReducer = function(state = {}, action) {
 const toggleTodo = function(state = {}, action) {
     let newState = JSON.parse(JSON.stringify(state));
 
-    // window.console.log(`toggle todo: state=${JSON.stringify(state)}`);
-
-    // window.console.log(`action.index = ${action.index}`);
     if (action.type === TOGGLE_TODO) {
         let i = newState.todoList.findIndex((item) => item.id === action.index);
 
         if (i < 0) window.console.log('ERROR: NOT FOUNT TODO');
 
-        // window.console.log(`i=${i}, before: compl=${newState.todosState[i].completed}`);
         newState.todoList[i].completed = ! newState.todoList[i].completed;
-        newState.todosState[i].completed = ! newState.todosState[i].completed;
-        // re-calculae progress-bar
-        // window.console.log(`i=${i}, after: compl=${newState.todosState[i].completed}`);
     }
-    // window.console.log(`toggle todo: newState=${JSON.stringify(newState)}`);
     return newState;
 };
+
+
+const editParams = function(state = {}, action) {
+    let newState = JSON.parse(JSON.stringify(state));
+    // action = {type, params = [action = text, task-id, value = e]}
+    // action={"type":"EDIT_PARAMS_TODO","params":["name",1,"Todo 15"]}
+
+    let i = newState.todoList.findIndex((item) => item.id === action.params[1]);
+    if (i < 0) window.console.log('ERROR: NOT FOUNT TODO');
+    let task = newState.todoList[i];
+
+    newState.taskEditStates[task.id] = Object.assign(
+        {},
+        task,
+        newState.taskEditStates[task.id]
+    );
+
+    switch (action.params[0]) {
+        case 'name': {
+            newState.taskEditStates[task.id].name = action.params[2];
+            break;
+        }
+        case 'text': {
+            newState.taskEditStates[task.id].text = action.params[2];
+            break;
+        }
+        case 'toggle': {
+            newState.taskEditStates[task.id].completed = ! newState.taskEditStates[task.id].completed;
+            break;
+        }
+        case 'save': {
+            newState.todoList[i] = newState.taskEditStates[task.id];
+            window.console.log(`save - toggle?....`);
+            break;
+        }
+        case 'cansel': {
+            newState.taskEditStates[task.id] = task;
+            break;
+        }
+    }
+    return newState;
+};
+
 
 // Combine Reducers
 // const reducers = combineReducers({
@@ -87,17 +114,29 @@ const mySingleReduser = function(state = {}, action) {
                 },
                 action
             );
-            Object.assign(newState, change);
+            newState = Object.assign({}, newState, change);
             break;
         }
         case TOGGLE_TODO: {
             let change = toggleTodo(
                 {
                     todoList: newState.todoList,
-                    todosState: newState.todosState,
+                    // todosState: newState.todosState,
                 },
-                action);
-            Object.assign(newState, change);
+                action
+            );
+            newState = Object.assign({}, newState, change);
+            break;
+        }
+        case EDIT_PARAMS_TODO: {
+            let change = editParams(
+                {
+                    todoList: newState.todoList,
+                    taskEditStates: newState.taskEditStates,
+                },
+                action
+            );
+            newState = Object.assign({}, newState, change);
             break;
         }
         default: window.console.log(`UNKNOWN_TYPE`);

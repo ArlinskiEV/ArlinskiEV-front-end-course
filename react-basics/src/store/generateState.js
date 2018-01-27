@@ -70,9 +70,9 @@ export default class GenerateState {
 
     }
 
-    static generateTodosState(arr) {
-        return arr;
-    }
+    // static generateTodosState(arr) {
+    //     return arr;
+    // }
 
     static init() {
 
@@ -104,8 +104,9 @@ export default class GenerateState {
         result = result ? result : {
             categoryList,
             todoList,
+            taskEditStates: {},
             categoriesState: GenerateState.generateCategoriesState(categoryList),
-            todosState: GenerateState.generateTodosState(todoList),
+            // todosState: GenerateState.generateTodosState(todoList),
         };
 
         sessionStorage.setItem('APP_STATE', JSON.stringify(result));

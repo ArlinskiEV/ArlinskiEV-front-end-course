@@ -59,7 +59,7 @@ export default class CategoryItem extends React.Component {
                 <Nested 
                     className={`fas fa-angle-${(this.props.isOpen || false) ? 'up' : 'down'}`}
                     show={(this.props.haveNested || false) ? "yes" : "no"}
-                    onClick = {()=> {this.props.showed();}}
+                    onClick = {(e)=> {this.props.showed(); e.preventDefault();}}
                 ></Nested>
                 <span>{this.props.name}</span>
                 <Icon className="fas fa-edit"></Icon>
