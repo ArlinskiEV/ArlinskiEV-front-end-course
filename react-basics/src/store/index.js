@@ -1,24 +1,19 @@
 // import { createStore, combineReducers } from 'redux';
 import { createStore } from 'redux';
 import generateState from './generateState'; 
-import { TOGGLE_CATEGORY, TOGGLE_TODO, EDIT_PARAMS_TODO } from './actions';
+import { TOGGLE_CATEGORY, TOGGLE_TODO, MOVE_TODO, EDIT_PARAMS_TODO } from './actions';
 
 
 // The Categories Reducer
 const categoriesReducer = function(state = {}, action) {
     let newState = JSON.parse(JSON.stringify(state));
-    // window.console.log(`categoriesReducer: type=${action.type}`);
-    // window.console.log(`all_state=${JSON.stringify(state)}`);
-    // let categoryList = state.categoryList;
+
     let prevCategoriesState = state.categoriesState
         ? state.categoriesState
         : generateState.generateCategoriesState(state.categoryList);
 
     let newCategoriesState = prevCategoriesState;
     if (action.type === TOGGLE_CATEGORY) {
-        // window.console.log(`id=${action.index}`);
-        // window.console.log(`state=${JSON.stringify(state)}`);
-        // window.console.log(`prev=${JSON.stringify(prevCategoriesState)}`);
         newCategoriesState = generateState.showedCategory(action.index, prevCategoriesState);
     }
     
@@ -38,16 +33,28 @@ const toggleTodo = function(state = {}, action) {
         if (i < 0) window.console.log('ERROR: NOT FOUNT TODO');
 
         newState.todoList[i].completed = ! newState.todoList[i].completed;
+        if (newState.taskEditStates[action.index]) {
+            newState.taskEditStates[action.index].completed = newState.todoList[i].completed;
+        }
     }
     return newState;
 };
 
+const moveTodoInCategory = function(state = {}, action) {
+    let newState = JSON.parse(JSON.stringify(state));
+    if (action.type === MOVE_TODO) {
+        // window.console.log(`move: action=${JSON.stringify(action)}`);
+        let i = newState.todoList.findIndex((item) => item.id === action.todoId);
+
+        if (i < 0) window.console.log('ERROR: NOT FOUNT TODO');
+
+        newState.todoList[i].categoryId = action.categoryId;
+    }
+    return newState;
+};
 
 const editParams = function(state = {}, action) {
     let newState = JSON.parse(JSON.stringify(state));
-    // action = {type, params = [action = text, task-id, value = e]}
-    // action={"type":"EDIT_PARAMS_TODO","params":["name",1,"Todo 15"]}
-
     let i = newState.todoList.findIndex((item) => item.id === action.params[1]);
     if (i < 0) window.console.log('ERROR: NOT FOUNT TODO');
     let task = newState.todoList[i];
@@ -84,16 +91,6 @@ const editParams = function(state = {}, action) {
     return newState;
 };
 
-
-// Combine Reducers
-// const reducers = combineReducers({
-//   userState: userReducer,
-//   categoriesListState: categoriesReducer
-// });
-// window.console.log(`redusers=${reducers}`);
-
-
-
 // My single Reduser
 const mySingleReduser = function(state = {}, action) {
 
@@ -121,7 +118,17 @@ const mySingleReduser = function(state = {}, action) {
             let change = toggleTodo(
                 {
                     todoList: newState.todoList,
-                    // todosState: newState.todosState,
+                    taskEditStates: newState.taskEditStates
+                },
+                action
+            );
+            newState = Object.assign({}, newState, change);
+            break;
+        }
+        case MOVE_TODO: {
+            let change = moveTodoInCategory(
+                {
+                    todoList: newState.todoList,
                 },
                 action
             );
@@ -145,6 +152,14 @@ const mySingleReduser = function(state = {}, action) {
     return newState;
 };
 
+
+
+// Combine Reducers
+// const reducers = combineReducers({
+//   userState: userReducer,
+//   categoriesListState: categoriesReducer
+// });
+// window.console.log(`redusers=${reducers}`);
 
 // const store = createStore(reducers);
 const store = createStore(mySingleReduser);

@@ -45,6 +45,7 @@ class TodoList extends React.Component {
                                     name = {item.name}
                                     completed = {item.completed}
                                     toggle = {() => {this.toggleTodo(item.id)}}
+                                    owner = {this.props.categoryId}
                                 />
                             );
                         })
@@ -63,22 +64,10 @@ TodoList.propTypes = {
 };
 
 const mapStateToProps = function(store, ownProps) {
-    // window.console.log('-------TodoList----------');
-    // window.console.log(`all_store=${JSON.stringify(store)}`);
-    // window.console.log(store);
     return {
         state: store.todoList,
         categoryId: parseInt(ownProps.match.params.id),
     };
 };
 
-// const mergeProps = function(stateProps, dispatchProps, ownProps) {
-//     // window.console.log(`owner:${JSON.stringify(ownProps)}`);
-//     // window.console.log(ownProps);
-//     return {
-//         categoryId: parseInt(ownProps.match.params.id),
-//     };
-// }
-
-// export default connect(mapStateToProps, {}, mergeProps)(TodoList);
 export default connect(mapStateToProps)(TodoList);

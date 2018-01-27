@@ -11,9 +11,6 @@ import store from '../../store';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import styled from 'styled-components';
 
-import Test2 from '../../components/Test2';
-import Weather from '../../components/Weather';
-
 import Header from '../../components/Header';
 import ToolBox from '../../components/ToolBox';
 import Categories from '../../containers/Categories';
@@ -22,12 +19,11 @@ import TaskEditForm from '../../containers/TaskEditForm';
 
 const Content = styled.div`
 display: flex;
+flex-wrap: wrap;
 `;
 const Left = styled.div`
-max-width: 30%;
 `;
 const Right = styled.div`
-width: 100%;
 `;
 
 export default class Main extends React.Component {
@@ -46,12 +42,8 @@ export default class Main extends React.Component {
                     <Route path="/" component={Categories}/>
                   </Left>
                   <Right>
-                    <Route path="/category/:id" component={TodoList}/>
-                    <Route path="/task/:id" component={TaskEditForm}/>
-
-
-                    <Route path="/Weather" component={Weather}/>
-                    <Route path="/test" component={Test2}/>
+                    <Route exact path="/category/:id" component={TodoList}/>
+                    <Route path="/category/:categoryId/task/:id" component={TaskEditForm}/>
                   </Right>
                 </Content>
               </div>

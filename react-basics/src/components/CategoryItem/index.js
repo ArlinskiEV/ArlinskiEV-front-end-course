@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {NavLink} from 'react-router-dom';
+import {
+    NavLink
+} from 'react-router-dom';
+
 
 const Tag = styled.div.attrs({
     // we can define dynamic props
@@ -34,37 +37,74 @@ margin: 0px 5px;
 }
 `;
 
+const ToolIcon = Icon.extend.attrs({
+    show: props => props.show || 'no',
+    move: props => props.move || 'no',
+})`
+transform: ${props => props.move === 'yes' ? 'rotate(180deg)' : 'none'};
+display: ${props => props.show === 'yes' ? 'inline-block' : 'none'};
+.selected & {
+    display: ${props => (props.show === 'yes' && props.move === 'yes') 
+        ? 'none' 
+        : props.show === 'yes'
+            ? 'inline-block'
+            : 'none'
+    };
+}
+`;
+
 const Nested = Icon.extend.attrs({
-    show: props => props.show || "no",
+    show: props => props.show || 'no',
 })`
 position: absolute;
 left: 10px;
-display: ${props => props.show === "yes" ? 'inline' : 'none'};
+display: ${props => props.show === 'yes' ? 'inline' : 'none'};
 `;
 
 export default class CategoryItem extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    // }
 
     render() {
         return (
             <MyLink 
-                to={`/category/${this.props.itemId}`}
-                activeClassName="selected"
+                to = {`/category/${this.props.itemId}`}
+                activeClassName = "selected"
             >
             <Tag
                 shift = {(this.props.shift || 0)}
             >
                 <Nested 
-                    className={`fas fa-angle-${(this.props.isOpen || false) ? 'up' : 'down'}`}
-                    show={(this.props.haveNested || false) ? "yes" : "no"}
-                    onClick = {(e)=> {this.props.showed(); e.preventDefault();}}
+                    className = {`fas fa-angle-${(this.props.isOpen || false) ? 'up' : 'down'}`}
+                    show = {(this.props.haveNested || false) ? "yes" : "no"}
+                    onClick = {(e) => {this.props.showed(); e.preventDefault();}}
                 ></Nested>
                 <span>{this.props.name}</span>
-                <Icon className="fas fa-edit"></Icon>
-                <Icon className="fas fa-trash"></Icon>
-                <Icon className="far fa-plus-square"></Icon>
+
+                <ToolIcon
+                    className = "fas fa-edit"
+                    onClick = {(e) => { e.preventDefault();}}
+                    show = { !(this.props.task > 0) ? "yes" : "no"}
+                ></ToolIcon>
+                <ToolIcon
+                    className = "fas fa-trash"
+                    onClick = {(e) => { e.preventDefault();}}
+                    show = { !(this.props.task > 0) ? "yes" : "no"}
+                ></ToolIcon>
+                <ToolIcon
+                    className = "far fa-plus-square"
+                    onClick = {(e) => { e.preventDefault();}}
+                    show = { !(this.props.task > 0) ? "yes" : "no"}
+                ></ToolIcon>
+                <ToolIcon
+                    className = "fas fa-share"
+                    onClick = {(e) => {
+                            this.props.moveIn(this.props.itemId);
+                            this.props.history.push(`/category/${this.props.itemId}/task/${this.props.task}`);
+                            e.preventDefault();
+                        }
+                    }
+                    show = {(this.props.task > 0) ? "yes" : "no"}
+                    move = {"yes"}
+                ></ToolIcon>
             </Tag>
             </MyLink>
         );
@@ -77,5 +117,10 @@ CategoryItem.propTypes = {
     haveNested: PropTypes.bool,
     isOpen: PropTypes.bool,
     shift: PropTypes.number,
+    task: PropTypes.number,
+
     showed: PropTypes.func,
+    moveIn: PropTypes.func,
+
+    history: PropTypes.object,
   };

@@ -7,10 +7,14 @@ import CategoryItem from '../../components/CategoryItem';
 
 import { connect } from 'react-redux';
 import store from '../../store';
-import {toggleSubCategories} from '../../store/actions';
+import {
+    toggleSubCategories,
+    moveTodo,
+} from '../../store/actions';
 
 const Tag = styled.div`
     overflow: auto;
+    min-width: 250px;
    -webkit-box-shadow: 0px 0px 3px 2px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 3px 2px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 3px 2px rgba(0,0,0,0.75);
@@ -24,21 +28,11 @@ min-width: max-content;
 `;
 
 class Categories extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    //     // this.state = {
-    //     //     list: generateState.generate(props.categoriesList), // {id:0, name: "name", parentId: 0} parentId = 0 => root
-    //     // }
-    // }
-
     showed(id) {
-        // this.setState((prevState) => {
-        //     return (
-        //         generateState.showed(id, prevState.list)
-        //     );
-        // });
-
         store.dispatch(toggleSubCategories(id));
+    }
+    moveIn(taskId, categoryId) {
+        store.dispatch(moveTodo(taskId, categoryId));
     }
 
     render() {
@@ -52,12 +46,17 @@ class Categories extends React.Component {
                             return (
                                 <CategoryItem
                                     key = {item.id}
+                                    showed = {() => {this.showed(item.id);}}
+                                    moveIn = {(categoryId) => {this.moveIn(this.props.task, categoryId);}}
+
+                                    history = {this.props.history}
+
                                     itemId = {item.id}
                                     name = {item.name}
                                     haveNested = {item.haveNested}
                                     isOpen = {item.isOpen}
                                     shift = {item.shift}
-                                    showed = {() => {this.showed(item.id)}}
+                                    task = {this.props.task}
                                 />
                             );
                         })
@@ -70,17 +69,23 @@ class Categories extends React.Component {
 }
 
 Categories.propTypes = {
-    state: PropTypes.array
+    state: PropTypes.array,
+    task: PropTypes.number,
+    history: PropTypes.object,
 };
 
 const mapStateToProps = function(store, ownProps) {
-    // window.console.log('-------Categories----------');
-    // window.console.log(`all_store=${JSON.stringify(store)}`);
-    // window.console.log(`store.catListState=${JSON.stringify(store.categoriesListState)}`);
+    //'/category/1/task/1'
+    // ownProps.location.pathname
+    let i = ownProps.location.pathname.lastIndexOf('/task/') + 6;
+    let task = i < 6
+        ? (-1)
+        : parseInt(ownProps.location.pathname.slice(i));
+
     return {
-        // state: store.categoriesListState.categoriesState
         state: store.categoriesState,
-        ownProps: ownProps,
+        task: task,
+        history: ownProps.history,
     };
 };
 

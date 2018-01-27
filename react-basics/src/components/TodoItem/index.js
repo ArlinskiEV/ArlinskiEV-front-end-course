@@ -54,7 +54,7 @@ export default class TodoItem extends React.Component {
                     />
                 </div>
                 <span>{this.props.name}</span>
-                <MyLink to={`/task/${this.props.itemId}`}>
+                <MyLink to={`/category/${this.props.owner}/task/${this.props.itemId}`}>
                     <Icon className="fas fa-edit"></Icon>
                 </MyLink>
             </Tag>
@@ -67,4 +67,5 @@ TodoItem.propTypes = {
     name: PropTypes.string,
     completed: PropTypes.bool,
     toggle: PropTypes.func,
+    owner: PropTypes.number,
   };
