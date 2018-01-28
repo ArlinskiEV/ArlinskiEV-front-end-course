@@ -20,10 +20,21 @@ const Block = styled.div`
 width: min-content;
 margin: 15px 0px;
 `;
-const TextBlock = styled.div`
-margin-top: 15px
+const TextBlock = styled.textarea`
+margin-top: 15px;
+width: 100%;
+display: block;
 `;
-
+const Warning = styled.i.attrs({
+    show: props => props.show || "none",
+})`
+display: ${props => props.show};
+color: GoldenRod;
+margin: 10px;
+&::before {
+    margin-right: 10px;
+}
+`;
 class TaskEditForm extends React.Component {
     changer(action, value) {
         //name/toggle/text/save/cansel
@@ -45,6 +56,10 @@ class TaskEditForm extends React.Component {
                         placeholder="Task Name"
                         onChange = {(e) => {this.changer('name',e.target.value)}}
                     />
+                    <Warning
+                        className="fas fa-exclamation-triangle"
+                        show = {!this.props.categoryIsExist ? "inline-block" : "none"}
+                    >{`Warning: Parent category doesn't exist`}</Warning>
                     <Block>
                         <Checkbox
                             label="Done"
@@ -52,8 +67,8 @@ class TaskEditForm extends React.Component {
                             onCheck={() => {this.changer('toggle');}}
                         />
                     </Block>
-                    <span>Task id = {this.props.id} ||| </span>
-                    <span>Category id = {this.props.categoryId} ||| </span>
+                    <p>Task id = {this.props.id}</p>
+                    <p>Category id = {this.props.categoryId}</p>
                     <input
                         type="button"
                         value="Save"
@@ -64,13 +79,11 @@ class TaskEditForm extends React.Component {
                         value="Cansel"
                         onClick = {() => {this.changer('cansel');}}
                     />
-                    <TextBlock>
-                        <textarea
-                            value ={this.props.text}
-                            placeholder="Text..."
-                            onChange = {(e) => {this.changer('text',e.target.value)}}
-                        />
-                    </TextBlock>
+                    <TextBlock
+                        value ={this.props.text}
+                        placeholder="Text..."
+                        onChange = {(e) => {this.changer('text',e.target.value)}}
+                    />
                 </Tag>
             )
         );
@@ -83,7 +96,9 @@ TaskEditForm.propTypes = {
     text: PropTypes.string,
     completed: PropTypes.bool,
     categoryId: PropTypes.number,
-    categoryURLId: PropTypes.number
+
+    categoryURLId: PropTypes.number,
+    categoryIsExist: PropTypes.bool,
 };
 
 const mapStateToProps = function(store, ownProps) {
@@ -92,6 +107,14 @@ const mapStateToProps = function(store, ownProps) {
     let id = store.todoList.findIndex((item) => item.id === taskId);
     let task = store.todoList[id];
     let state = store.taskEditStates[taskId];
-    return Object.assign({categoryURLId: categoryURLId}, task, state);
+    let categoryIsExist = store.categoryList.some(category => category.id === task.id);
+    return Object.assign(
+        {
+            categoryURLId: categoryURLId,
+            categoryIsExist: categoryIsExist,
+        },
+        task,
+        state
+    );
 };
 export default connect(mapStateToProps)(TaskEditForm);

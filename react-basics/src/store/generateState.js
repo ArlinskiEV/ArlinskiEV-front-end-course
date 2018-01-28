@@ -98,6 +98,7 @@ export default class GenerateState {
             {id:7, name:'Todo 7', text:'', completed: false, categoryId:7},
             {id:8, name:'Todo 8', text:'', completed: false, categoryId:8},
             {id:9, name:'Todo 9', text:'', completed: false, categoryId:1},
+            {id:10, name:'Todo 9', text:'', completed: false, categoryId:10},
         ];
 
         result = result ? result : {

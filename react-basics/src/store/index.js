@@ -49,8 +49,8 @@ const moveTodoInCategory = function(state = {}, action) {
         if (i < 0) window.console.log('ERROR: NOT FOUNT TODO');
 
         newState.todoList[i].categoryId = action.categoryId;
-        if (newState.taskEditStates[action.index]) {
-            newState.taskEditStates[action.index].categoryId = action.categoryId;
+        if (newState.taskEditStates[action.todoId]) {
+            newState.taskEditStates[action.todoId].categoryId = action.categoryId;
         }
     }
     return newState;

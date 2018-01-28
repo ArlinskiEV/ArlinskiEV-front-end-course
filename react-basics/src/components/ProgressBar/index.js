@@ -41,8 +41,8 @@ const mapStateToProps = function(store) {
     return {
         count: store.categoryList.length,
         completed: store.categoryList.length - store.categoryList
-            .filter(category => 
-                store.todoList.some( todo => 
+            .filter(category =>
+                store.todoList.some( todo =>
                     (!todo.completed) && (todo.categoryId === category.id)
                 )
             )
