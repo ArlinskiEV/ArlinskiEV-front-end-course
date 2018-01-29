@@ -5,6 +5,7 @@ import {
     NavLink
 } from 'react-router-dom';
 
+import ModalDialog from '../../containers/ModalDialog'
 
 const Tag = styled.div.attrs({
     // we can define dynamic props
@@ -81,7 +82,7 @@ export default class CategoryItem extends React.Component {
 
                 <ToolIcon
                     className = "fas fa-edit"
-                    onClick = {(e) => { e.preventDefault();}}
+                    onClick = {(e) => { this.props.edit(this.props.itemId, this.props.name); e.preventDefault();}}
                     show = { !(this.props.task > 0) ? "yes" : "no"}
                 ></ToolIcon>
                 <ToolIcon
@@ -95,7 +96,7 @@ export default class CategoryItem extends React.Component {
                 ></ToolIcon>
                 <ToolIcon
                     className = "far fa-plus-square"
-                    onClick = {(e) => { e.preventDefault();}}
+                    onClick = {(e) => { this.props.add(this.props.itemId); e.preventDefault();}}
                     show = { !(this.props.task > 0) ? "yes" : "no"}
                 ></ToolIcon>
                 <ToolIcon
@@ -109,6 +110,7 @@ export default class CategoryItem extends React.Component {
                     show = {(this.props.task > 0) ? "yes" : "no"}
                     move = {"yes"}
                 ></ToolIcon>
+                <ModalDialog/>
             </Tag>
             </MyLink>
         );
@@ -126,6 +128,8 @@ CategoryItem.propTypes = {
     showed: PropTypes.func,
     moveIn: PropTypes.func,
     remove: PropTypes.func,
+    add: PropTypes.func,
+    edit: PropTypes.func,
 
     history: PropTypes.object,
   };

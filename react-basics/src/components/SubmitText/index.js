@@ -7,7 +7,13 @@ import {
  } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { addTodo, editAddTodoName } from '../../store/actions'
+import {
+    addTodo,
+    editAddTodoName,
+    editAddCategoryName,
+    addCategory,
+    modalOpen,
+} from '../../store/actions'
 import store from '../../store';
 
 const Tag = styled.div`
@@ -58,7 +64,6 @@ SubmitText.propTypes = {
 
 
 const mapStateToProps = function(state, ownProps) {
-    // window.console.log(`own.location.pathname=${JSON.stringify(ownProps.location.pathname)}`);
     let placeholder = 'Category name...';
     let buttonName = 'Add';
     let value = '';
@@ -89,6 +94,23 @@ const mapStateToProps = function(state, ownProps) {
             break;
         }
         case 'ADD_CATEGORY': {
+            placeholder = 'Category name...';
+            value = state.editCategoryName || '';
+            changer = (value) => store.dispatch(editAddCategoryName(value));
+            clicker = () => {
+                if (state.editCategoryName) {
+                    store.dispatch(addCategory(
+                        {
+                            name: state.editCategoryName || 'noName',
+                            parentId: 0,//state.editCategoryParentId || 0,
+                        })
+                    );
+                    store.dispatch(editAddCategoryName(''));
+                } else {
+                    window.console.log('TRASH!!!!!!!!!!!');
+                    store.dispatch(modalOpen({type:'ADD', parentId: 0}));
+                }
+            };
             break;
         }
         case 'SEARCH': {

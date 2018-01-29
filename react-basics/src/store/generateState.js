@@ -104,9 +104,17 @@ export default class GenerateState {
         result = result ? result : {
             categoryList,
             todoList,
+
+            modal: {
+                open: false,
+                type: 'CONFIRM',
+            },
+            editCategoryName: '',
+            editCategoryParentId: 0,
+
+
             taskEditStates: {},
             categoriesState: GenerateState.generateCategoriesState(categoryList),
-            // todosState: GenerateState.generateTodosState(todoList),
         };
 
         sessionStorage.setItem('APP_STATE', JSON.stringify(result));

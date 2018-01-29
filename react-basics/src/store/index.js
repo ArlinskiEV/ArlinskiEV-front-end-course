@@ -9,6 +9,11 @@ import {
     ADD_TODO,
     EDIT_PARAMS_TODO,
     EDIT_ADD_TODO_NAME,
+    EDIT_ADD_CATEGORY_NAME,
+    EDIT_CATEGORY,
+    MODAL_OPEN,
+    MODAL_CLOSE,
+    ADD_CATEGORY,
 } from './actions';
 
 
@@ -39,14 +44,16 @@ const deleteCategory = function(state = {}, action) {
                 return item.id === action.id;
             });
         let delArr = [action.id];
-        for (i++; (i < newState.categoriesState.length) && (shift < newState.categoriesState[i].shift); i++) {
-            delArr.push(newState.categoriesState[i].id);
+        for (let j = i + 1; (j < newState.categoriesState.length) && (shift < newState.categoriesState[j].shift); j++) {
+            delArr.push(newState.categoriesState[j].id);
         }
 
         newState.categoryList = newState.categoryList
             .filter((item) => delArr.indexOf(item.id) === -1);
         newState.categoriesState = newState.categoriesState
             .filter((item) => delArr.indexOf(item.id) === -1);
+
+        newState.categoriesState[i - 1].haveNested = (newState.categoriesState[i - 1].shift < newState.categoriesState[i].shift);
     }
     return newState;
 }
@@ -88,6 +95,53 @@ const addTodo = function(state = {}, action) {
         },
     ];
     return newState
+}
+
+const addCategory = function(state = {}, action) {
+    let newState = JSON.parse(JSON.stringify(state));
+    let nextId = newState.categoryList
+        .reduce(
+            (prev, item) => item.id > prev
+                ? item.id
+                : prev,
+            0
+        )
+        + 1;
+    newState.categoryList = [
+        ...newState.categoryList,
+        {
+            id: nextId,
+            name: action.field.name,
+            parentId: action.field.parentId,
+        }
+    ];
+
+    if (action.field.parentId === 0) {
+        newState.categoriesState.unshift(
+            {
+                id: nextId,
+                name: action.field.name,
+                visible: true,
+                shift: 0,
+            }
+        );
+    } else {
+        let i = newState.categoriesState
+            .findIndex((item) => item.id === action.field.parentId);
+        newState.categoriesState[i].haveNested = true;
+        newState.categoriesState = [
+            ...(newState.categoriesState.slice(0, i + 1)),
+            {
+                id: nextId,
+                name: action.field.name,
+                visible: newState.categoriesState[i].visible && newState.categoriesState[i].isOpen,
+                shift: newState.categoriesState[i].shift + 1,
+            },
+            ...(newState.categoriesState.slice(i + 1))
+        ];
+    }
+
+    return newState;
 }
 
 const moveTodoInCategory = function(state = {}, action) {
@@ -152,6 +206,52 @@ const editAddTodoName = function(state = {}, action) {
     return newState;
 }
 
+const editAddCategoryName = function(state = {}, action) {
+    let newState = JSON.parse(JSON.stringify(state));
+    if (action.type === EDIT_ADD_CATEGORY_NAME) {
+        newState.editCategoryName = action.text;
+    }
+    return newState;
+}
+
+const editCategory = function(state = {}, action) {
+    let newState = JSON.parse(JSON.stringify(state));
+    if (action.type === EDIT_CATEGORY) {
+        // field={name:'',id:0}
+        let i = newState.categoryList
+            .findIndex((item) => item.id === action.field.id);
+        newState.categoryList[i].name = action.field.name;
+        i = newState.categoriesState
+            .findIndex((item) => item.id === action.field.id);
+        newState.categoriesState[i].name = action.field.name;
+    }
+    return newState;
+}
+
+const modalOpen = function(state = {}, action) {
+    let newState = JSON.parse(JSON.stringify(state));
+    if (action.type === MODAL_OPEN) {
+        Object.assign(newState.modal,{open: true});
+        newState.modal.type = action.field.type;
+        if (action.field.type === 'ADD') {
+            newState.editCategoryParentId = action.field.parentId;
+        }
+        if (action.field.type === 'EDIT') {
+            newState.editCategoryParentId = action.field.id;
+        }
+    }
+    return newState;
+}
+
+const modalClose = function(state = {}, action) {
+    let newState = JSON.parse(JSON.stringify(state));
+    if (action.type === MODAL_CLOSE) {
+        Object.assign(newState.modal,{open: false});
+    }
+    return newState;
+}
+
+
 // My single Reduser
 const mySingleReduser = function(state = {}, action) {
     let newState = Object.assign({}, state);
@@ -210,6 +310,16 @@ const mySingleReduser = function(state = {}, action) {
                 action);
             break;
         }
+        case ADD_CATEGORY: {
+            change = addCategory(
+                {
+                    editCategoryName: newState.editCategoryName,
+                    categoryList: newState.categoryList,
+                    categoriesState: newState.categoriesState,
+                },
+                action);
+            break;
+        }
         case EDIT_PARAMS_TODO: {
             change = editParams(
                 {
@@ -224,6 +334,44 @@ const mySingleReduser = function(state = {}, action) {
             change = editAddTodoName(
                 {
                     addTodoName: newState.addTodoName,
+                },
+                action
+            );
+            break;
+        }
+        case EDIT_ADD_CATEGORY_NAME: {
+            change = editAddCategoryName(
+                {
+                    editCategoryName: newState.editCategoryName,
+                },
+                action
+            );
+            break;
+        }
+        case EDIT_CATEGORY: {
+            change = editCategory(
+                {
+                    categoryList: newState.categoryList,
+                    categoriesState: newState.categoriesState,
+                },
+                action
+            );
+            break;
+        }
+        case MODAL_OPEN: {
+            change = modalOpen(
+                {
+                    modal: newState.modal,
+                    editCategoryParentId: newState.editCategoryParentId,
+                },
+                action
+            );
+            break;
+        }
+        case MODAL_CLOSE: {
+            change = modalClose(
+                {
+                    modal: newState.modal,
                 },
                 action
             );

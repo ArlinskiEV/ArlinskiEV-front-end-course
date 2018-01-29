@@ -62,9 +62,9 @@ TodoList.propTypes = {
     categoryId: PropTypes.number,
 };
 
-const mapStateToProps = function(store, ownProps) {
+const mapStateToProps = function(state, ownProps) {
     return {
-        state: store.todoList,
+        state: state.todoList,
         categoryId: parseInt(ownProps.match.params.id),
     };
 };

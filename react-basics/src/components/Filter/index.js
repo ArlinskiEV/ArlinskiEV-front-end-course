@@ -19,7 +19,7 @@ export default class Filter extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            checked: false,
+            checked: true,
         }
     }
   updateCheck() {

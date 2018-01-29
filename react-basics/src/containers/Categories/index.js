@@ -11,6 +11,8 @@ import {
     toggleSubCategories,
     moveTodo,
     deleteCategory,
+    modalOpen,
+    editAddCategoryName,
 } from '../../store/actions';
 
 const Tag = styled.div`
@@ -37,6 +39,14 @@ class Categories extends React.Component {
     }
     remove(id) {
         store.dispatch(deleteCategory(id));
+        store.dispatch(modalOpen({type:'CONFIRM'}));
+    }
+    add(parentId) {
+        store.dispatch(modalOpen({type:'ADD', parentId}));
+    }
+    edit(id, name) {
+        store.dispatch(editAddCategoryName(name));
+        store.dispatch(modalOpen({type:'EDIT', id}));
     }
 
     render() {
@@ -52,6 +62,8 @@ class Categories extends React.Component {
                                     showed = {() => this.showed(item.id)}
                                     moveIn = {(categoryId) => this.moveIn(this.props.task, categoryId)}
                                     remove = {(categoryId) => this.remove(categoryId)}
+                                    add = {(categoryId) => this.add(categoryId)}
+                                    edit = {(categoryId, name) => this.edit(categoryId, name)}
 
                                     history = {this.props.history}
 
