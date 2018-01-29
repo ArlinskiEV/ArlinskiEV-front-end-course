@@ -86,7 +86,11 @@ export default class CategoryItem extends React.Component {
                 ></ToolIcon>
                 <ToolIcon
                     className = "fas fa-trash"
-                    onClick = {(e) => { e.preventDefault();}}
+                    onClick = {(e) => {
+                        this.props.remove(this.props.itemId);
+                        e.preventDefault();
+                        }
+                    }
                     show = { !(this.props.task > 0) ? "yes" : "no"}
                 ></ToolIcon>
                 <ToolIcon
@@ -121,6 +125,7 @@ CategoryItem.propTypes = {
 
     showed: PropTypes.func,
     moveIn: PropTypes.func,
+    remove: PropTypes.func,
 
     history: PropTypes.object,
   };

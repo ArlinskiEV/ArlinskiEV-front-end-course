@@ -58,7 +58,7 @@ class TaskEditForm extends React.Component {
                     />
                     <Warning
                         className="fas fa-exclamation-triangle"
-                        show = {!this.props.categoryIsExist ? "inline-block" : "none"}
+                        show = {!this.props.categoryIsExist ? "block" : "none"}
                     >{`Warning: Parent category doesn't exist`}</Warning>
                     <Block>
                         <Checkbox
@@ -107,7 +107,7 @@ const mapStateToProps = function(store, ownProps) {
     let id = store.todoList.findIndex((item) => item.id === taskId);
     let task = store.todoList[id];
     let state = store.taskEditStates[taskId];
-    let categoryIsExist = store.categoryList.some(category => category.id === task.id);
+    let categoryIsExist = store.categoryList.some(category => category.id === task.categoryId);
     return Object.assign(
         {
             categoryURLId: categoryURLId,

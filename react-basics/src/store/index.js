@@ -1,11 +1,18 @@
 // import { createStore, combineReducers } from 'redux';
 import { createStore } from 'redux';
 import generateState from './generateState'; 
-import { TOGGLE_CATEGORY, TOGGLE_TODO, MOVE_TODO, EDIT_PARAMS_TODO } from './actions';
+import {
+    TOGGLE_CATEGORY,
+    DELETE_CATEGORY,
+    TOGGLE_TODO,
+    MOVE_TODO,
+    ADD_TODO,
+    EDIT_PARAMS_TODO,
+    EDIT_ADD_TODO_NAME,
+} from './actions';
 
 
-// The Categories Reducer
-const categoriesReducer = function(state = {}, action) {
+const toggleCategory = function(state = {}, action) {
     let newState = JSON.parse(JSON.stringify(state));
 
     let prevCategoriesState = state.categoriesState
@@ -19,10 +26,30 @@ const categoriesReducer = function(state = {}, action) {
     
     newState.categoriesState = [...newCategoriesState];
 
-    // window.console.log(`categoryReducer: newState=${JSON.stringify(newState)}`);
   return newState;
 }
 
+const deleteCategory = function(state = {}, action) {
+    let newState = JSON.parse(JSON.stringify(state));
+    if (action.type === DELETE_CATEGORY) {
+        let shift = 0;
+        let i = newState.categoriesState
+            .findIndex((item) => {
+                if (item.id === action.id) shift = item.shift;
+                return item.id === action.id;
+            });
+        let delArr = [action.id];
+        for (i++; (i < newState.categoriesState.length) && (shift < newState.categoriesState[i].shift); i++) {
+            delArr.push(newState.categoriesState[i].id);
+        }
+
+        newState.categoryList = newState.categoryList
+            .filter((item) => delArr.indexOf(item.id) === -1);
+        newState.categoriesState = newState.categoriesState
+            .filter((item) => delArr.indexOf(item.id) === -1);
+    }
+    return newState;
+}
 
 const toggleTodo = function(state = {}, action) {
     let newState = JSON.parse(JSON.stringify(state));
@@ -39,6 +66,29 @@ const toggleTodo = function(state = {}, action) {
     }
     return newState;
 };
+
+const addTodo = function(state = {}, action) {
+    let newState = JSON.parse(JSON.stringify(state));
+    let nextId = newState.todoList
+        .reduce(
+            (prev, item) => item.id > prev
+                ? item.id
+                : prev,
+            0
+        )
+        + 1;
+    newState.todoList = [
+        ...newState.todoList,
+        {
+            id: nextId,
+            name: action.field.name,
+            text: '',
+            completed: false,
+            categoryId: action.field.category
+        },
+    ];
+    return newState
+}
 
 const moveTodoInCategory = function(state = {}, action) {
     let newState = JSON.parse(JSON.stringify(state));
@@ -94,65 +144,99 @@ const editParams = function(state = {}, action) {
     return newState;
 };
 
+const editAddTodoName = function(state = {}, action) {
+    let newState = JSON.parse(JSON.stringify(state));
+    if (action.type === EDIT_ADD_TODO_NAME) {
+        newState.addTodoName = action.text;
+    }
+    return newState;
+}
+
 // My single Reduser
 const mySingleReduser = function(state = {}, action) {
-
     let newState = Object.assign({}, state);
+    let change = {};
 
     window.console.log(`TYPE: ${action.type}`);
     switch (action.type) {
         case '@@redux/INIT': {
-            let change = generateState.init();
-            Object.assign(newState, change);
+            change = generateState.init();
             break;
         }
         case TOGGLE_CATEGORY: {
-            let change = categoriesReducer(
+            change = toggleCategory(
                 {
                     categoryList: newState.categoryList,
                     categoriesState: newState.categoriesState,
                 },
                 action
             );
-            newState = Object.assign({}, newState, change);
+            break;
+        }
+        case DELETE_CATEGORY: {
+            change = deleteCategory(
+                {
+                    categoryList: newState.categoryList,
+                    categoriesState: newState.categoriesState,
+                },
+                action);
             break;
         }
         case TOGGLE_TODO: {
-            let change = toggleTodo(
+            change = toggleTodo(
                 {
                     todoList: newState.todoList,
                     taskEditStates: newState.taskEditStates
                 },
                 action
             );
-            newState = Object.assign({}, newState, change);
             break;
         }
         case MOVE_TODO: {
-            let change = moveTodoInCategory(
+            change = moveTodoInCategory(
                 {
                     todoList: newState.todoList,
                     taskEditStates: newState.taskEditStates
                 },
                 action
             );
-            newState = Object.assign({}, newState, change);
+            break;
+        }
+        case ADD_TODO: {
+            change = addTodo(
+                {
+                    todoList: newState.todoList,
+                },
+                action);
             break;
         }
         case EDIT_PARAMS_TODO: {
-            let change = editParams(
+            change = editParams(
                 {
                     todoList: newState.todoList,
                     taskEditStates: newState.taskEditStates,
                 },
                 action
             );
-            newState = Object.assign({}, newState, change);
             break;
         }
-        default: window.console.log(`UNKNOWN_TYPE`);
+        case EDIT_ADD_TODO_NAME: {
+            change = editAddTodoName(
+                {
+                    addTodoName: newState.addTodoName,
+                },
+                action
+            );
+            break;
+        }
+        default: {
+            window.console.log(`UNKNOWN_TYPE`);
+            change = {};
+        }
     }
+    newState = Object.assign({}, newState, change);
     sessionStorage.setItem('APP_STATE', JSON.stringify(newState));
+
     return newState;
 };
 

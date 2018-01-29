@@ -20,8 +20,7 @@ export default class ToolBox extends React.Component {
         return (
             <Tag>
                 <SubmitText
-                    placeholder = "Add category..."
-                    buttonName = "Add"
+                    type = "ADD_CATEGORY"
                 />
                 <div>
                     <span>undo</span>
@@ -29,10 +28,9 @@ export default class ToolBox extends React.Component {
                     <span>redo</span>
                 </div>
                 <SubmitText
-                    placeholder = "Add todo..."
-                    buttonName = "Add"
+                    type = "ADD_TODO"
                 />
-            </ Tag>
+            </Tag>
         );
     }
 }

@@ -10,6 +10,7 @@ import store from '../../store';
 import {
     toggleSubCategories,
     moveTodo,
+    deleteCategory,
 } from '../../store/actions';
 
 const Tag = styled.div`
@@ -34,20 +35,23 @@ class Categories extends React.Component {
     moveIn(taskId, categoryId) {
         store.dispatch(moveTodo(taskId, categoryId));
     }
+    remove(id) {
+        store.dispatch(deleteCategory(id));
+    }
 
     render() {
         return (
             <Tag>
                 <Wrap>
-                    <hr/>
                     {this.props.state//this.state.list
                         .filter((item) => item.visible)
                         .map((item) => {
                             return (
                                 <CategoryItem
                                     key = {item.id}
-                                    showed = {() => {this.showed(item.id);}}
-                                    moveIn = {(categoryId) => {this.moveIn(this.props.task, categoryId);}}
+                                    showed = {() => this.showed(item.id)}
+                                    moveIn = {(categoryId) => this.moveIn(this.props.task, categoryId)}
+                                    remove = {(categoryId) => this.remove(categoryId)}
 
                                     history = {this.props.history}
 
@@ -61,7 +65,6 @@ class Categories extends React.Component {
                             );
                         })
                     }
-                    <hr/>
                 </Wrap>
             </Tag>
         );

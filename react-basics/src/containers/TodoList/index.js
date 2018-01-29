@@ -33,7 +33,6 @@ class TodoList extends React.Component {
         let obj = (
             <Tag>
                 <Wrap>
-                    <hr/>
                     {this.props.state
                         .filter((item) => this.props.categoryId === item.categoryId)
                         .sort((a, b) => b.id - a.id)
@@ -51,7 +50,6 @@ class TodoList extends React.Component {
                             );
                         })
                     }
-                    <hr/>
                 </Wrap>
             </Tag>
         );

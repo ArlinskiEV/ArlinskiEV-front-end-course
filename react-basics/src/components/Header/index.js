@@ -21,8 +21,7 @@ export default class Header extends React.Component {
                 <Left>
                     <Filter/>
                     <Search
-                        placeholder = "Search..."
-                        buttonName = "Search"
+                        type = "SEARCH"
                     />
                 </Left>
                 <ProgressBar/>
