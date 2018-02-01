@@ -18,8 +18,7 @@ import {
 
 
 const toggleCategory = function(state = {}, action) {
-    let newState = JSON.parse(JSON.stringify(state));
-
+// .categoriesState
     let prevCategoriesState = state.categoriesState
         ? state.categoriesState
         : generateState.generateCategoriesState(state.categoryList);
@@ -28,55 +27,88 @@ const toggleCategory = function(state = {}, action) {
     if (action.type === TOGGLE_CATEGORY) {
         newCategoriesState = generateState.showedCategory(action.index, prevCategoriesState);
     }
-    
-    newState.categoriesState = [...newCategoriesState];
 
-  return newState;
+  return Object.assign(
+      {},
+      state,
+      {
+        categoriesState: [...newCategoriesState],
+      }
+    );
 }
 
 const deleteCategory = function(state = {}, action) {
-    let newState = JSON.parse(JSON.stringify(state));
+// .categoriesState
+// .categoryList
+    let change = {};
+
     if (action.type === DELETE_CATEGORY) {
         let shift = 0;
-        let i = newState.categoriesState
+        let i = state.categoriesState
             .findIndex((item) => {
                 if (item.id === action.id) shift = item.shift;
                 return item.id === action.id;
             });
+
         let delArr = [action.id];
-        for (let j = i + 1; (j < newState.categoriesState.length) && (shift < newState.categoriesState[j].shift); j++) {
-            delArr.push(newState.categoriesState[j].id);
+        for (let j = i + 1; (j < state.categoriesState.length) && (shift < state.categoriesState[j].shift); j++) {
+            delArr.push(state.categoriesState[j].id);
         }
 
-        newState.categoryList = newState.categoryList
+        change.categoryList = state.categoryList
             .filter((item) => delArr.indexOf(item.id) === -1);
-        newState.categoriesState = newState.categoriesState
+        change.categoriesState = state.categoriesState
             .filter((item) => delArr.indexOf(item.id) === -1);
 
-        newState.categoriesState[i - 1].haveNested = (newState.categoriesState[i - 1].shift < newState.categoriesState[i].shift);
+        if (i > 0) change.categoriesState[i - 1] = Object.assign(
+            {},
+            change.categoriesState[i - 1],
+            {
+                haveNested: (change.categoriesState[i - 1].shift < change.categoriesState[i].shift),
+            }
+        );
     }
-    return newState;
+    return Object.assign({}, state, change);
 }
 
 const toggleTodo = function(state = {}, action) {
-    let newState = JSON.parse(JSON.stringify(state));
-
+// .todoList
+// .taskEditState
+    let change = {};
     if (action.type === TOGGLE_TODO) {
-        let i = newState.todoList.findIndex((item) => item.id === action.index);
+        let i = state.todoList.findIndex((item) => item.id === action.index);
 
         if (i < 0) window.console.log('ERROR: NOT FOUNT TODO');
 
-        newState.todoList[i].completed = ! newState.todoList[i].completed;
-        if (newState.taskEditStates[action.index]) {
-            newState.taskEditStates[action.index].completed = newState.todoList[i].completed;
+        change = {
+                todoList: state.todoList.map((item, index) => {
+                    if (index !== i) return item;
+                    return Object.assign({}, item, {completed: !item.completed});
+                }),
+            };
+
+        if (state.taskEditStates[action.index]) {
+            change.taskEditStates = Object.assign(
+                {},
+                state.taskEditStates,
+                {
+                    [action.index]: Object.assign(
+                        {},
+                        state.taskEditStates[action.index],
+                        {
+                            completed: change.todoList[i].completed,
+                        }
+                    ),
+                }
+            );
         }
     }
-    return newState;
+    return Object.assign({}, state, change);
 };
 
 const addTodo = function(state = {}, action) {
-    let newState = JSON.parse(JSON.stringify(state));
-    let nextId = newState.todoList
+// .todoList
+    let nextId = state.todoList
         .reduce(
             (prev, item) => item.id > prev
                 ? item.id
@@ -84,22 +116,29 @@ const addTodo = function(state = {}, action) {
             0
         )
         + 1;
-    newState.todoList = [
-        ...newState.todoList,
+
+    return Object.assign(
+        {},
+        state,
         {
-            id: nextId,
-            name: action.field.name,
-            text: '',
-            completed: false,
-            categoryId: action.field.category
-        },
-    ];
-    return newState
+            todoList: [
+                ...state.todoList,
+                {
+                    id: nextId,
+                    name: action.field.name,
+                    text: '',
+                    completed: false,
+                    categoryId: action.field.category
+                },
+            ],
+        }
+    );
 }
 
 const addCategory = function(state = {}, action) {
-    let newState = JSON.parse(JSON.stringify(state));
-    let nextId = newState.categoryList
+// .categoryList
+// .categoriesState
+    let nextId = state.categoryList
         .reduce(
             (prev, item) => item.id > prev
                 ? item.id
@@ -107,148 +146,279 @@ const addCategory = function(state = {}, action) {
             0
         )
         + 1;
-    newState.categoryList = [
-        ...newState.categoryList,
-        {
-            id: nextId,
-            name: action.field.name,
-            parentId: action.field.parentId,
-        }
-    ];
 
+    let newCategoriesState = [];
     if (action.field.parentId === 0) {
-        newState.categoriesState.unshift(
+        newCategoriesState = [
             {
                 id: nextId,
                 name: action.field.name,
                 visible: true,
                 shift: 0,
-            }
-        );
+            },
+            ...state.categoriesState
+        ];
     } else {
-        let i = newState.categoriesState
+        let i = state.categoriesState
             .findIndex((item) => item.id === action.field.parentId);
-        newState.categoriesState[i].haveNested = true;
-        newState.categoriesState = [
-            ...(newState.categoriesState.slice(0, i + 1)),
+        
+        newCategoriesState = state.categoriesState.map((item, index) => {
+            if (index !== i) return item;
+            return Object.assign(
+                {},
+                item,
+                {
+                    haveNested: true,
+                }
+            );
+        });
+
+        newCategoriesState = [
+            ...(newCategoriesState.slice(0, i + 1)),
             {
                 id: nextId,
                 name: action.field.name,
-                visible: newState.categoriesState[i].visible && newState.categoriesState[i].isOpen,
-                shift: newState.categoriesState[i].shift + 1,
+                visible: newCategoriesState[i].visible && newCategoriesState[i].isOpen,
+                shift: newCategoriesState[i].shift + 1,
             },
-            ...(newState.categoriesState.slice(i + 1))
+            ...(newCategoriesState.slice(i + 1))
         ];
     }
 
-    return newState;
+    return Object.assign(
+        {},
+        state,
+        {
+            categoryList: [
+                ...state.categoryList,
+                {
+                    id: nextId,
+                    name: action.field.name,
+                    parentId: action.field.parentId,
+                }
+            ],
+            categoriesState: [...newCategoriesState],
+        }
+    );
 }
 
 const moveTodoInCategory = function(state = {}, action) {
-    let newState = JSON.parse(JSON.stringify(state));
+// .todoList
+// .taskEditStates
+    let newTodoList = [...state.todoList];
+    let changeTaskEditState = {};
     if (action.type === MOVE_TODO) {
-        // window.console.log(`move: action=${JSON.stringify(action)}`);
-        let i = newState.todoList.findIndex((item) => item.id === action.todoId);
+        let i = state.todoList.findIndex((item) => item.id === action.todoId);
 
         if (i < 0) window.console.log('ERROR: NOT FOUNT TODO');
 
-        newState.todoList[i].categoryId = action.categoryId;
-        if (newState.taskEditStates[action.todoId]) {
-            newState.taskEditStates[action.todoId].categoryId = action.categoryId;
+        newTodoList = state.todoList.map((item, index) => {
+            if (index !== i) return item;
+            return Object.assign(
+                {},
+                item,
+                {
+                    categoryId: action.categoryId,
+                }
+            );
+        });
+
+        if (state.taskEditStates[action.todoId]) {
+            changeTaskEditState = Object.assign(
+                {},
+                {
+                    [action.todoId]: {categoryId: action.categoryId}
+                }
+            );
         }
     }
-    return newState;
+    return Object.assign(
+        {},
+        state,
+        {
+            todoList: [...newTodoList],
+            taskEditStates: Object.assign(
+                {},
+                state.taskEditStates,
+                changeTaskEditState
+            ),
+        }
+    );
 };
 
 const editParams = function(state = {}, action) {
-    let newState = JSON.parse(JSON.stringify(state));
-    let i = newState.todoList.findIndex((item) => item.id === action.params[1]);
-    if (i < 0) window.console.log('ERROR: NOT FOUNT TODO');
-    let task = newState.todoList[i];
+// .todoList
+// .taskEditStates
 
-    newState.taskEditStates[task.id] = Object.assign(
+    let i = state.todoList.findIndex((item) => item.id === action.params[1]);
+    if (i < 0) window.console.log('ERROR: NOT FOUNT TODO');
+    
+    let task = Object.assign({}, state.todoList[i]);
+    let taskState  = Object.assign(
         {},
         task,
-        newState.taskEditStates[task.id]
+        state.taskEditStates[task.id]
     );
+
+    let change = {};
 
     switch (action.params[0]) {
         case 'name': {
-            newState.taskEditStates[task.id].name = action.params[2];
+            Object.assign(taskState,{name: action.params[2]});
             break;
         }
         case 'text': {
-            newState.taskEditStates[task.id].text = action.params[2];
+            Object.assign(taskState,{text: action.params[2]});
             break;
         }
         case 'toggle': {
-            newState.taskEditStates[task.id].completed = ! newState.taskEditStates[task.id].completed;
+            Object.assign(taskState,{completed: !taskState.completed});
             break;
         }
         case 'save': {
-            newState.todoList[i] = newState.taskEditStates[task.id];
-            window.console.log(`save - toggle?....`);
+            Object.assign(
+                change,
+                {
+                    todoList: state.todoList.map((item, index) => {
+                        if (index !== i) return item;
+                        return Object.assign({}, taskState);
+                    }),
+                }
+            );
             break;
         }
         case 'cansel': {
-            newState.taskEditStates[task.id] = task;
+            taskState = Object.assign({}, task);
             break;
         }
     }
-    return newState;
+    Object.assign(
+        change,
+        {
+            taskEditStates: {
+                [action.params[1]]: taskState,
+            }
+        }
+    );
+    return Object.assign({}, state, change);
 };
 
 const editAddTodoName = function(state = {}, action) {
-    let newState = JSON.parse(JSON.stringify(state));
+// .addTodoName
+    let change = {};
+
     if (action.type === EDIT_ADD_TODO_NAME) {
-        newState.addTodoName = action.text;
+        Object.assign(
+            change,
+            {
+                addTodoName: action.text,
+            }
+        );
     }
-    return newState;
+
+    return Object.assign({}, state, change);
 }
 
 const editAddCategoryName = function(state = {}, action) {
-    let newState = JSON.parse(JSON.stringify(state));
+// .editCategoryName
+    let change = {};
+
     if (action.type === EDIT_ADD_CATEGORY_NAME) {
-        newState.editCategoryName = action.text;
+        Object.assign(
+            change,
+            {
+                editCategoryName: action.text,
+            }
+        );
     }
-    return newState;
+
+    return Object.assign({}, state, change);
 }
 
 const editCategory = function(state = {}, action) {
-    let newState = JSON.parse(JSON.stringify(state));
+// .caegoryList
+// .categoriesState
+    let change = {};
     if (action.type === EDIT_CATEGORY) {
         // field={name:'',id:0}
-        let i = newState.categoryList
+        let i = state.categoryList
             .findIndex((item) => item.id === action.field.id);
-        newState.categoryList[i].name = action.field.name;
-        i = newState.categoriesState
+        change.categoryList = state.categoryList.map((item, index) => {
+            if (index !== i) return item;
+            return Object.assign({}, item, {name: action.field.name});
+        });
+
+        i = state.categoriesState
             .findIndex((item) => item.id === action.field.id);
-        newState.categoriesState[i].name = action.field.name;
+        change.categoriesState = state.categoriesState.map((item, index) => {
+            if (index !== i) return item;
+            return Object.assign({}, item, {name: action.field.name});
+        });
     }
-    return newState;
+
+    return Object.assign({}, state, change);
 }
 
 const modalOpen = function(state = {}, action) {
-    let newState = JSON.parse(JSON.stringify(state));
+// .modal
+// .editCategoryParentId
+
+    let change = {};
     if (action.type === MODAL_OPEN) {
-        Object.assign(newState.modal,{open: true});
-        newState.modal.type = action.field.type;
-        if (action.field.type === 'ADD') {
-            newState.editCategoryParentId = action.field.parentId;
+        Object.assign(
+            change,
+            {
+                modal: Object.assign(
+                    {},
+                    state.modal,
+                    {
+                        open: true,
+                        type: action.field.type,
+                    }
+                ),
+            }
+        );
+
+        switch (action.field.type) {
+            case 'ADD': {
+                Object.assign(change, {
+                    editCategoryParentId: action.field.parentId,
+                });
+                break;
+            }
+            case 'EDIT': {
+                Object.assign(change, {
+                    editCategoryParentId: action.field.id,
+                });
+                break;
+            }
+            default: window.console.log('ERROR: UNKNOWN MODAL TYPE');
         }
-        if (action.field.type === 'EDIT') {
-            newState.editCategoryParentId = action.field.id;
-        }
+
     }
-    return newState;
+    return Object.assign({}, state, change);
 }
 
 const modalClose = function(state = {}, action) {
-    let newState = JSON.parse(JSON.stringify(state));
+// .modal
+    let change = {};
+
     if (action.type === MODAL_CLOSE) {
-        Object.assign(newState.modal,{open: false});
+        Object.assign(
+            change,
+            {
+                modal: Object.assign(
+                    {},
+                    state.modal,
+                    {
+                        open: false,
+                    }
+                ),
+            }
+        );
     }
-    return newState;
+
+    return Object.assign({},change);
 }
 
 

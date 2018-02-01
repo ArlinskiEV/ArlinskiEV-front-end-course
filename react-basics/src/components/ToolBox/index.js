@@ -2,7 +2,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import SubmitText from '../../components/SubmitText';
+import Submit from '../../containers/Submit';
 
 const Tag = styled.div`
 margin-bottom: 15px;
@@ -19,7 +19,7 @@ export default class ToolBox extends React.Component {
     render() {
         return (
             <Tag>
-                <SubmitText
+                <Submit
                     type = "ADD_CATEGORY"
                 />
                 <div>
@@ -27,7 +27,7 @@ export default class ToolBox extends React.Component {
                     <span> || </span>
                     <span>redo</span>
                 </div>
-                <SubmitText
+                <Submit
                     type = "ADD_TODO"
                 />
             </Tag>

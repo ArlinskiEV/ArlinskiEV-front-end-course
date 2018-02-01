@@ -79,7 +79,6 @@ export default class CategoryItem extends React.Component {
                     onClick = {(e) => {this.props.showed(); e.preventDefault();}}
                 ></Nested>
                 <span>{this.props.name}</span>
-
                 <ToolIcon
                     className = "fas fa-edit"
                     onClick = {(e) => { this.props.edit(this.props.itemId, this.props.name); e.preventDefault();}}

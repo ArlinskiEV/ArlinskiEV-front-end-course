@@ -58,7 +58,7 @@ const mapStateToProps = function(state) {
           open: state.modal.open,
           title: 'Done',
           actions,
-          children: <span>Category was remove with nestet category</span>,
+          children: <span>Category was remove with nested category</span>,
         }
       );
       break;
