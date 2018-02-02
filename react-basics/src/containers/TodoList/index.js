@@ -31,6 +31,7 @@ class TodoList extends React.Component {
                 <Wrap>
                     {this.props.state
                         .filter((item) => this.props.categoryId === item.categoryId)
+                        .filter((item) => (!item.completed) || this.props.showDone)
                         .sort((a, b) => b.id - a.id)
                         .map((item) => {
                             child = true;
@@ -56,6 +57,8 @@ class TodoList extends React.Component {
 TodoList.propTypes = {
     state: PropTypes.array,
     categoryId: PropTypes.number,
+    showDone: PropTypes.bool,
+
     toggleTodo: PropTypes.func,
 };
 
@@ -63,6 +66,7 @@ const mapStateToProps = function(state, ownProps) {
     return {
         state: state.todoList,
         categoryId: parseInt(ownProps.match.params.id),
+        showDone: state.filter.showDone,
     };
 };
 

@@ -55,7 +55,7 @@ export const deleteCategory = function(state = {}, action) {
             {},
             change.categoriesState[i - 1],
             {
-                haveNested: (change.categoriesState[i - 1].shift < change.categoriesState[i].shift),
+                haveNested: (i !== change.categoriesState.length) && (change.categoriesState[i - 1].shift < change.categoriesState[i].shift),
             }
         );
     }

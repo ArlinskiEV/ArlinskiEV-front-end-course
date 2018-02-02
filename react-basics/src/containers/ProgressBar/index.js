@@ -33,7 +33,7 @@ class ProgressBar extends React.Component {
 
 ProgressBar.propTypes = {
   count: PropTypes.number,
-  completed: PropTypes.number
+  completed: PropTypes.number,
 };
 
 const mapStateToProps = function(store) {

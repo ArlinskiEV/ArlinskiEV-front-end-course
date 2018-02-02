@@ -16,6 +16,8 @@ import {
 
     MODAL_OPEN,
     MODAL_CLOSE,
+
+    TOGGLE_FILTER,
 } from './actions';
 
 import {
@@ -40,22 +42,25 @@ import {
     modalClose,
 } from './redusers/modal';
 
+import {
+    toggleFilter,
+} from './redusers/filter';
+
 // My single Reduser
 const mySingleReduser = function(state = {}, action) {
-    let newState = Object.assign({}, state);
     let change = {};
 
     window.console.log(`TYPE: ${action.type}`);
     switch (action.type) {
-        case '@@redux/INIT': {
-            change = generateState.init();
-            break;
-        }
+        // case '@@redux/INIT': {
+        //     change = generateState.init();
+        //     break;
+        // }
         case TOGGLE_CATEGORY: {
             change = toggleCategory(
                 {
-                    categoryList: newState.categoryList,
-                    categoriesState: newState.categoriesState,
+                    categoryList: state.categoryList,
+                    categoriesState: state.categoriesState,
                 },
                 action
             );
@@ -64,36 +69,8 @@ const mySingleReduser = function(state = {}, action) {
         case DELETE_CATEGORY: {
             change = deleteCategory(
                 {
-                    categoryList: newState.categoryList,
-                    categoriesState: newState.categoriesState,
-                },
-                action);
-            break;
-        }
-        case TOGGLE_TODO: {
-            change = toggleTodo(
-                {
-                    todoList: newState.todoList,
-                    taskEditStates: newState.taskEditStates
-                },
-                action
-            );
-            break;
-        }
-        case MOVE_TODO: {
-            change = moveTodoInCategory(
-                {
-                    todoList: newState.todoList,
-                    taskEditStates: newState.taskEditStates
-                },
-                action
-            );
-            break;
-        }
-        case ADD_TODO: {
-            change = addTodo(
-                {
-                    todoList: newState.todoList,
+                    categoryList: state.categoryList,
+                    categoriesState: state.categoriesState,
                 },
                 action);
             break;
@@ -101,36 +78,17 @@ const mySingleReduser = function(state = {}, action) {
         case ADD_CATEGORY: {
             change = addCategory(
                 {
-                    editCategoryName: newState.editCategoryName,
-                    categoryList: newState.categoryList,
-                    categoriesState: newState.categoriesState,
+                    editCategoryName: state.editCategoryName,
+                    categoryList: state.categoryList,
+                    categoriesState: state.categoriesState,
                 },
                 action);
-            break;
-        }
-        case EDIT_PARAMS_TODO: {
-            change = editParams(
-                {
-                    todoList: newState.todoList,
-                    taskEditStates: newState.taskEditStates,
-                },
-                action
-            );
-            break;
-        }
-        case EDIT_ADD_TODO_NAME: {
-            change = editAddTodoName(
-                {
-                    addTodoName: newState.addTodoName,
-                },
-                action
-            );
             break;
         }
         case EDIT_ADD_CATEGORY_NAME: {
             change = editAddCategoryName(
                 {
-                    editCategoryName: newState.editCategoryName,
+                    editCategoryName: state.editCategoryName,
                 },
                 action
             );
@@ -139,18 +97,68 @@ const mySingleReduser = function(state = {}, action) {
         case EDIT_CATEGORY: {
             change = editCategory(
                 {
-                    categoryList: newState.categoryList,
-                    categoriesState: newState.categoriesState,
+                    categoryList: state.categoryList,
+                    categoriesState: state.categoriesState,
                 },
                 action
             );
             break;
         }
+        // -----------------------------------------
+        // -----------------------------------------
+        case TOGGLE_TODO: {
+            change = toggleTodo(
+                {
+                    todoList: state.todoList,
+                    taskEditStates: state.taskEditStates
+                },
+                action
+            );
+            break;
+        }
+        case MOVE_TODO: {
+            change = moveTodoInCategory(
+                {
+                    todoList: state.todoList,
+                    taskEditStates: state.taskEditStates
+                },
+                action
+            );
+            break;
+        }
+        case ADD_TODO: {
+            change = addTodo(
+                {
+                    todoList: state.todoList,
+                },
+                action);
+            break;
+        }
+        case EDIT_PARAMS_TODO: {
+            change = editParams(
+                {
+                    todoList: state.todoList,
+                    taskEditStates: state.taskEditStates,
+                },
+                action
+            );
+            break;
+        }
+        case EDIT_ADD_TODO_NAME: {
+            change = editAddTodoName(
+                {
+                    addTodoName: state.addTodoName,
+                },
+                action
+            );
+            break;
+        }
+        // -----------------------------------------
+        // -----------------------------------------
         case MODAL_OPEN: {
             change = modalOpen(
                 {
-                    modal: newState.modal,
-                    editCategoryParentId: newState.editCategoryParentId,
+                    modal: state.modal,
                 },
                 action
             );
@@ -159,18 +167,32 @@ const mySingleReduser = function(state = {}, action) {
         case MODAL_CLOSE: {
             change = modalClose(
                 {
-                    modal: newState.modal,
+                    modal: state.modal,
                 },
                 action
             );
             break;
         }
+        // -----------------------------------------
+        // -----------------------------------------
+        case TOGGLE_FILTER: {
+            change = toggleFilter(
+                {
+                    filter: state.filter,
+                },
+                action
+            );
+            break;
+        }
+        // -----------------------------------------
+        // -----------------------------------------
         default: {
-            window.console.log(`UNKNOWN_TYPE`);
+            window.console.log(`UNKNOWN_TYPE: ${action.type}`);
             change = {};
         }
     }
-    newState = Object.assign({}, newState, change);
+    let newState = Object.assign({}, state, change);
+    // window.console.log(`newstate: ${JSON.stringify(newState)}`);
     sessionStorage.setItem('APP_STATE', JSON.stringify(newState));
 
     return newState;
@@ -185,5 +207,5 @@ const mySingleReduser = function(state = {}, action) {
 // });
 
 // const store = createStore(reducers);
-const store = createStore(mySingleReduser);
+const store = createStore(mySingleReduser, generateState.init());
 export default store;

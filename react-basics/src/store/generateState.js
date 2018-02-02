@@ -102,18 +102,22 @@ export default class GenerateState {
         ];
 
         result = result ? result : {
-            categoryList,
             todoList,
+            taskEditStates: {},
 
             modal: {
                 open: false,
                 type: 'CONFIRM',
             },
+
+            filter: {
+                showDone: true,
+            },
+
+
+            categoryList,
             editCategoryName: '',
             editCategoryParentId: 0,
-
-
-            taskEditStates: {},
             categoriesState: GenerateState.generateCategoriesState(categoryList),
         };
 

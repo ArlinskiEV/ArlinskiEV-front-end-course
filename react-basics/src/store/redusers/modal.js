@@ -27,13 +27,25 @@ export const modalOpen = function(state = {}, action) {
         switch (action.field.type) {
             case 'ADD': {
                 Object.assign(change, {
-                    editCategoryParentId: action.field.parentId,
+                    modal: Object.assign(
+                        {},
+                        change.modal,
+                        {
+                            parentId: action.field.parentId
+                        }
+                    ),
                 });
                 break;
             }
             case 'EDIT': {
                 Object.assign(change, {
-                    editCategoryParentId: action.field.id,
+                    modal: Object.assign(
+                        {},
+                        change.modal,
+                        {
+                            parentId: action.field.id
+                        }
+                    ),
                 });
                 break;
             }

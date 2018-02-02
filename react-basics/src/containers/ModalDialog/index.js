@@ -4,6 +4,9 @@ import FlatButton from 'material-ui/FlatButton';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import UndoRedo from '../../containers/UndoRedo';
+
 import store from '../../store';
 import {
   modalClose,
@@ -35,8 +38,10 @@ ModalDialog.propTypes = {
   open: PropTypes.bool,
   title: PropTypes.string,
   text: PropTypes.string,
+
   actions: PropTypes.array,
-  children: PropTypes.object
+  // children: PropTypes.object,
+  children: PropTypes.array,
 };
 
 const mapStateToProps = function(state) {
@@ -50,6 +55,10 @@ const mapStateToProps = function(state) {
       onClick={() => store.dispatch(modalClose({}))}
     />,
   ];
+  let children = [
+    <UndoRedo key={'undo-redo'}/>
+  ];
+
   switch (state.modal.type) {
     case 'CONFIRM': {
       Object.assign(
@@ -58,7 +67,10 @@ const mapStateToProps = function(state) {
           open: state.modal.open,
           title: 'Done',
           actions,
-          children: <span>Category was remove with nested category</span>,
+          children: [
+            ...children,
+            <span key="text">Category was remove with nested category</span>
+          ],
         }
       );
       break;
@@ -80,7 +92,7 @@ const mapStateToProps = function(state) {
                 store.dispatch(addCategory(
                   {
                     name: state.editCategoryName,
-                    parentId: state.editCategoryParentId,
+                    parentId: state.modal.parentId,
                   }
                 ));
                 store.dispatch(editAddCategoryName(''))
@@ -88,13 +100,15 @@ const mapStateToProps = function(state) {
               }}
             />,
           ],
-          children:
+          children: [
+            ...children,
             <input
               key = {0}
-              placeholder = {`Add category in ${state.editCategoryParentId}`}
+              placeholder = {`Add category in ${state.modal.parentId}`}
               value = {state.editCategoryName || ''}
               onChange = {(e) => store.dispatch(editAddCategoryName(e.target.value))}
-            />,
+            />
+          ],
         }
       );
       break;
@@ -116,7 +130,7 @@ const mapStateToProps = function(state) {
                 store.dispatch(editCategory(
                   {
                     name: state.editCategoryName,
-                    id: state.editCategoryParentId,
+                    id: state.modal.parentId,
                   }
                 ));
                 store.dispatch(editAddCategoryName(''))
@@ -124,13 +138,15 @@ const mapStateToProps = function(state) {
               }}
             />,
           ],
-          children:
+          children: [
+            ...children,
             <input
               key = {0}
-              placeholder = {`Edit category name id = ${state.editCategoryParentId}`}
+              placeholder = {`Edit category name id = ${state.modal.parentId}`}
               value = {state.editCategoryName || ''}
               onChange = {(e) => store.dispatch(editAddCategoryName(e.target.value))}
-            />,
+            />
+          ],
         }
       );
       break;
@@ -140,7 +156,9 @@ const mapStateToProps = function(state) {
 };
 
 // const mapDispatchToProps = function(dispatch) {
-//   return {};
+//   return {
+    
+//   };
 // };
 
 export default connect(mapStateToProps)(ModalDialog);
