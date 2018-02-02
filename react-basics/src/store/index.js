@@ -1,62 +1,66 @@
-// import { createStore, combineReducers } from 'redux';
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
+// import { createStore } from 'redux';
+
+// import undoable from 'redux-undo';
+
 import generateState from './generateState'; 
-import {
-    TOGGLE_TODO,
-    MOVE_TODO,
-    ADD_TODO,
-    EDIT_PARAMS_TODO,
-    EDIT_ADD_TODO_NAME,
 
-    TOGGLE_CATEGORY,
-    ADD_CATEGORY,
-    DELETE_CATEGORY,
-    EDIT_ADD_CATEGORY_NAME,
-    EDIT_CATEGORY,
+// import {
+//     TOGGLE_TODO,
+//     MOVE_TODO,
+//     ADD_TODO,
+//     EDIT_PARAMS_TODO,
+//     EDIT_ADD_TODO_NAME,
 
-    MODAL_OPEN,
-    MODAL_CLOSE,
+//     TOGGLE_CATEGORY,
+//     ADD_CATEGORY,
+//     DELETE_CATEGORY,
+//     EDIT_ADD_CATEGORY_NAME,
+//     EDIT_CATEGORY,
 
-    TOGGLE_FILTER,
+//     MODAL_OPEN,
+//     MODAL_CLOSE,
 
-    EDIT_SEARCH_FIELD,
-    APPLY_SEARCH,
-} from './actions';
+//     TOGGLE_FILTER,
 
-import {
-    toggleTodo,
-    addTodo,
-    moveTodoInCategory,
-    editParams,
-    editAddTodoName,
+//     EDIT_SEARCH_FIELD,
+//     APPLY_SEARCH,
+// } from './actions';
 
-} from './redusers/todo';
+// import {
+//     toggleTodo,
+//     addTodo,
+//     moveTodoInCategory,
+//     editParams,
+//     editAddTodoName,
 
-import {
-    toggleCategory,
-    deleteCategory,
-    addCategory,
-    editAddCategoryName,
-    editCategory,
-} from './redusers/category';
+// } from './redusers/todo';
 
-import {
-    modalOpen,
-    modalClose,
-} from './redusers/modal';
+// import {
+//     toggleCategory,
+//     deleteCategory,
+//     addCategory,
+//     editAddCategoryName,
+//     editCategory,
+// } from './redusers/category';
 
-import {
-    toggleFilter,
-} from './redusers/filter';
+// import {
+//     modalOpen,
+//     modalClose,
+// } from './redusers/modal';
 
-import {
-    editSearchTodo,
-    enableSearch,
-} from './redusers/search';
+// import {
+//     toggleFilter,
+// } from './redusers/filter';
+
+// import {
+//     editSearchTodo,
+//     enableSearch,
+// } from './redusers/search';
 
 
 
-
+/*
 // My single Reduser
 const mySingleReduser = function(state = {}, action) {
     let change = {};
@@ -229,14 +233,26 @@ const mySingleReduser = function(state = {}, action) {
     return newState;
 };
 
-
+*/
 
 // Combine Reducers
-// const reducers = combineReducers({
-//   userState: userReducer,
-//   categoriesListState: categoriesReducer
-// });
+import {todoReducer} from './reducers/todo';
+import {categoryReducer} from './reducers/category';
+import {filterReducer} from './reducers/filter';
+import {modalReducer} from './reducers/modal';
+import {searchReducer} from './reducers/search';
+const reducers = combineReducers({
+  todos: todoReducer,
+  categories: categoryReducer,
 
-// const store = createStore(reducers);
-const store = createStore(mySingleReduser, generateState.init());
+  filter: filterReducer,
+  modal: modalReducer,
+  search: searchReducer,
+});
+
+const store = createStore(reducers, generateState.init());
+// const store = createStore(mySingleReduser, generateState.init());
+
+// const store = createStore(undoable(mySingleReduser), generateState.init());
+
 export default store;

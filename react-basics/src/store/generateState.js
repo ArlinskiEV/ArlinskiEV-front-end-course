@@ -102,13 +102,17 @@ export default class GenerateState {
         ];
 
         result = result ? result : {
-            todoList,
-            taskEditStates: {},
+            todos: {
+                todoList,
+                taskEditStates: {},
+            },
 
-            categoryList,
-            editCategoryName: '',
-            editCategoryParentId: 0,
-            categoriesState: GenerateState.generateCategoriesState(categoryList),
+            categories: {
+                categoryList,
+                editCategoryName: '',
+                editCategoryParentId: 0,
+                categoriesState: GenerateState.generateCategoriesState(categoryList),
+            },
 
             modal: {
                 open: false,

@@ -67,7 +67,7 @@ TodoList.propTypes = {
 
 const mapStateToProps = function(state, ownProps) {
     return {
-        state: state.todoList,
+        state: state.todos.todoList,
         categoryId: parseInt(ownProps.match.params.id),
         showDone: state.filter.showDone,
         search: state.search.apply ? state.search.text : '',

@@ -9,16 +9,19 @@ export function toggleFilter(state = {}, action) {
         Object.assign(
             change,
             {
-                filter: Object.assign(
-                    {},
-                    state.filter,
-                    {
-                        showDone: state.filter
-                            ? !state.filter.showDone
-                            : true,
-                    }),
+                showDone: !state.showDone,
             }
         );
     }
     return Object.assign({}, state, change);
+}
+
+
+export function filterReducer(state = {}, action) {
+    switch (action.type) {
+        case TOGGLE_FILTER: {
+            return toggleFilter(state, action);
+        }
+        default: return state;
+    }
 }

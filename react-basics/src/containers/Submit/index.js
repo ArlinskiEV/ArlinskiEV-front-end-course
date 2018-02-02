@@ -25,12 +25,12 @@ const mapStateToProps = function(state, ownProps) {
     switch (ownProps.type) {
         case 'ADD_TODO': {
             placeholder = 'Task name...';
-            value = state.addTodoName || '';
+            value = state.todos.addTodoName || '';
             break;
         }
         case 'ADD_CATEGORY': {
             placeholder = 'Category name...';
-            value = state.editCategoryName || '';
+            value = state.categories.editCategoryName || '';
             break;
         }
         case 'SEARCH': {

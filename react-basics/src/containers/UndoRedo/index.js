@@ -5,6 +5,11 @@ import FlatButton from 'material-ui/FlatButton';
 
 import { connect } from 'react-redux';
 
+
+// import undoable from 'redux-undo';
+import { ActionCreators } from 'redux-undo';
+
+
 const Tag = styled.div`
 display: flex;
 align-items: center;
@@ -40,15 +45,21 @@ UndoRedo.propTypes = {
     redo: PropTypes.func,
 };
   
-const mapStateToProps = function() {
-    return {};
-};
+// const mapStateToProps = function() {
+//     return {};
+// };
 
-const mapDispatchToProps= function() {
+const mapDispatchToProps= function(dispatch) {
     return {
-        undo: () => {window.console.log('undo')},
-        redo: () => {window.console.log('redo')},
+        undo: () => {
+            window.console.log('undo');
+            dispatch(ActionCreators.undo()) // undo the last action
+        },
+        redo: () => {
+            window.console.log('redo');
+            dispatch(ActionCreators.redo()) // redo the last action
+        },
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UndoRedo);
+export default connect(undefined, mapDispatchToProps)(UndoRedo);

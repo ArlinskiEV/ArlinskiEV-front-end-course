@@ -195,3 +195,31 @@ export const editAddTodoName = function(state = {}, action) {
 
     return Object.assign({}, state, change);
 }
+
+
+
+
+
+
+
+
+export function todoReducer(state = {}, action) {
+    switch (action.type) {
+        case TOGGLE_TODO: {
+            return toggleTodo(state, action);
+        }
+        case MOVE_TODO: {
+            return moveTodoInCategory(state, action);
+        }
+        case ADD_TODO: {
+            return addTodo(state, action);
+        }
+        case EDIT_PARAMS_TODO: {
+            return editParams(state, action);
+        }
+        case EDIT_ADD_TODO_NAME: {
+            return editAddTodoName(state, action);
+        }
+        default: return state;
+    }
+}

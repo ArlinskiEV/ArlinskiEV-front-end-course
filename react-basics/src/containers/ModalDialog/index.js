@@ -91,7 +91,7 @@ const mapStateToProps = function(state) {
               onClick={() => {
                 store.dispatch(addCategory(
                   {
-                    name: state.editCategoryName,
+                    name: state.categories.editCategoryName,
                     parentId: state.modal.parentId,
                   }
                 ));
@@ -105,7 +105,7 @@ const mapStateToProps = function(state) {
             <input
               key = {0}
               placeholder = {`Add category in ${state.modal.parentId}`}
-              value = {state.editCategoryName || ''}
+              value = {state.categories.editCategoryName || ''}
               onChange = {(e) => store.dispatch(editAddCategoryName(e.target.value))}
             />
           ],
@@ -129,7 +129,7 @@ const mapStateToProps = function(state) {
               onClick={() => {
                 store.dispatch(editCategory(
                   {
-                    name: state.editCategoryName,
+                    name: state.categories.editCategoryName,
                     id: state.modal.parentId,
                   }
                 ));
@@ -143,7 +143,7 @@ const mapStateToProps = function(state) {
             <input
               key = {0}
               placeholder = {`Edit category name id = ${state.modal.parentId}`}
-              value = {state.editCategoryName || ''}
+              value = {state.categories.editCategoryName || ''}
               onChange = {(e) => store.dispatch(editAddCategoryName(e.target.value))}
             />
           ],

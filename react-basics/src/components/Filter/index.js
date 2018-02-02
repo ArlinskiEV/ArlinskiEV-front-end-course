@@ -54,6 +54,7 @@ const mapStateToProps = function(state, ownProps) {
     ? true
     : ownProps.location.search.slice(i).toLowerCase() === 'true';
 
+  window.console.log(`map to props filter: ${state.filter.showDone}`);
   return {
     state: state.filter.showDone,
     stateFromURL: test,

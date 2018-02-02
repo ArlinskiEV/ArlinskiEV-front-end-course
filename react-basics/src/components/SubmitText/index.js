@@ -25,6 +25,9 @@ width: 30%;
 `;
 
 export default class SubmitText extends React.Component {
+    componentWillMount() {
+        // this.props.mount(this.props.value);
+    }
     render () {
         return (
             <Tag>
@@ -50,4 +53,5 @@ SubmitText.propTypes = {
 
     clicker: PropTypes.func,
     changer: PropTypes.func,
+    mount: PropTypes.func,
 };

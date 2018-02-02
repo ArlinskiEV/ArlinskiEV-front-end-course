@@ -10,13 +10,7 @@ export function editSearchTodo(state = {}, action) {
         Object.assign(
             change,
             {
-                search: Object.assign(
-                    {},
-                    state.search,
-                    {
-                        text: action.text
-                    }
-                ),
+                text: action.text,
             }
         );
     }
@@ -30,15 +24,24 @@ export function enableSearch(state = {}, action) {
         Object.assign(
             change,
             {
-                search: Object.assign(
-                    {},
-                    state.search,
-                    {
-                        apply: action.value,
-                    }
-                ),
+                apply: action.value,
             }
         );
     }
     return Object.assign({}, state, change);
+}
+
+
+
+
+export function searchReducer(state = {}, action) {
+    switch (action.type) {
+        case EDIT_SEARCH_FIELD: {
+            return editSearchTodo(state, action);
+        }
+        case APPLY_SEARCH: {
+            return enableSearch(state, action);
+        }
+        default: return state;
+    }
 }

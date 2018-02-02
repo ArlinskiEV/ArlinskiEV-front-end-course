@@ -158,7 +158,7 @@ export const editAddCategoryName = function(state = {}, action) {
 }
 
 export const editCategory = function(state = {}, action) {
-// .caegoryList
+// .categoryList
 // .categoriesState
     let change = {};
     if (action.type === EDIT_CATEGORY) {
@@ -179,4 +179,28 @@ export const editCategory = function(state = {}, action) {
     }
 
     return Object.assign({}, state, change);
+}
+
+
+
+
+export function categoryReducer(state = {}, action) {
+    switch (action.type) {
+        case TOGGLE_CATEGORY: {
+            return toggleCategory(state, action);
+        }
+        case DELETE_CATEGORY: {
+            return deleteCategory(state, action);
+        }
+        case ADD_CATEGORY: {
+            return addCategory(state, action);
+        }
+        case EDIT_ADD_CATEGORY_NAME: {
+            return editAddCategoryName(state, action);
+        }
+        case EDIT_CATEGORY: {
+            return editCategory(state, action);
+        }
+        default: return state;
+    }
 }
