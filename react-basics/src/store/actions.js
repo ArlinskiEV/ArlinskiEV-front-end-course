@@ -2,7 +2,7 @@
  * action types
  */
 
-export const ADD_TODO = 'ADD_TODO'
+export const ADD_TODO = 'ADD_TODO';
 export const TOGGLE_TODO = 'TOGGLE_TODO';
 export const MOVE_TODO = 'MOVE_TODO';
 export const EDIT_PARAMS_TODO = 'EDIT_PARAMS_TODO';
@@ -18,7 +18,10 @@ export const MODAL_OPEN = 'MODAL_OPEN';
 export const MODAL_CLOSE = 'MODAL_CLOSE';
 
 export const TOGGLE_FILTER = 'TOGGLE_FILTER';
-export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
+export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
+
+export const EDIT_SEARCH_FIELD = 'EDIT_SEARCH_FIELD';
+export const APPLY_SEARCH = 'APPLY_SEARCH';
 /*
  * other constants
  */
@@ -105,4 +108,15 @@ export function toggleFilter() {
 
 export function setVisibilityFilter(filter) {
   return { type: SET_VISIBILITY_FILTER, filter };
+}
+
+
+
+
+export function editSearh(text) {
+  return {type: EDIT_SEARCH_FIELD, text};
+}
+
+export function applySearh(value) {
+  return {type: APPLY_SEARCH, value};
 }

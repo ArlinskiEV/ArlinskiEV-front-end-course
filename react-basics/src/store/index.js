@@ -18,6 +18,9 @@ import {
     MODAL_CLOSE,
 
     TOGGLE_FILTER,
+
+    EDIT_SEARCH_FIELD,
+    APPLY_SEARCH,
 } from './actions';
 
 import {
@@ -45,6 +48,14 @@ import {
 import {
     toggleFilter,
 } from './redusers/filter';
+
+import {
+    editSearchTodo,
+    enableSearch,
+} from './redusers/search';
+
+
+
 
 // My single Reduser
 const mySingleReduser = function(state = {}, action) {
@@ -179,6 +190,26 @@ const mySingleReduser = function(state = {}, action) {
             change = toggleFilter(
                 {
                     filter: state.filter,
+                },
+                action
+            );
+            break;
+        }
+        // -----------------------------------------
+        // -----------------------------------------
+        case EDIT_SEARCH_FIELD: {
+            change = editSearchTodo(
+                {
+                    search: state.search,
+                },
+                action
+            );
+            break;
+        }
+        case APPLY_SEARCH: {
+            change = enableSearch(
+                {
+                    search: state.search,
                 },
                 action
             );

@@ -1,8 +1,10 @@
-import SubmitText from '../../components/SubmitText'
+import SubmitText from '../../components/SubmitText';
 
 import {
     withRouter
- } from 'react-router-dom';
+} from 'react-router-dom';
+
+import 'url-search-params-polyfill';
 
 import { connect } from 'react-redux';
 import {
@@ -11,7 +13,9 @@ import {
     editAddCategoryName,
     addCategory,
     modalOpen,
-} from '../../store/actions'
+    editSearh,
+    applySearh,
+} from '../../store/actions';
 
 const mapStateToProps = function(state, ownProps) {
     let placeholder = 'Category name...';
@@ -32,6 +36,7 @@ const mapStateToProps = function(state, ownProps) {
         case 'SEARCH': {
             buttonName = 'Search';
             placeholder = 'Search task by name';
+            value = state.search.text || '';
             break;
         }
         default: window.console.log('ERROR: UNKNOWN SUBMIT_TYPE');
@@ -52,6 +57,7 @@ const mapDispatchToProps = function(dispatch, ownProps) {
     let changer = () => {
         window.console.log('change');
     };
+    let mount = () => {};
 
     switch (ownProps.type) {
         case 'ADD_TODO': {
@@ -93,6 +99,29 @@ const mapDispatchToProps = function(dispatch, ownProps) {
             break;
         }
         case 'SEARCH': {
+            changer = (value) => dispatch(editSearh(value));
+            clicker = (value) => {
+                if (value) {
+                    dispatch(applySearh(true));
+                    let path = ownProps.location.pathname;
+                    let search = new URLSearchParams (ownProps.location.search);
+                    search.set("search", value);
+                    ownProps.history.push(`${path+'?'+search}`);
+
+                } else {
+                    dispatch(editSearh(''));
+                    dispatch(applySearh(false));
+                }
+            };
+            mount = (current) => {
+                let search = new URLSearchParams (ownProps.location.search);
+                let value = search.get("search");
+                if (value !== current) {
+                    dispatch(editSearh(value));
+                    dispatch(applySearh(true));
+                    window.console.log('apply search from url');
+                }
+            };
             break;
         }
         default: window.console.log('ERROR: UNKNOWN SUBMIT_TYPE');
@@ -101,6 +130,8 @@ const mapDispatchToProps = function(dispatch, ownProps) {
     return {
         clicker: clicker,
         changer: changer,
+
+        willmount: mount,
     };
 }
 

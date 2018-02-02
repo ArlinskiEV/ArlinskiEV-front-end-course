@@ -105,6 +105,11 @@ export default class GenerateState {
             todoList,
             taskEditStates: {},
 
+            categoryList,
+            editCategoryName: '',
+            editCategoryParentId: 0,
+            categoriesState: GenerateState.generateCategoriesState(categoryList),
+
             modal: {
                 open: false,
                 type: 'CONFIRM',
@@ -114,11 +119,10 @@ export default class GenerateState {
                 showDone: true,
             },
 
-
-            categoryList,
-            editCategoryName: '',
-            editCategoryParentId: 0,
-            categoriesState: GenerateState.generateCategoriesState(categoryList),
+            search: {
+                text: '',
+                apply: false,
+            },
         };
 
         sessionStorage.setItem('APP_STATE', JSON.stringify(result));
