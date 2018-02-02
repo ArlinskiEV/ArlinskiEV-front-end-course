@@ -49,14 +49,15 @@ Filter.propTypes = {
 };
 
 const mapStateToProps = function(state, ownProps) {
+  // window.console.log(`STATE: ${JSON.stringify(state)}`);
   let i = ownProps.location.search.lastIndexOf('filter=') + 7;
   let test = i < 7 
     ? true
     : ownProps.location.search.slice(i).toLowerCase() === 'true';
 
-  window.console.log(`map to props filter: ${state.filter.showDone}`);
+  // window.console.log(`map to props filter: ${state.present.filter.showDone}`);
   return {
-    state: state.filter.showDone,
+    state: state.present.filter.showDone,
     stateFromURL: test,
   };
 };

@@ -39,10 +39,10 @@ ProgressBar.propTypes = {
 const mapStateToProps = function(state) {
 
     return {
-        count: state.categories.categoryList.length,
-        completed: state.categories.categoryList.length - state.categories.categoryList
+        count: state.present.categories.categoryList.length,
+        completed: state.present.categories.categoryList.length - state.present.categories.categoryList
             .filter(category =>
-                state.todos.todoList.some( todo =>
+                state.present.todos.todoList.some( todo =>
                     (!todo.completed) && (todo.categoryId === category.id)
                 )
             )

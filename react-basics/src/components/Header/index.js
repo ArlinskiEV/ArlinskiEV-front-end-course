@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import ProgressBar from '../../containers/ProgressBar';
 import Submit from '../../containers/Submit';
-import Filter from '../../components/Filter';
+import Filter from '../../containers/Filter';
 
 const Tag = styled.div`
 margin-bottom: 15px;

@@ -59,12 +59,12 @@ const mapStateToProps = function(state) {
     <UndoRedo key={'undo-redo'}/>
   ];
 
-  switch (state.modal.type) {
+  switch (state.present.modal.type) {
     case 'CONFIRM': {
       Object.assign(
         newState,
         {
-          open: state.modal.open,
+          open: state.present.modal.open,
           title: 'Done',
           actions,
           children: [
@@ -79,7 +79,7 @@ const mapStateToProps = function(state) {
       Object.assign(
         newState,
         {
-          open: state.modal.open,
+          open: state.present.modal.open,
           title: 'Add category',
           actions: [
             ...actions,
@@ -91,8 +91,8 @@ const mapStateToProps = function(state) {
               onClick={() => {
                 store.dispatch(addCategory(
                   {
-                    name: state.categories.editCategoryName,
-                    parentId: state.modal.parentId,
+                    name: state.present.categories.editCategoryName,
+                    parentId: state.present.modal.parentId,
                   }
                 ));
                 store.dispatch(editAddCategoryName(''))
@@ -104,8 +104,8 @@ const mapStateToProps = function(state) {
             ...children,
             <input
               key = {0}
-              placeholder = {`Add category in ${state.modal.parentId}`}
-              value = {state.categories.editCategoryName || ''}
+              placeholder = {`Add category in ${state.present.modal.parentId}`}
+              value = {state.present.categories.editCategoryName || ''}
               onChange = {(e) => store.dispatch(editAddCategoryName(e.target.value))}
             />
           ],
@@ -117,7 +117,7 @@ const mapStateToProps = function(state) {
       Object.assign(
         newState,
         {
-          open: state.modal.open,
+          open: state.present.modal.open,
           title: 'Edit category name',
           actions: [
             ...actions,
@@ -129,8 +129,8 @@ const mapStateToProps = function(state) {
               onClick={() => {
                 store.dispatch(editCategory(
                   {
-                    name: state.categories.editCategoryName,
-                    id: state.modal.parentId,
+                    name: state.present.categories.editCategoryName,
+                    id: state.present.modal.parentId,
                   }
                 ));
                 store.dispatch(editAddCategoryName(''))
@@ -142,8 +142,8 @@ const mapStateToProps = function(state) {
             ...children,
             <input
               key = {0}
-              placeholder = {`Edit category name id = ${state.modal.parentId}`}
-              value = {state.categories.editCategoryName || ''}
+              placeholder = {`Edit category name id = ${state.present.modal.parentId}`}
+              value = {state.present.categories.editCategoryName || ''}
               onChange = {(e) => store.dispatch(editAddCategoryName(e.target.value))}
             />
           ],

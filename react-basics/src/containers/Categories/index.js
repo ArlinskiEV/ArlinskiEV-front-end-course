@@ -86,7 +86,7 @@ const mapStateToProps = function(store, ownProps) {
         : parseInt(ownProps.location.pathname.slice(i));
 
     return {
-        state: store.categories.categoriesState,
+        state: store.present.categories.categoriesState,
         task: task,
         history: ownProps.history,
     };

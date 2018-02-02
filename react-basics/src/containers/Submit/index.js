@@ -25,18 +25,18 @@ const mapStateToProps = function(state, ownProps) {
     switch (ownProps.type) {
         case 'ADD_TODO': {
             placeholder = 'Task name...';
-            value = state.todos.addTodoName || '';
+            value = state.present.todos.addTodoName || '';
             break;
         }
         case 'ADD_CATEGORY': {
             placeholder = 'Category name...';
-            value = state.categories.editCategoryName || '';
+            value = state.present.categories.editCategoryName || '';
             break;
         }
         case 'SEARCH': {
             buttonName = 'Search';
             placeholder = 'Search task by name';
-            value = state.search.text || '';
+            value = state.present.search.text || '';
             break;
         }
         default: window.console.log('ERROR: UNKNOWN SUBMIT_TYPE');

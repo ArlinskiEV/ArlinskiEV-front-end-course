@@ -102,10 +102,10 @@ TaskEditForm.propTypes = {
 const mapStateToProps = function(store, ownProps) {
     let taskId = parseInt(ownProps.match.params.id);
     let categoryURLId = parseInt(ownProps.match.params.categoryId);
-    let id = store.todos.todoList.findIndex((item) => item.id === taskId);
-    let task = store.todos.todoList[id];
-    let state = store.todos.taskEditStates[taskId];
-    let categoryIsExist = store.categories.categoryList.some(category => category.id === task.categoryId);
+    let id = store.present.todos.todoList.findIndex((item) => item.id === taskId);
+    let task = store.present.todos.todoList[id];
+    let state = store.present.todos.taskEditStates[taskId];
+    let categoryIsExist = store.present.categories.categoryList.some(category => category.id === task.categoryId);
     return Object.assign(
         {
             categoryURLId: categoryURLId,
