@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import CategoryItem from '../../components/CategoryItem';
-// import generateState from './generateState'; 
 
 import { connect } from 'react-redux';
-import store from '../../store';
+
 import {
     toggleSubCategories,
     moveTodo,
@@ -31,24 +30,6 @@ min-width: max-content;
 `;
 
 class Categories extends React.Component {
-    showed(id) {
-        store.dispatch(toggleSubCategories(id));
-    }
-    moveIn(taskId, categoryId) {
-        store.dispatch(moveTodo(taskId, categoryId));
-    }
-    remove(id) {
-        store.dispatch(deleteCategory(id));
-        store.dispatch(modalOpen({type:'CONFIRM'}));
-    }
-    add(parentId) {
-        store.dispatch(modalOpen({type:'ADD', parentId}));
-    }
-    edit(id, name) {
-        store.dispatch(editAddCategoryName(name));
-        store.dispatch(modalOpen({type:'EDIT', id}));
-    }
-
     render() {
         return (
             <Tag>
@@ -59,11 +40,12 @@ class Categories extends React.Component {
                             return (
                                 <CategoryItem
                                     key = {item.id}
-                                    showed = {() => this.showed(item.id)}
-                                    moveIn = {(categoryId) => this.moveIn(this.props.task, categoryId)}
-                                    remove = {(categoryId) => this.remove(categoryId)}
-                                    add = {(categoryId) => this.add(categoryId)}
-                                    edit = {(categoryId, name) => this.edit(categoryId, name)}
+
+                                    showed = {() => this.props.showed(item.id)}
+                                    moveIn = {(categoryId) => this.props.moveIn(this.props.task, categoryId)}
+                                    remove = {(categoryId) => this.props.remove(categoryId)}
+                                    add = {(categoryId) => this.props.add(categoryId)}
+                                    edit = {(categoryId, name) => this.props.edit(categoryId, name)}
 
                                     history = {this.props.history}
 
@@ -87,6 +69,12 @@ Categories.propTypes = {
     state: PropTypes.array,
     task: PropTypes.number,
     history: PropTypes.object,
+
+    showed: PropTypes.func,
+    moveIn: PropTypes.func,
+    remove: PropTypes.func,
+    add: PropTypes.func,
+    edit: PropTypes.func,
 };
 
 const mapStateToProps = function(store, ownProps) {
@@ -104,4 +92,26 @@ const mapStateToProps = function(store, ownProps) {
     };
 };
 
-export default connect(mapStateToProps)(Categories);
+const mapDispatchToProps = function(dispatch) {
+    return {
+        showed: (id) => {
+            dispatch(toggleSubCategories(id));
+        },
+        moveIn: (taskId, categoryId) => {
+            dispatch(moveTodo(taskId, categoryId));
+        },
+        remove: (id) => {
+            dispatch(deleteCategory(id));
+            dispatch(modalOpen({type:'CONFIRM'}));
+        },
+        add: (parentId) => {
+            dispatch(modalOpen({type:'ADD', parentId}));
+        },
+        edit: (id, name) => {
+            dispatch(editAddCategoryName(name));
+            dispatch(modalOpen({type:'EDIT', id}));
+        },
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Categories);

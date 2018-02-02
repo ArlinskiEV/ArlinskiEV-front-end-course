@@ -7,7 +7,7 @@ import {
 export const modalOpen = function(state = {}, action) {
     // .modal
     // .editCategoryParentId
-    
+
     let change = {};
     if (action.type === MODAL_OPEN) {
         Object.assign(
@@ -37,7 +37,10 @@ export const modalOpen = function(state = {}, action) {
                 });
                 break;
             }
-            default: window.console.log('ERROR: UNKNOWN MODAL TYPE');
+            case 'CONFIRM': {
+                break;
+            }
+            default: window.console.log(`ERROR: UNKNOWN MODAL TYPE: ${action.field.type}`);
         }
 
     }

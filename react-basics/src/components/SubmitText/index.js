@@ -35,7 +35,7 @@ export default class SubmitText extends React.Component {
                 />
                 <Button
                     label={this.props.buttonName}
-                    onClick = {() => {this.props.clicker();}}
+                    onClick = {() => {this.props.clicker(this.props.value);}}
                 />
             </Tag>
         );
@@ -45,7 +45,9 @@ export default class SubmitText extends React.Component {
 SubmitText.propTypes = {
     placeholder: PropTypes.string,
     buttonName: PropTypes.string,
+
+    value: PropTypes.string,
+
     clicker: PropTypes.func,
     changer: PropTypes.func,
-    value: PropTypes.string,
 };

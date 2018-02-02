@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import store from '../../store';
 
 import TodoItem from '../../components/TodoItem';
 
@@ -25,9 +24,6 @@ min-width: max-content;
 
 
 class TodoList extends React.Component {
-    toggleTodo(id) {
-        store.dispatch(toggleTodo(id));
-    }
     render() {
         let child = false;
         let obj = (
@@ -44,7 +40,7 @@ class TodoList extends React.Component {
                                     itemId = {item.id}
                                     name = {item.name}
                                     completed = {item.completed}
-                                    toggle = {() => {this.toggleTodo(item.id)}}
+                                    toggle = {() => {this.props.toggleTodo(item.id)}}
                                     owner = {this.props.categoryId}
                                 />
                             );
@@ -60,6 +56,7 @@ class TodoList extends React.Component {
 TodoList.propTypes = {
     state: PropTypes.array,
     categoryId: PropTypes.number,
+    toggleTodo: PropTypes.func,
 };
 
 const mapStateToProps = function(state, ownProps) {
@@ -69,4 +66,12 @@ const mapStateToProps = function(state, ownProps) {
     };
 };
 
-export default connect(mapStateToProps)(TodoList);
+const mapDispatchToProps = function(dispatch) {
+    return {
+        toggleTodo: (id) => {
+            dispatch(toggleTodo(id));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

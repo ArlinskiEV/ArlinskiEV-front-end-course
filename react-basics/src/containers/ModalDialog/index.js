@@ -139,4 +139,8 @@ const mapStateToProps = function(state) {
   return newState;
 };
 
+// const mapDispatchToProps = function(dispatch) {
+//   return {};
+// };
+
 export default connect(mapStateToProps)(ModalDialog);

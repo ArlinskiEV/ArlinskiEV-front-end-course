@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import ProgressBar from '../../components/ProgressBar';
+import ProgressBar from '../../containers/ProgressBar';
 import Submit from '../../containers/Submit';
 import Filter from '../../components/Filter';
 

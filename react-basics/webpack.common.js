@@ -8,6 +8,7 @@ const common = {
   //   app: path.join(__dirname, './src/app.js'),
   // },
   entry: ['babel-polyfill', 'react-hot-loader/patch', './src/app.js'],
+  // entry: ['react-hot-loader/patch', './src/app.js'],
 
   output: {
     filename: '[name].bundle.[hash].js',

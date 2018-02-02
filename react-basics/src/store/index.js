@@ -18,10 +18,6 @@ import {
     MODAL_CLOSE,
 } from './actions';
 
-
-
-
-
 import {
     toggleTodo,
     addTodo,
@@ -187,7 +183,6 @@ const mySingleReduser = function(state = {}, action) {
 //   userState: userReducer,
 //   categoriesListState: categoriesReducer
 // });
-// window.console.log(`redusers=${reducers}`);
 
 // const store = createStore(reducers);
 const store = createStore(mySingleReduser);

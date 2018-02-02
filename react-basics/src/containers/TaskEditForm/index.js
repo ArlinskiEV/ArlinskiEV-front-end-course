@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Checkbox from 'material-ui/Checkbox';
 import { connect } from 'react-redux';
-import store from '../../store';
+
 import {editParamsTodo} from '../../store/actions'
 
 const Tag = styled.div`
@@ -36,10 +36,6 @@ margin: 10px;
 }
 `;
 class TaskEditForm extends React.Component {
-    changer(action, value) {
-        //name/toggle/text/save/cansel
-        store.dispatch(editParamsTodo([action, this.props.id, value]));
-    }
     render() {
         return (
             (this.props.categoryURLId !== this.props.categoryId )
@@ -54,7 +50,7 @@ class TaskEditForm extends React.Component {
                         type="text"
                         value = {this.props.name}
                         placeholder="Task Name"
-                        onChange = {(e) => {this.changer('name',e.target.value)}}
+                        onChange = {(e) => {this.props.changer('name', this.props.id, e.target.value)}}
                     />
                     <Warning
                         className="fas fa-exclamation-triangle"
@@ -64,7 +60,7 @@ class TaskEditForm extends React.Component {
                         <Checkbox
                             label="Done"
                             checked={this.props.completed}
-                            onCheck={() => {this.changer('toggle');}}
+                            onCheck={() => {this.props.changer('toggle', this.props.id);}}
                         />
                     </Block>
                     <p>Task id = {this.props.id}</p>
@@ -72,17 +68,17 @@ class TaskEditForm extends React.Component {
                     <input
                         type="button"
                         value="Save"
-                        onClick = {() => {this.changer('save');}}
+                        onClick = {() => {this.props.changer('save', this.props.id);}}
                     />
                     <input
                         type="button"
                         value="Cansel"
-                        onClick = {() => {this.changer('cansel');}}
+                        onClick = {() => {this.props.changer('cansel', this.props.id);}}
                     />
                     <TextBlock
                         value ={this.props.text}
                         placeholder="Text..."
-                        onChange = {(e) => {this.changer('text',e.target.value)}}
+                        onChange = {(e) => {this.props.changer('text', this.props.id, e.target.value)}}
                     />
                 </Tag>
             )
@@ -99,6 +95,8 @@ TaskEditForm.propTypes = {
 
     categoryURLId: PropTypes.number,
     categoryIsExist: PropTypes.bool,
+
+    changer: PropTypes.func,
 };
 
 const mapStateToProps = function(store, ownProps) {
@@ -117,4 +115,14 @@ const mapStateToProps = function(store, ownProps) {
         state
     );
 };
-export default connect(mapStateToProps)(TaskEditForm);
+
+const mapDispatchToProps = function(dispatch) {
+    return {
+        changer: (action, id, value) => {
+            //name/toggle/text/save/cansel
+            dispatch(editParamsTodo([action, id, value]));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskEditForm);
